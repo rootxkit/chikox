@@ -72,7 +72,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' }} data-testid="dashboard-layout">
       <Sider
         trigger={null}
         collapsible
@@ -85,6 +85,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           top: 0,
           bottom: 0
         }}
+        data-testid="sidebar"
       >
         <div
           style={{
@@ -96,6 +97,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             fontSize: 20,
             fontWeight: 'bold'
           }}
+          data-testid="app-logo"
         >
           {collapsed ? 'C' : 'Chikox'}
         </div>
@@ -105,6 +107,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           selectedKeys={[location.pathname]}
           items={menuItems}
           onClick={({ key }) => handleMenuClick(key)}
+          data-testid="sidebar-menu"
         />
       </Sider>
 
@@ -118,23 +121,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             justifyContent: 'space-between',
             boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
           }}
+          data-testid="header"
         >
           <div>
             {collapsed ? (
               <MenuUnfoldOutlined
                 style={{ fontSize: 18, cursor: 'pointer' }}
                 onClick={() => setCollapsed(false)}
+                data-testid="menu-unfold"
               />
             ) : (
               <MenuFoldOutlined
                 style={{ fontSize: 18, cursor: 'pointer' }}
                 onClick={() => setCollapsed(true)}
+                data-testid="menu-fold"
               />
             )}
           </div>
 
           <Dropdown menu={{ items: dropdownItems }} placement="bottomRight">
-            <Space style={{ cursor: 'pointer' }}>
+            <Space style={{ cursor: 'pointer' }} data-testid="user-dropdown">
               <Avatar icon={<UserOutlined />} />
               <div>
                 <Text strong>{user?.name || user?.email}</Text>
@@ -155,6 +161,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             borderRadius: 8,
             minHeight: 280
           }}
+          data-testid="content"
         >
           {children}
         </Content>

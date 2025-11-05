@@ -37,6 +37,7 @@ export default function DashboardPage() {
           alignItems: 'center',
           justifyContent: 'center'
         }}
+        data-testid="loading-spinner"
       >
         <Spin size="large" />
       </div>
@@ -44,18 +45,18 @@ export default function DashboardPage() {
   }
 
   const totalUsers = users?.length || 0;
-  const activeUsers = users?.length || 0; // All users are considered active for now
+  const activeUsers = users?.length || 0;
   const adminUsers = users?.filter((u) => u.role === 'ADMIN' || u.role === 'SUPER_ADMIN').length || 0;
   const growthRate = 12.5;
 
   return (
     <DashboardLayout>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" style={{ width: '100%' }} data-testid="dashboard-page">
         <Title level={2}>Dashboard</Title>
 
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card data-testid="total-users-card">
               <Statistic
                 title="Total Users"
                 value={totalUsers}
@@ -66,7 +67,7 @@ export default function DashboardPage() {
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card data-testid="active-users-card">
               <Statistic
                 title="Active Users"
                 value={activeUsers}
@@ -77,7 +78,7 @@ export default function DashboardPage() {
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card data-testid="admin-users-card">
               <Statistic
                 title="Admin Users"
                 value={adminUsers}
@@ -88,7 +89,7 @@ export default function DashboardPage() {
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card data-testid="growth-rate-card">
               <Statistic
                 title="Growth Rate"
                 value={growthRate}
@@ -102,19 +103,20 @@ export default function DashboardPage() {
 
         <Row gutter={[16, 16]}>
           <Col xs={24} lg={16}>
-            <Card title="Recent Activity">
+            <Card title="Recent Activity" data-testid="recent-activity-card">
               <Paragraph type="secondary">No recent activity to display.</Paragraph>
             </Card>
           </Col>
 
           <Col xs={24} lg={8}>
-            <Card title="Quick Actions">
+            <Card title="Quick Actions" data-testid="quick-actions-card">
               <Space direction="vertical" style={{ width: '100%' }}>
                 <Button
                   type="primary"
                   icon={<UserOutlined />}
                   block
                   onClick={() => navigate('/dashboard/users')}
+                  data-testid="manage-users-button"
                 >
                   Manage Users
                 </Button>
@@ -122,10 +124,11 @@ export default function DashboardPage() {
                   icon={<SettingOutlined />}
                   block
                   onClick={() => navigate('/dashboard/settings')}
+                  data-testid="settings-button"
                 >
                   Settings
                 </Button>
-                <Button icon={<FileTextOutlined />} block>
+                <Button icon={<FileTextOutlined />} block data-testid="reports-button">
                   View Reports
                 </Button>
               </Space>

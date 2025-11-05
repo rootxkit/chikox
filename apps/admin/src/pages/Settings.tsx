@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Form, Input, Button, Switch, Typography, Space, Divider, Spin } from 'antd';
+import { Card, Form, Input, Button, Switch, Typography, Space, Divider, Spin, message } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useAuth } from '@/hooks/useAuth';
@@ -29,6 +29,7 @@ export default function SettingsPage() {
           alignItems: 'center',
           justifyContent: 'center'
         }}
+        data-testid="loading-spinner"
       >
         <Spin size="large" />
       </div>
@@ -37,25 +38,42 @@ export default function SettingsPage() {
 
   const onFinish = (values: any) => {
     console.log('Settings updated:', values);
+    message.success('Settings saved successfully!');
   };
 
   return (
     <DashboardLayout>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space
+        direction="vertical"
+        size="large"
+        style={{ width: '100%' }}
+        data-testid="settings-page"
+      >
         <Title level={2}>Settings</Title>
 
-        <Card title="General Settings" bordered={false}>
-          <Form form={form} layout="vertical" onFinish={onFinish}>
-            <Form.Item label="Site Name" name="siteName" initialValue="Chikox">
-              <Input />
+        <Card title="General Settings" bordered={false} data-testid="general-settings-card">
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            data-testid="settings-form"
+          >
+            <Form.Item
+              label="Site Name"
+              name="siteName"
+              initialValue="Chikox"
+              rules={[{ required: true, message: 'Please enter site name' }]}
+            >
+              <Input data-testid="site-name-input" />
             </Form.Item>
 
             <Form.Item
               label="Site Description"
               name="siteDescription"
               initialValue="Full-stack TypeScript application"
+              rules={[{ required: true, message: 'Please enter site description' }]}
             >
-              <Input.TextArea rows={3} />
+              <Input.TextArea rows={3} data-testid="site-description-input" />
             </Form.Item>
 
             <Divider />
@@ -68,7 +86,7 @@ export default function SettingsPage() {
               valuePropName="checked"
               initialValue={true}
             >
-              <Switch />
+              <Switch data-testid="email-notifications-switch" />
             </Form.Item>
 
             <Form.Item
@@ -77,24 +95,29 @@ export default function SettingsPage() {
               valuePropName="checked"
               initialValue={false}
             >
-              <Switch />
+              <Switch data-testid="push-notifications-switch" />
             </Form.Item>
 
             <Divider />
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                icon={<SaveOutlined />}
+                data-testid="save-button"
+              >
                 Save Settings
               </Button>
             </Form.Item>
           </Form>
         </Card>
 
-        <Card title="Security" bordered={false}>
+        <Card title="Security" bordered={false} data-testid="security-card">
           <Paragraph type="secondary">
             Configure security settings for your application.
           </Paragraph>
-          <Button>Change Password</Button>
+          <Button data-testid="change-password-button">Change Password</Button>
         </Card>
       </Space>
     </DashboardLayout>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Table,
@@ -32,6 +32,7 @@ export default function UsersPage() {
   const navigate = useNavigate();
   const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
   const { users, isLoading } = useUsers();
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -50,6 +51,7 @@ export default function UsersPage() {
           alignItems: 'center',
           justifyContent: 'center'
         }}
+        data-testid="loading-spinner"
       >
         <Spin size="large" />
       </div>
@@ -67,13 +69,19 @@ export default function UsersPage() {
     }
   };
 
+  const filteredUsers = users?.filter(
+    (user) =>
+      user.email.toLowerCase().includes(searchText.toLowerCase()) ||
+      (user.name && user.name.toLowerCase().includes(searchText.toLowerCase()))
+  );
+
   const columns: ColumnsType<UserDTO> = [
     {
       title: 'User',
       dataIndex: 'name',
       key: 'name',
       render: (name: string, record: UserDTO) => (
-        <Space>
+        <Space data-testid={`user-${record.id}`}>
           <Avatar icon={<UserOutlined />} />
           <div>
             <div style={{ fontWeight: 500 }}>{name || 'N/A'}</div>
@@ -92,7 +100,11 @@ export default function UsersPage() {
         { text: 'Super Admin', value: 'SUPER_ADMIN' }
       ],
       onFilter: (value, record) => record.role === value,
-      render: (role: string) => <Tag color={getRoleColor(role)}>{role}</Tag>
+      render: (role: string) => (
+        <Tag color={getRoleColor(role)} data-testid="role-tag">
+          {role}
+        </Tag>
+      )
     },
     {
       title: 'Created',
@@ -108,12 +120,23 @@ export default function UsersPage() {
     {
       title: 'Actions',
       key: 'actions',
-      render: (_: any) => (
+      render: () => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} size="small">
+          <Button
+            type="link"
+            icon={<EditOutlined />}
+            size="small"
+            data-testid="edit-button"
+          >
             Edit
           </Button>
-          <Button type="link" danger icon={<DeleteOutlined />} size="small">
+          <Button
+            type="link"
+            danger
+            icon={<DeleteOutlined />}
+            size="small"
+            data-testid="delete-button"
+          >
             Delete
           </Button>
         </Space>
@@ -123,12 +146,17 @@ export default function UsersPage() {
 
   return (
     <DashboardLayout>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Space
+        direction="vertical"
+        size="large"
+        style={{ width: '100%' }}
+        data-testid="users-page"
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Title level={2} style={{ margin: 0 }}>
             Users Management
           </Title>
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" icon={<PlusOutlined />} data-testid="add-user-button">
             Add User
           </Button>
         </div>
@@ -140,11 +168,14 @@ export default function UsersPage() {
               prefix={<SearchOutlined />}
               size="large"
               style={{ maxWidth: 400 }}
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              data-testid="search-input"
             />
 
             <Table
               columns={columns}
-              dataSource={users}
+              dataSource={filteredUsers}
               rowKey="id"
               loading={isLoading}
               pagination={{
@@ -152,6 +183,7 @@ export default function UsersPage() {
                 showSizeChanger: true,
                 showTotal: (total) => `Total ${total} users`
               }}
+              data-testid="users-table"
             />
           </Space>
         </Card>
