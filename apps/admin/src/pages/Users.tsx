@@ -1,7 +1,5 @@
-'use client';
-
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import {
   Table,
   Tag,
@@ -31,17 +29,17 @@ import dayjs from 'dayjs';
 const { Title } = Typography;
 
 export default function UsersPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
   const { users, isLoading } = useUsers();
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      navigate('/login');
     } else if (!authLoading && !isAdmin()) {
-      router.push('/login');
+      navigate('/login');
     }
-  }, [isAuthenticated, isAdmin, authLoading, router]);
+  }, [isAuthenticated, isAdmin, authLoading, navigate]);
 
   if (authLoading || !isAuthenticated) {
     return (
@@ -110,7 +108,7 @@ export default function UsersPage() {
     {
       title: 'Actions',
       key: 'actions',
-      render: (_: any, record: UserDTO) => (
+      render: (_: any) => (
         <Space size="middle">
           <Button type="link" icon={<EditOutlined />} size="small">
             Edit

@@ -1,32 +1,32 @@
-'use client';
-
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Row, Col, Card, Statistic, Typography, Space, Spin } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Card, Row, Col, Statistic, Typography, Space, Button, Spin } from 'antd';
 import {
   UserOutlined,
   TeamOutlined,
+  CrownOutlined,
   RiseOutlined,
-  CheckCircleOutlined
+  SettingOutlined,
+  FileTextOutlined
 } from '@ant-design/icons';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useAuth } from '@/hooks/useAuth';
 import { useUsers } from '@/hooks/useUsers';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 export default function DashboardPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
-  const { users, isLoading: usersLoading } = useUsers();
+  const { users, isLoading } = useUsers();
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      navigate('/login');
     } else if (!authLoading && !isAdmin()) {
-      router.push('/login');
+      navigate('/login');
     }
-  }, [isAuthenticated, isAdmin, authLoading, router]);
+  }, [isAuthenticated, isAdmin, authLoading, navigate]);
 
   if (authLoading || !isAuthenticated) {
     return (
@@ -44,8 +44,9 @@ export default function DashboardPage() {
   }
 
   const totalUsers = users?.length || 0;
-  const activeUsers = users?.filter((u) => u.role === 'USER').length || 0;
+  const activeUsers = users?.length || 0; // All users are considered active for now
   const adminUsers = users?.filter((u) => u.role === 'ADMIN' || u.role === 'SUPER_ADMIN').length || 0;
+  const growthRate = 12.5;
 
   return (
     <DashboardLayout>
@@ -54,34 +55,34 @@ export default function DashboardPage() {
 
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} lg={6}>
-            <Card loading={usersLoading}>
+            <Card>
               <Statistic
                 title="Total Users"
                 value={totalUsers}
                 prefix={<UserOutlined />}
-                valueStyle={{ color: '#3f8600' }}
+                loading={isLoading}
               />
             </Card>
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
-            <Card loading={usersLoading}>
+            <Card>
               <Statistic
                 title="Active Users"
                 value={activeUsers}
                 prefix={<TeamOutlined />}
-                valueStyle={{ color: '#1890ff' }}
+                loading={isLoading}
               />
             </Card>
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
-            <Card loading={usersLoading}>
+            <Card>
               <Statistic
-                title="Admins"
+                title="Admin Users"
                 value={adminUsers}
-                prefix={<CheckCircleOutlined />}
-                valueStyle={{ color: '#cf1322' }}
+                prefix={<CrownOutlined />}
+                loading={isLoading}
               />
             </Card>
           </Col>
@@ -90,11 +91,10 @@ export default function DashboardPage() {
             <Card>
               <Statistic
                 title="Growth Rate"
-                value={12.5}
-                precision={1}
-                valueStyle={{ color: '#3f8600' }}
+                value={growthRate}
                 prefix={<RiseOutlined />}
                 suffix="%"
+                valueStyle={{ color: '#3f8600' }}
               />
             </Card>
           </Col>
@@ -102,28 +102,32 @@ export default function DashboardPage() {
 
         <Row gutter={[16, 16]}>
           <Col xs={24} lg={16}>
-            <Card title="Recent Activity" bordered={false}>
-              <Space direction="vertical" style={{ width: '100%' }}>
-                <Typography.Paragraph>
-                  <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
-                  System is running smoothly
-                </Typography.Paragraph>
-                <Typography.Paragraph type="secondary">
-                  Last updated: {new Date().toLocaleString()}
-                </Typography.Paragraph>
-              </Space>
+            <Card title="Recent Activity">
+              <Paragraph type="secondary">No recent activity to display.</Paragraph>
             </Card>
           </Col>
 
           <Col xs={24} lg={8}>
-            <Card title="Quick Actions" bordered={false}>
+            <Card title="Quick Actions">
               <Space direction="vertical" style={{ width: '100%' }}>
-                <Typography.Link onClick={() => router.push('/dashboard/users')}>
+                <Button
+                  type="primary"
+                  icon={<UserOutlined />}
+                  block
+                  onClick={() => navigate('/dashboard/users')}
+                >
                   Manage Users
-                </Typography.Link>
-                <Typography.Link onClick={() => router.push('/dashboard/settings')}>
-                  System Settings
-                </Typography.Link>
+                </Button>
+                <Button
+                  icon={<SettingOutlined />}
+                  block
+                  onClick={() => navigate('/dashboard/settings')}
+                >
+                  Settings
+                </Button>
+                <Button icon={<FileTextOutlined />} block>
+                  View Reports
+                </Button>
               </Space>
             </Card>
           </Col>

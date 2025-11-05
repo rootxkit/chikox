@@ -1,6 +1,6 @@
 # Chikox Admin Dashboard
 
-A modern admin dashboard built with Next.js 14, Ant Design, and TypeScript.
+A modern admin dashboard built with React, Vite, Ant Design, and TypeScript.
 
 ## Features
 
@@ -40,7 +40,8 @@ A modern admin dashboard built with Next.js 14, Ant Design, and TypeScript.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: React 18 with Vite
+- **Routing**: React Router v6
 - **UI Library**: Ant Design 5.x
 - **State Management**: SWR for data fetching
 - **HTTP Client**: Axios
@@ -72,7 +73,7 @@ npm install
 Create `.env.local` file:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:3001
 ```
 
 ### Development
@@ -91,7 +92,7 @@ The admin dashboard will be available at: http://localhost:3002
 
 ```bash
 npm run build
-npm run start
+npm run preview
 ```
 
 ## Usage
@@ -170,17 +171,11 @@ The admin uses the following API endpoints:
 ```
 apps/admin/
 ├── src/
-│   ├── app/
-│   │   ├── dashboard/
-│   │   │   ├── page.tsx           # Main dashboard
-│   │   │   ├── users/
-│   │   │   │   └── page.tsx       # User management
-│   │   │   └── settings/
-│   │   │       └── page.tsx       # Settings
-│   │   ├── login/
-│   │   │   └── page.tsx           # Login page
-│   │   ├── layout.tsx             # Root layout
-│   │   └── page.tsx               # Redirect to login
+│   ├── pages/
+│   │   ├── Login.tsx              # Login page
+│   │   ├── Dashboard.tsx          # Main dashboard
+│   │   ├── Users.tsx              # User management
+│   │   └── Settings.tsx           # Settings
 │   ├── components/
 │   │   └── DashboardLayout.tsx    # Dashboard layout with sidebar
 │   ├── hooks/
@@ -188,11 +183,16 @@ apps/admin/
 │   │   └── useUsers.ts            # Users data hook
 │   ├── lib/
 │   │   └── api.ts                 # API client and endpoints
-│   └── __tests__/
-│       └── login.test.tsx         # Tests
+│   ├── __tests__/
+│   │   ├── setup.ts               # Test setup
+│   │   └── login.test.tsx         # Tests
+│   ├── App.tsx                    # Main app with routes
+│   ├── main.tsx                   # React entry point
+│   └── index.css                  # Global styles
+├── index.html
 ├── package.json
 ├── tsconfig.json
-├── next.config.js
+├── vite.config.ts
 └── vitest.config.ts
 ```
 
@@ -231,7 +231,7 @@ Includes:
 
 ### Theme
 
-Modify the theme in `src/app/layout.tsx`:
+Modify the theme in `src/main.tsx`:
 
 ```typescript
 <ConfigProvider
@@ -290,7 +290,7 @@ docker run -p 3002:3002 chikox-admin
 Set these in your deployment platform:
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-api-domain.com
+VITE_API_URL=https://your-api-domain.com
 ```
 
 ## Troubleshooting

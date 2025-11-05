@@ -1,6 +1,5 @@
-'use client';
-
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu, Avatar, Dropdown, Typography, Space } from 'antd';
 import {
   DashboardOutlined,
@@ -11,7 +10,6 @@ import {
   MenuUnfoldOutlined,
   TeamOutlined
 } from '@ant-design/icons';
-import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import type { MenuProps } from 'antd';
 
@@ -24,8 +22,8 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout } = useAuth();
 
   const menuItems = [
@@ -47,7 +45,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   ];
 
   const handleMenuClick = (key: string) => {
-    router.push(key);
+    navigate(key);
   };
 
   const dropdownItems: MenuProps['items'] = [
@@ -104,7 +102,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[pathname]}
+          selectedKeys={[location.pathname]}
           items={menuItems}
           onClick={({ key }) => handleMenuClick(key)}
         />

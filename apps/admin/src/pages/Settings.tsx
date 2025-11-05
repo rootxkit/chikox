@@ -1,7 +1,5 @@
-'use client';
-
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { Card, Form, Input, Button, Switch, Typography, Space, Divider, Spin } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import DashboardLayout from '@/components/DashboardLayout';
@@ -10,17 +8,17 @@ import { useAuth } from '@/hooks/useAuth';
 const { Title, Paragraph } = Typography;
 
 export default function SettingsPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      navigate('/login');
     } else if (!authLoading && !isAdmin()) {
-      router.push('/login');
+      navigate('/login');
     }
-  }, [isAuthenticated, isAdmin, authLoading, router]);
+  }, [isAuthenticated, isAdmin, authLoading, navigate]);
 
   if (authLoading || !isAuthenticated) {
     return (

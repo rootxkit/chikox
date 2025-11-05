@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import type { UserDTO, LoginRequest } from '@chikox/types';
+import { useNavigate } from 'react-router-dom';
+import type { UserDTO } from '@chikox/types';
 import { authApi } from '@/lib/api';
 
 export function useAuth() {
   const [user, setUser] = useState<UserDTO | null>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadUser = () => {
@@ -22,19 +22,18 @@ export function useAuth() {
     loadUser();
   }, []);
 
-  const login = async (credentials: LoginRequest) => {
+  const login = async (email: string, password: string) => {
+    setLoading(true);
     try {
-      const response = await authApi.login(credentials);
+      const response = await authApi.login({ email, password });
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('user', JSON.stringify(response.user));
       setUser(response.user);
-      router.push('/dashboard');
+      setLoading(false);
       return { success: true };
     } catch (error: any) {
-      return {
-        success: false,
-        error: error.response?.data?.error?.message || 'Login failed'
-      };
+      setLoading(false);
+      throw error;
     }
   };
 
@@ -47,7 +46,7 @@ export function useAuth() {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
       setUser(null);
-      router.push('/login');
+      navigate('/login');
     }
   };
 
