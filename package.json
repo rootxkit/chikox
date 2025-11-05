@@ -1,0 +1,53 @@
+{
+  "name": "chikox",
+  "version": "1.0.0",
+  "description": "Full-stack TypeScript monorepo with Fastify, Next.js, and Prisma",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:server": "npm run dev --workspace=apps/server",
+    "dev:client": "npm run dev --workspace=apps/client",
+    "dev:admin": "npm run dev --workspace=apps/admin",
+    "build": "npm run build --workspaces --if-present",
+    "build:server": "npm run build --workspace=apps/server",
+    "build:client": "npm run build --workspace=apps/client",
+    "build:admin": "npm run build --workspace=apps/admin",
+    "start:server": "npm run start --workspace=apps/server",
+    "start:client": "npm run start --workspace=apps/client",
+    "start:admin": "npm run start --workspace=apps/admin",
+    "test": "vitest run --workspace=apps/server --workspace=apps/client --workspace=apps/admin",
+    "test:watch": "vitest --workspace=apps/server --workspace=apps/client --workspace=apps/admin",
+    "test:server": "vitest run --workspace=apps/server",
+    "test:client": "vitest run --workspace=apps/client",
+    "lint": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
+    "type-check": "tsc --noEmit --workspace=apps/server --workspace=apps/client --workspace=apps/admin",
+    "db:generate": "npm run db:generate --workspace=packages/database",
+    "db:push": "npm run db:push --workspace=packages/database",
+    "db:migrate": "npm run db:migrate --workspace=packages/database",
+    "db:studio": "npm run db:studio --workspace=packages/database",
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/.next apps/*/dist packages/*/node_modules packages/*/dist"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

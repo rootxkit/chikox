@@ -1,0 +1,54 @@
+// Prisma Schema for Chikox
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model with authentication fields
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String?
+  role          UserRole  @default(USER)
+
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  // Relations
+  sessions      Session[]
+
+  @@index([email])
+  @@map("users")
+}
+
+// Session model for JWT refresh tokens
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  refreshToken String   @unique
+  expiresAt    DateTime
+  userAgent    String?
+  ipAddress    String?
+
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([refreshToken])
+  @@map("sessions")
+}
+
+// User roles enum
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
