@@ -36,16 +36,16 @@ api.interceptors.response.use(
 // Auth API
 export const authApi = {
   login: async (data: LoginRequest): Promise<AuthResponse> => {
-    const response = await api.post<ApiResponse<AuthResponse>>('/api/auth/login', data);
+    const response = await api.post<ApiResponse<AuthResponse>>('/api/v1/auth/login', data);
     return response.data.data!;
   },
 
   logout: async (): Promise<void> => {
-    await api.post('/api/auth/logout');
+    await api.post('/api/v1/auth/logout');
   },
 
   getCurrentUser: async (): Promise<UserDTO> => {
-    const response = await api.get<ApiResponse<UserDTO>>('/api/users/me');
+    const response = await api.get<ApiResponse<UserDTO>>('/api/v1/users/me');
     return response.data.data!;
   }
 };
@@ -53,12 +53,12 @@ export const authApi = {
 // Users API
 export const usersApi = {
   getAll: async (): Promise<UserDTO[]> => {
-    const response = await api.get<ApiResponse<UserDTO[]>>('/api/users');
+    const response = await api.get<ApiResponse<UserDTO[]>>('/api/v1/users');
     return response.data.data!;
   },
 
   getById: async (id: string): Promise<UserDTO> => {
-    const response = await api.get<ApiResponse<UserDTO>>(`/api/users/${id}`);
+    const response = await api.get<ApiResponse<UserDTO>>(`/api/v1/users/${id}`);
     return response.data.data!;
   }
 };

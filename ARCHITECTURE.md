@@ -22,7 +22,7 @@
 │  │                                                     │   │
 │  │  ┌──────────────┐    ┌──────────────┐            │   │
 │  │  │ Auth Routes  │    │ User Routes  │   ...      │   │
-│  │  │ /api/auth/*  │    │ /api/users/* │            │   │
+│  │  │ /api/v1/auth/*  │    │ /api/v1/users/* │            │   │
 │  │  └──────┬───────┘    └──────┬───────┘            │   │
 │  │         │                    │                     │   │
 │  │  ┌──────▼────────────────────▼───────────┐        │   │
@@ -107,7 +107,7 @@
      │  Store accessToken         │                           │
      │  in memory/localStorage    │                           │
      │                            │                           │
-     │  GET /api/users/me         │                           │
+     │  GET /api/v1/users/me         │                           │
      │  Authorization: Bearer ... │                           │
      ├───────────────────────────►│                           │
      │                            │  Verify JWT               │
@@ -181,20 +181,20 @@
 
 | Method | Endpoint           | Auth Required | Description              |
 |--------|-------------------|---------------|--------------------------|
-| POST   | /api/auth/register| No            | Register new user        |
-| POST   | /api/auth/login   | No            | Login user               |
-| POST   | /api/auth/logout  | No            | Logout user              |
-| POST   | /api/auth/refresh | No (Cookie)   | Refresh access token     |
+| POST   | /api/v1/auth/register| No            | Register new user        |
+| POST   | /api/v1/auth/login   | No            | Login user               |
+| POST   | /api/v1/auth/logout  | No            | Logout user              |
+| POST   | /api/v1/auth/refresh | No (Cookie)   | Refresh access token     |
 
 ### User Endpoints
 
 | Method | Endpoint        | Auth Required | Roles          | Description           |
 |--------|----------------|---------------|----------------|-----------------------|
-| GET    | /api/users/me  | Yes           | Any            | Get current user      |
-| GET    | /api/users     | Yes           | ADMIN+         | List all users        |
-| GET    | /api/users/:id | Yes           | ADMIN+         | Get user by ID        |
-| PATCH  | /api/users/:id | Yes           | ADMIN+         | Update user           |
-| DELETE | /api/users/:id | Yes           | SUPER_ADMIN    | Delete user           |
+| GET    | /api/v1/users/me  | Yes           | Any            | Get current user      |
+| GET    | /api/v1/users     | Yes           | ADMIN+         | List all users        |
+| GET    | /api/v1/users/:id | Yes           | ADMIN+         | Get user by ID        |
+| PATCH  | /api/v1/users/:id | Yes           | ADMIN+         | Update user           |
+| DELETE | /api/v1/users/:id | Yes           | SUPER_ADMIN    | Delete user           |
 
 ## 🗂️ Database Schema Relationships
 

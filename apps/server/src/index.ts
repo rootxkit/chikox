@@ -93,8 +93,8 @@ async function registerPlugins() {
 
 // Register routes
 async function registerRoutes() {
-  await server.register(authRoutes, { prefix: '/api/auth' });
-  await server.register(userRoutes, { prefix: '/api/users' });
+  await server.register(authRoutes, { prefix: '/api/v1/auth' });
+  await server.register(userRoutes, { prefix: '/api/v1/users' });
 }
 
 // Health check

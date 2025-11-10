@@ -96,7 +96,7 @@ The system uses **dual-token JWT authentication**:
 
 **Protected Route Pattern**:
 ```typescript
-server.get('/api/users', {
+server.get('/api/v1/users', {
   onRequest: [authenticate, authorize('ADMIN')]
 }, handlerFunction);
 ```

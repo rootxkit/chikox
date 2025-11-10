@@ -120,13 +120,13 @@ The authentication system uses a dual-token approach:
 2. **Refresh Token (Long-lived, 7 days)**
    - Stored as HttpOnly cookie (secure, not accessible via JavaScript)
    - Used to obtain new access tokens
-   - Automatically sent with requests to `/api/auth/*`
+   - Automatically sent with requests to `/api/v1/auth/*`
 
 ### Authentication Endpoints
 
 #### Register
 ```http
-POST /api/auth/register
+POST /api/v1/auth/register
 Content-Type: application/json
 
 {
@@ -155,7 +155,7 @@ Response:
 
 #### Login
 ```http
-POST /api/auth/login
+POST /api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -166,7 +166,7 @@ Content-Type: application/json
 
 #### Logout
 ```http
-POST /api/auth/logout
+POST /api/v1/auth/logout
 ```
 
 ### Protected Routes
@@ -175,7 +175,7 @@ Protected routes require authentication:
 
 ```typescript
 // Server-side middleware
-server.get('/api/users/me', {
+server.get('/api/v1/users/me', {
   onRequest: [authenticate]
 }, async (request, reply) => {
   const user = request.user; // JWTPayload
@@ -187,7 +187,7 @@ server.get('/api/users/me', {
 
 ```typescript
 // Admin-only route
-server.get('/api/users', {
+server.get('/api/v1/users', {
   onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')]
 }, async (request, reply) => {
   // Only ADMIN and SUPER_ADMIN can access
@@ -209,7 +209,7 @@ The Swagger UI provides:
 ### Example Route with Swagger Schema
 
 ```typescript
-server.post('/api/auth/login', {
+server.post('/api/v1/auth/login', {
   schema: {
     description: 'Login with email and password',
     tags: ['Authentication'],

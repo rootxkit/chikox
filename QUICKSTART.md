@@ -73,7 +73,7 @@ This starts:
 
 3. **Register a User**
    ```bash
-   curl -X POST http://localhost:3000/api/auth/register \
+   curl -X POST http://localhost:3000/api/v1/auth/register \
      -H "Content-Type: application/json" \
      -d '{
        "email": "test@example.com",
@@ -84,7 +84,7 @@ This starts:
 
 4. **Login**
    ```bash
-   curl -X POST http://localhost:3000/api/auth/login \
+   curl -X POST http://localhost:3000/api/v1/auth/login \
      -H "Content-Type: application/json" \
      -d '{
        "email": "test@example.com",

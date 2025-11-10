@@ -3,7 +3,7 @@ import { usersApi } from '@/lib/api';
 import type { UserDTO } from '@chikox/types';
 
 export function useUsers() {
-  const { data, error, isLoading, mutate } = useSWR<UserDTO[]>('/api/users', usersApi.getAll);
+  const { data, error, isLoading, mutate } = useSWR<UserDTO[]>('/api/v1/users', usersApi.getAll);
 
   return {
     users: data,

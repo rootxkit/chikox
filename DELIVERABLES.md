@@ -310,7 +310,7 @@ export function authorize(...roles) {
 }
 
 // Usage
-server.get('/api/users', {
+server.get('/api/v1/users', {
   onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')]
 }, handler);
 ```
