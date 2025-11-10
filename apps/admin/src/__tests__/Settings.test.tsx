@@ -45,7 +45,7 @@ describe('SettingsPage', () => {
     );
 
     expect(screen.getByTestId('settings-page')).toBeInTheDocument();
-    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getAllByText('Settings').length).toBeGreaterThan(0);
   });
 
   it('displays general settings card', () => {

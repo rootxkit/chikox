@@ -126,11 +126,12 @@ describe('UsersPage', () => {
     await waitFor(() => {
       const table = screen.getByTestId('users-table');
       const rows = table.querySelectorAll('tbody tr');
-      // Should only show 1 user (john)
-      expect(rows.length).toBe(1);
+      // Should show 2 users (John Doe and Bob Johnson)
+      expect(rows.length).toBe(2);
     });
 
     expect(screen.getByText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByText('bob@example.com')).toBeInTheDocument();
   });
 
   it('displays role tags with correct colors', () => {

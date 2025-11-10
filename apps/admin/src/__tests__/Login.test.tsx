@@ -79,10 +79,12 @@ describe('LoginPage', () => {
     });
   });
 
-  it('redirects to dashboard when authenticated', () => {
+  it('redirects to dashboard when authenticated as admin', () => {
     vi.mocked(authHook.useAuth).mockReturnValue({
       ...mockUseAuth,
-      isAuthenticated: true
+      isAuthenticated: true,
+      isAdmin: () => true,
+      loading: false
     });
 
     render(
@@ -91,7 +93,7 @@ describe('LoginPage', () => {
       </BrowserRouter>
     );
 
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+    expect(mockNavigate).toHaveBeenCalledWith('/dashboard', { replace: true });
   });
 
   it('calls login function with email and password', async () => {
