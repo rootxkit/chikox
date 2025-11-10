@@ -139,6 +139,11 @@ jobs:
       - name: Generate Prisma Client
         run: npm run db:generate
 
+      - name: Build shared packages
+        run: |
+          cd packages/database && npm run build
+          cd ../types && npm run build
+
       - name: Run all tests
         run: npm test
 
@@ -171,6 +176,11 @@ jobs:
 
       - name: Generate Prisma Client
         run: npm run db:generate
+
+      - name: Build shared packages
+        run: |
+          cd packages/database && npm run build
+          cd ../types && npm run build
 
       - name: Build all applications
         run: npm run build
