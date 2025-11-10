@@ -16,7 +16,7 @@ Chikox is a full-stack TypeScript monorepo with:
 ### Starting Development
 
 ```bash
-npm run dev                  # Start all apps (server:3001, client:3000, admin:3002)
+npm run dev                  # Start all apps (server:3000, client:3001, admin:3002)
 npm run dev:server           # Start API server only
 npm run dev:client           # Start client app only
 npm run dev:admin            # Start admin dashboard only
@@ -59,14 +59,15 @@ npm run lint:fix             # Auto-fix linting issues
 npm run format               # Format with Prettier
 npm run format:check         # Check formatting
 npm run type-check           # Run TypeScript compiler checks
+npm run clean                # Remove all build artifacts and node_modules
 ```
 
 ## Architecture
 
 ### Monorepo Structure
 
-- `apps/server/` - Fastify API (port 3001)
-- `apps/client/` - Next.js client app (port 3000)
+- `apps/server/` - Fastify API (port 3000)
+- `apps/client/` - Next.js client app (port 3001)
 - `apps/admin/` - React + Vite admin dashboard (port 3002)
 - `packages/database/` - Prisma client and schema
 - `packages/types/` - Shared TypeScript interfaces and DTOs
@@ -117,13 +118,13 @@ server.get(
 );
 ```
 
-### Admin Dashboard (React + Vite + Ant Design)
+### Admin Dashboard (React + Vite)
 
 **Tech Stack**:
 
 - React 18 with TypeScript
 - Vite for build tooling
-- Ant Design UI components
+- Ant Design UI component library
 - React Router for routing
 - Axios for API calls
 - SWR for data fetching/caching
@@ -236,20 +237,20 @@ JWT_ACCESS_SECRET=your-secret
 JWT_REFRESH_SECRET=your-secret
 JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
-CORS_ORIGIN=http://localhost:3000,http://localhost:3002
+CORS_ORIGIN=http://localhost:3001,http://localhost:3002
 COOKIE_SECRET=your-secret
 ```
 
 ### Client (`apps/client/.env`)
 
 ```
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 ### Admin (`apps/admin/.env`)
 
 ```
-VITE_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:3000
 ```
 
 ### Database (`packages/database/.env`)
