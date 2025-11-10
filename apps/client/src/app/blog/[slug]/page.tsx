@@ -31,36 +31,40 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       name: 'Full name',
       title: 'Job title',
       company: 'Company name',
-      avatar: 'https://cdn.prod.website-files.com/624380709031623bfe4aee60/6243807090316203124aee66_placeholder-image.svg',
+      avatar:
+        'https://cdn.prod.website-files.com/624380709031623bfe4aee60/6243807090316203124aee66_placeholder-image.svg'
     },
-    tags: ['Tag one', 'Tag two', 'Tag three', 'Tag four'],
+    tags: ['Tag one', 'Tag two', 'Tag three', 'Tag four']
   };
 
   const relatedPosts = [
     {
       id: 1,
       title: 'Pushing the limits of drone performance',
-      description: 'Discover how advanced engineering transforms aerial capabilities and flight dynamics',
+      description:
+        'Discover how advanced engineering transforms aerial capabilities and flight dynamics',
       category: 'Technology',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 2,
       title: 'Pushing the limits of drone performance',
-      description: 'Discover how advanced engineering transforms aerial capabilities and flight dynamics',
+      description:
+        'Discover how advanced engineering transforms aerial capabilities and flight dynamics',
       category: 'Technology',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 3,
       title: 'Pushing the limits of drone performance',
-      description: 'Discover how advanced engineering transforms aerial capabilities and flight dynamics',
+      description:
+        'Discover how advanced engineering transforms aerial capabilities and flight dynamics',
       category: 'Technology',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
-    },
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
+    }
   ];
 
   return (
@@ -68,9 +72,21 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       {/* Preload images */}
       <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/logo-image.svg" />
       <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg" />
-      <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" />
-      <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" />
-      <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg" />
+      <link
+        rel="preload"
+        as="image"
+        href="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg"
+      />
 
       {/* Navbar */}
       <section className="relative z-[999] flex min-h-16 w-full items-center border-b border-border-primary bg-background-primary px-[5%] md:min-h-18">
@@ -164,14 +180,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               <h3>Introduction</h3>
               <p>
                 Mi tincidunt elit, id quisque ligula ac diam, amet. Vel etiam suspendisse morbi
-                eleifend faucibus eget vestibulum felis. Dictum quis montes, sit sit. Tellus
-                aliquam enim urna, etiam. Mauris posuere vulputate arcu amet, vitae nisi, tellus
-                tincidunt. At feugiat sapien varius id.
+                eleifend faucibus eget vestibulum felis. Dictum quis montes, sit sit. Tellus aliquam
+                enim urna, etiam. Mauris posuere vulputate arcu amet, vitae nisi, tellus tincidunt.
+                At feugiat sapien varius id.
               </p>
               <p>
-                Eget quis mi enim, leo lacinia pharetra, semper. Eget in volutpat mollis at
-                volutpat lectus velit, sed auctor. Porttitor fames arcu quis fusce augue enim. Quis
-                at habitant diam at. Suscipit tristique risus, at donec. In turpis vel et quam
+                Eget quis mi enim, leo lacinia pharetra, semper. Eget in volutpat mollis at volutpat
+                lectus velit, sed auctor. Porttitor fames arcu quis fusce augue enim. Quis at
+                habitant diam at. Suscipit tristique risus, at donec. In turpis vel et quam
                 imperdiet. Ipsum molestie aliquet sodales id est ac volutpat.
               </p>
               <figure>
@@ -192,9 +208,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo
                 consectetur convallis risus. Sed condimentum enim dignissim adipiscing faucibus
                 consequat, urna. Viverra purus et erat auctor aliquam. Risus, volutpat vulputate
-                posuere purus sit congue convallis aliquet. Arcu id augue ut feugiat donec
-                porttitor neque. Mauris, neque ultricies eu vestibulum, bibendum quam lorem id.
-                Dolor lacus, eget nunc lectus in tellus, pharetra, porttitor.
+                posuere purus sit congue convallis aliquet. Arcu id augue ut feugiat donec porttitor
+                neque. Mauris, neque ultricies eu vestibulum, bibendum quam lorem id. Dolor lacus,
+                eget nunc lectus in tellus, pharetra, porttitor.
               </p>
               <blockquote>
                 &quot;Ipsum sit mattis nulla quam nulla. Gravida id gravida ac enim mauris id. Non
@@ -293,7 +309,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 <ul className="flex flex-wrap gap-2 sm:justify-end">
                   {post.tags.map((tag, index) => (
                     <li key={index} className="flex">
-                      <a href="#" className="bg-background-secondary px-2 py-1 text-sm font-semibold">
+                      <a
+                        href="#"
+                        className="bg-background-secondary px-2 py-1 text-sm font-semibold"
+                      >
                         {tag}
                       </a>
                     </li>
@@ -398,7 +417,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 <h2 className="mb-3 text-5xl font-bold md:mb-4 md:text-7xl lg:text-8xl">
                   Short heading goes here
                 </h2>
-                <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p className="md:text-md">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
               </div>
             </div>
             <div className="hidden md:flex">

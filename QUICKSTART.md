@@ -55,6 +55,7 @@ npm run dev
 ```
 
 This starts:
+
 - ✅ API Server at http://localhost:3000
 - ✅ Client App at http://localhost:3001
 - ✅ Admin App at http://localhost:3002
@@ -67,11 +68,13 @@ This starts:
    Visit http://localhost:3000/docs
 
 2. **Health Check**
+
    ```bash
    curl http://localhost:3000/health
    ```
 
 3. **Register a User**
+
    ```bash
    curl -X POST http://localhost:3000/api/v1/auth/register \
      -H "Content-Type: application/json" \
@@ -83,6 +86,7 @@ This starts:
    ```
 
 4. **Login**
+
    ```bash
    curl -X POST http://localhost:3000/api/v1/auth/login \
      -H "Content-Type: application/json" \
@@ -146,6 +150,7 @@ If ports 3000, 3001, or 3002 are in use:
 
 1. Edit `.env` files to change ports
 2. Or kill processes using those ports:
+
    ```bash
    # Find process
    lsof -i :3000

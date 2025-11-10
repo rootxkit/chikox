@@ -8,15 +8,16 @@
 
 The application ports have been updated as follows:
 
-| Application | Old Port | New Port |
-|------------|----------|----------|
-| **Server** (Fastify API) | 3001 | **3000** ✅ |
-| **Client** (Next.js) | 3000 | **3001** ✅ |
-| **Admin** (React + Vite) | 3002 | **3002** (unchanged) |
+| Application              | Old Port | New Port             |
+| ------------------------ | -------- | -------------------- |
+| **Server** (Fastify API) | 3001     | **3000** ✅          |
+| **Client** (Next.js)     | 3000     | **3001** ✅          |
+| **Admin** (React + Vite) | 3002     | **3002** (unchanged) |
 
 ### 📦 Files Updated
 
 #### Configuration Files
+
 - ✅ `apps/server/.env.example` - Updated PORT to 3000 and CORS_ORIGIN
 - ✅ `apps/client/.env.example` - Updated NEXT_PUBLIC_API_URL to localhost:3000
 - ✅ `apps/client/package.json` - Added port 3001 to dev and start scripts
@@ -26,6 +27,7 @@ The application ports have been updated as follows:
 - ✅ `apps/admin/nginx.conf` - Already configured for port 3002
 
 #### Documentation Files
+
 - ✅ `README.md` - Updated all port references
 - ✅ `CLAUDE.md` - Updated architecture and commands
 - ✅ `ARCHITECTURE.md` - Updated architecture diagrams
@@ -36,12 +38,14 @@ The application ports have been updated as follows:
 ### 🚀 CI/CD Configuration
 
 #### GitHub Actions Workflow
+
 - ✅ **Node.js Version**: Updated to 24.x (latest LTS)
 - ✅ **SSH Deployment**: Enabled and configured (Option 5)
 - ✅ **Deployment Path**: `/var/www/chikox`
 - ✅ **PM2 Integration**: Automatic restart of all services
 
 #### Workflow Stages
+
 1. **Install** - Dependencies with caching
 2. **Lint** - ESLint and Prettier checks
 3. **Type Check** - TypeScript validation
@@ -110,6 +114,7 @@ npm run dev
 Follow the comprehensive guide in **`SSH_DEPLOYMENT_SETUP.md`**
 
 **Quick Setup:**
+
 1. Prepare your production server
 2. Generate SSH keys for GitHub Actions
 3. Add GitHub secrets:
@@ -134,6 +139,7 @@ git push origin main
 ## 🔍 Verification
 
 ### Local Development
+
 ```bash
 # Check if server is running on correct port
 curl http://localhost:3000/health
@@ -149,6 +155,7 @@ open http://localhost:3002
 ```
 
 ### Docker Deployment
+
 ```bash
 # Build and start with Docker
 docker-compose up -d
@@ -161,6 +168,7 @@ docker-compose ps
 ```
 
 ### Production Deployment
+
 ```bash
 # SSH into your server
 ssh your-username@your-server-ip
@@ -194,6 +202,7 @@ pm2 logs chikox-admin
    - `VITE_API_URL` in admin environment
 
 4. **Database Migrations**: Always run migrations in production:
+
    ```bash
    npm run db:migrate  # NOT db:push
    ```
@@ -206,6 +215,7 @@ pm2 logs chikox-admin
 ## 🐛 Troubleshooting
 
 ### Port Already in Use
+
 ```bash
 # Find what's using the port
 lsof -i :3000
@@ -217,12 +227,14 @@ kill -9 <PID>
 ```
 
 ### GitHub Actions Fails
+
 1. Check logs in Actions tab
 2. Verify secrets are set correctly
 3. Ensure server is accessible via SSH
 4. Check server logs: `pm2 logs`
 
 ### Docker Issues
+
 ```bash
 # Rebuild images
 docker-compose build --no-cache
@@ -260,6 +272,7 @@ You'll know everything is working when:
 ---
 
 **Questions or Issues?**
+
 - Check the documentation files listed above
 - Review GitHub Actions logs
 - Check server logs with `pm2 logs`

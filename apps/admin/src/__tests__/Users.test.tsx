@@ -28,9 +28,27 @@ describe('UsersPage', () => {
   };
 
   const mockUsers = [
-    { id: '1', email: 'john@example.com', name: 'John Doe', role: 'USER' as const, createdAt: '2024-01-01' },
-    { id: '2', email: 'jane@example.com', name: 'Jane Smith', role: 'ADMIN' as const, createdAt: '2024-01-02' },
-    { id: '3', email: 'bob@example.com', name: 'Bob Johnson', role: 'SUPER_ADMIN' as const, createdAt: '2024-01-03' }
+    {
+      id: '1',
+      email: 'john@example.com',
+      name: 'John Doe',
+      role: 'USER' as const,
+      createdAt: '2024-01-01'
+    },
+    {
+      id: '2',
+      email: 'jane@example.com',
+      name: 'Jane Smith',
+      role: 'ADMIN' as const,
+      createdAt: '2024-01-02'
+    },
+    {
+      id: '3',
+      email: 'bob@example.com',
+      name: 'Bob Johnson',
+      role: 'SUPER_ADMIN' as const,
+      createdAt: '2024-01-03'
+    }
   ];
 
   beforeEach(() => {

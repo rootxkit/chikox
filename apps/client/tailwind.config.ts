@@ -15,17 +15,17 @@ const config: Config = {
         'background-secondary': 'rgb(var(--color-background-secondary) / <alpha-value>)',
         'text-primary': 'rgb(var(--color-text-primary) / <alpha-value>)',
         'text-alternative': 'rgb(var(--color-text-alternative) / <alpha-value>)',
-        'neutral': 'rgb(var(--color-neutral) / <alpha-value>)',
+        neutral: 'rgb(var(--color-neutral) / <alpha-value>)',
         'neutral-white': 'rgb(var(--color-neutral-white) / <alpha-value>)',
-        'neutral-light': 'rgb(var(--color-neutral-light) / <alpha-value>)',
+        'neutral-light': 'rgb(var(--color-neutral-light) / <alpha-value>)'
       },
       fontSize: {
         '9xl': ['8rem', { lineHeight: '1' }],
-        '10xl': ['10rem', { lineHeight: '1' }],
+        '10xl': ['10rem', { lineHeight: '1' }]
       },
       spacing: {
-        '18': '4.5rem',
-      },
+        '18': '4.5rem'
+      }
     }
   },
   plugins: []

@@ -131,6 +131,7 @@ nano .env
 ```
 
 Update these values:
+
 - `CORS_ORIGIN` - Your actual domains (e.g., `https://app.example.com,https://admin.example.com`)
 - `NEXT_PUBLIC_API_URL` - Your API URL (e.g., `https://api.example.com`)
 - `VITE_API_URL` - Your API URL (e.g., `https://api.example.com`)
@@ -313,14 +314,17 @@ Go to: **GitHub Repository → Settings → Secrets and variables → Actions**
 Add these secrets:
 
 #### PROD_SERVER_HOST
+
 - **Name:** `PROD_SERVER_HOST`
 - **Value:** Your server's IP address or domain
 
 #### PROD_SERVER_USERNAME
+
 - **Name:** `PROD_SERVER_USERNAME`
 - **Value:** Your SSH username (e.g., `ubuntu`)
 
 #### PROD_SERVER_SSH_KEY
+
 - **Name:** `PROD_SERVER_SSH_KEY`
 - **Value:** Content of your private key
 
@@ -332,6 +336,7 @@ cat ~/.ssh/chikox_deploy
 Copy the entire output including BEGIN and END lines.
 
 #### PROD_SERVER_PORT (Optional)
+
 - **Name:** `PROD_SERVER_PORT`
 - **Value:** SSH port (default: `22`)
 
@@ -684,6 +689,7 @@ docker-compose up -d --scale server=3
 ---
 
 **Questions or Issues?**
+
 - Check container logs: `docker-compose logs -f`
 - Verify environment variables: `cat .env`
 - Test database connection: `docker-compose exec database psql -U chikox_user -d chikox`

@@ -179,22 +179,22 @@
 
 ### Authentication Endpoints
 
-| Method | Endpoint           | Auth Required | Description              |
-|--------|-------------------|---------------|--------------------------|
-| POST   | /api/v1/auth/register| No            | Register new user        |
-| POST   | /api/v1/auth/login   | No            | Login user               |
-| POST   | /api/v1/auth/logout  | No            | Logout user              |
-| POST   | /api/v1/auth/refresh | No (Cookie)   | Refresh access token     |
+| Method | Endpoint              | Auth Required | Description          |
+| ------ | --------------------- | ------------- | -------------------- |
+| POST   | /api/v1/auth/register | No            | Register new user    |
+| POST   | /api/v1/auth/login    | No            | Login user           |
+| POST   | /api/v1/auth/logout   | No            | Logout user          |
+| POST   | /api/v1/auth/refresh  | No (Cookie)   | Refresh access token |
 
 ### User Endpoints
 
-| Method | Endpoint        | Auth Required | Roles          | Description           |
-|--------|----------------|---------------|----------------|-----------------------|
-| GET    | /api/v1/users/me  | Yes           | Any            | Get current user      |
-| GET    | /api/v1/users     | Yes           | ADMIN+         | List all users        |
-| GET    | /api/v1/users/:id | Yes           | ADMIN+         | Get user by ID        |
-| PATCH  | /api/v1/users/:id | Yes           | ADMIN+         | Update user           |
-| DELETE | /api/v1/users/:id | Yes           | SUPER_ADMIN    | Delete user           |
+| Method | Endpoint          | Auth Required | Roles       | Description      |
+| ------ | ----------------- | ------------- | ----------- | ---------------- |
+| GET    | /api/v1/users/me  | Yes           | Any         | Get current user |
+| GET    | /api/v1/users     | Yes           | ADMIN+      | List all users   |
+| GET    | /api/v1/users/:id | Yes           | ADMIN+      | Get user by ID   |
+| PATCH  | /api/v1/users/:id | Yes           | ADMIN+      | Update user      |
+| DELETE | /api/v1/users/:id | Yes           | SUPER_ADMIN | Delete user      |
 
 ## 🗂️ Database Schema Relationships
 
@@ -229,11 +229,13 @@
 ## 🛡️ Security Architecture
 
 ### Password Security
+
 - **Hashing**: bcrypt with 10 salt rounds
 - **Never stored** in plain text
 - **Compared** securely on login
 
 ### JWT Token Security
+
 - **Access Token**:
   - Short-lived (15 minutes)
   - Stored in memory/localStorage
@@ -247,14 +249,16 @@
   - Used to obtain new access tokens
 
 ### Cookie Security
+
 - **HttpOnly**: Prevents XSS attacks
 - **Secure**: HTTPS only in production
 - **SameSite**: Strict policy prevents CSRF
 
 ### Route Protection
+
 ```typescript
 // Middleware chain
-[authenticate, authorize('ADMIN')]
+[authenticate, authorize('ADMIN')];
 
 // 1. authenticate: Verifies JWT token
 // 2. authorize: Checks user role
@@ -383,15 +387,18 @@
 ## 🧪 Testing Strategy
 
 ### Unit Tests
+
 - Route handler logic
 - Utility functions
 - Component rendering
 
 ### Integration Tests
+
 - API endpoint flows
 - Database operations
 - Authentication flows
 
 ### E2E Tests (Future)
+
 - Complete user workflows
 - Cross-application testing

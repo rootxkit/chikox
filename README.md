@@ -29,12 +29,14 @@ chikox/
 ### Installation
 
 1. **Clone and install dependencies:**
+
    ```bash
    cd chikox
    npm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    # Server
    cp apps/server/.env.example apps/server/.env
@@ -47,17 +49,20 @@ chikox/
    ```
 
 3. **Configure your database connection in `packages/database/.env`:**
+
    ```env
    DATABASE_URL="postgresql://user:password@localhost:5432/chikox"
    ```
 
 4. **Generate Prisma client and push schema:**
+
    ```bash
    npm run db:generate
    npm run db:push
    ```
 
 5. **Start development servers:**
+
    ```bash
    npm run dev
    ```
@@ -70,29 +75,34 @@ chikox/
 ## 📦 Available Scripts
 
 ### Development
+
 - `npm run dev` - Start all apps in development mode
 - `npm run dev:server` - Start only the API server
 - `npm run dev:client` - Start only the client app
 - `npm run dev:admin` - Start only the admin app
 
 ### Build
+
 - `npm run build` - Build all apps
 - `npm run build:server` - Build API server
 - `npm run build:client` - Build client app
 - `npm run build:admin` - Build admin app
 
 ### Production
+
 - `npm run start:server` - Start production API server
 - `npm run start:client` - Start production client
 - `npm run start:admin` - Start production admin
 
 ### Testing
+
 - `npm test` - Run all tests
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:server` - Run server tests only
 - `npm run test:client` - Run client tests only
 
 ### Code Quality
+
 - `npm run lint` - Lint all TypeScript files
 - `npm run lint:fix` - Fix linting issues
 - `npm run format` - Format all files with Prettier
@@ -100,6 +110,7 @@ chikox/
 - `npm run type-check` - Type check all apps
 
 ### Database
+
 - `npm run db:generate` - Generate Prisma client
 - `npm run db:push` - Push schema to database
 - `npm run db:migrate` - Run migrations
@@ -125,6 +136,7 @@ The authentication system uses a dual-token approach:
 ### Authentication Endpoints
 
 #### Register
+
 ```http
 POST /api/v1/auth/register
 Content-Type: application/json
@@ -137,6 +149,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "success": true,
@@ -154,6 +167,7 @@ Response:
 ```
 
 #### Login
+
 ```http
 POST /api/v1/auth/login
 Content-Type: application/json
@@ -165,6 +179,7 @@ Content-Type: application/json
 ```
 
 #### Logout
+
 ```http
 POST /api/v1/auth/logout
 ```
@@ -175,23 +190,31 @@ Protected routes require authentication:
 
 ```typescript
 // Server-side middleware
-server.get('/api/v1/users/me', {
-  onRequest: [authenticate]
-}, async (request, reply) => {
-  const user = request.user; // JWTPayload
-  // ...
-});
+server.get(
+  '/api/v1/users/me',
+  {
+    onRequest: [authenticate]
+  },
+  async (request, reply) => {
+    const user = request.user; // JWTPayload
+    // ...
+  }
+);
 ```
 
 ### Role-Based Authorization
 
 ```typescript
 // Admin-only route
-server.get('/api/v1/users', {
-  onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')]
-}, async (request, reply) => {
-  // Only ADMIN and SUPER_ADMIN can access
-});
+server.get(
+  '/api/v1/users',
+  {
+    onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')]
+  },
+  async (request, reply) => {
+    // Only ADMIN and SUPER_ADMIN can access
+  }
+);
 ```
 
 ## 📚 API Documentation (Swagger)
@@ -201,6 +224,7 @@ Once the server is running, access the interactive API documentation at:
 **http://localhost:3000/docs**
 
 The Swagger UI provides:
+
 - Complete API endpoint documentation
 - Request/response schemas
 - Try-it-out functionality
@@ -209,35 +233,41 @@ The Swagger UI provides:
 ### Example Route with Swagger Schema
 
 ```typescript
-server.post('/api/v1/auth/login', {
-  schema: {
-    description: 'Login with email and password',
-    tags: ['Authentication'],
-    body: {
-      type: 'object',
-      required: ['email', 'password'],
-      properties: {
-        email: { type: 'string', format: 'email' },
-        password: { type: 'string' }
-      }
-    },
-    response: {
-      200: {
+server.post(
+  '/api/v1/auth/login',
+  {
+    schema: {
+      description: 'Login with email and password',
+      tags: ['Authentication'],
+      body: {
         type: 'object',
+        required: ['email', 'password'],
         properties: {
-          success: { type: 'boolean' },
-          data: {
-            type: 'object',
-            properties: {
-              user: { /* ... */ },
-              accessToken: { type: 'string' }
+          email: { type: 'string', format: 'email' },
+          password: { type: 'string' }
+        }
+      },
+      response: {
+        200: {
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            data: {
+              type: 'object',
+              properties: {
+                user: {
+                  /* ... */
+                },
+                accessToken: { type: 'string' }
+              }
             }
           }
         }
       }
     }
-  }
-}, handlerFunction);
+  },
+  handlerFunction
+);
 ```
 
 ## 🗄️ Database Schema
@@ -403,6 +433,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ### Server Deployment
 
 1. Build the server:
+
    ```bash
    npm run build:server
    ```
@@ -417,6 +448,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ### Client Deployment
 
 1. Build the client:
+
    ```bash
    npm run build:client
    ```

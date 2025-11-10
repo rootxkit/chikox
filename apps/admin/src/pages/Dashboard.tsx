@@ -46,12 +46,18 @@ export default function DashboardPage() {
 
   const totalUsers = users?.length || 0;
   const activeUsers = users?.length || 0;
-  const adminUsers = users?.filter((u) => u.role === 'ADMIN' || u.role === 'SUPER_ADMIN').length || 0;
+  const adminUsers =
+    users?.filter((u) => u.role === 'ADMIN' || u.role === 'SUPER_ADMIN').length || 0;
   const growthRate = 12.5;
 
   return (
     <DashboardLayout>
-      <Space direction="vertical" size="large" style={{ width: '100%' }} data-testid="dashboard-page">
+      <Space
+        direction="vertical"
+        size="large"
+        style={{ width: '100%' }}
+        data-testid="dashboard-page"
+      >
         <Title level={2}>Dashboard</Title>
 
         <Row gutter={[16, 16]}>

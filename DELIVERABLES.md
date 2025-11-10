@@ -73,6 +73,7 @@ chikox/
 **File**: `package.json`
 
 ### Key Scripts:
+
 - **Development**: `npm run dev` - Starts all apps concurrently
 - **Build**: `npm run build` - Builds all applications
 - **Testing**: `npm test` - Runs all test suites
@@ -81,12 +82,10 @@ chikox/
 - **Database**: `npm run db:generate`, `npm run db:push`, `npm run db:migrate`
 
 ### Workspace Configuration:
+
 ```json
 {
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "workspaces": ["apps/*", "packages/*"]
 }
 ```
 
@@ -97,6 +96,7 @@ chikox/
 ### Models:
 
 #### User Model
+
 ```prisma
 model User {
   id            String    @id @default(cuid())
@@ -112,6 +112,7 @@ model User {
 ```
 
 #### Session Model
+
 ```prisma
 model Session {
   id           String   @id @default(cuid())
@@ -126,6 +127,7 @@ model Session {
 ```
 
 #### User Roles Enum
+
 ```prisma
 enum UserRole {
   USER
@@ -135,16 +137,16 @@ enum UserRole {
 ```
 
 ### Database Client Export
+
 **File**: `packages/database/src/index.ts`
 
 Singleton pattern Prisma client with environment-aware logging:
+
 ```typescript
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: process.env.NODE_ENV === 'development'
-      ? ['query', 'error', 'warn']
-      : ['error']
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error']
   });
 ```
 
@@ -177,7 +179,9 @@ server.post<{ Body: LoginRequest; Reply: ApiResponse<AuthResponse> }>(
             data: {
               type: 'object',
               properties: {
-                user: { /* UserDTO schema */ },
+                user: {
+                  /* UserDTO schema */
+                },
                 accessToken: { type: 'string' }
               }
             }
@@ -229,6 +233,7 @@ server.post<{ Body: LoginRequest; Reply: ApiResponse<AuthResponse> }>(
 ```
 
 ### Key Integration Points:
+
 1. **Type Safety**: Full TypeScript types from `@chikox/types`
 2. **Validation**: Zod schemas for request validation
 3. **Prisma**: Direct database operations with type inference
@@ -274,11 +279,13 @@ server.post<{ Body: LoginRequest; Reply: ApiResponse<AuthResponse> }>(
 ### Security Features:
 
 #### Password Security
+
 - **Hashing Algorithm**: bcrypt with 10 salt rounds
 - **Storage**: Only hashed passwords stored in database
 - **Verification**: Secure comparison on login
 
 #### Token Security
+
 - **Access Token**:
   - Short-lived (15 minutes)
   - Sent in Authorization header
@@ -293,6 +300,7 @@ server.post<{ Body: LoginRequest; Reply: ApiResponse<AuthResponse> }>(
   - Tracked in database for revocation
 
 #### Middleware Protection
+
 ```typescript
 // Authentication middleware
 export async function authenticate(request, reply) {
@@ -310,9 +318,13 @@ export function authorize(...roles) {
 }
 
 // Usage
-server.get('/api/v1/users', {
-  onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')]
-}, handler);
+server.get(
+  '/api/v1/users',
+  {
+    onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')]
+  },
+  handler
+);
 ```
 
 ## 5️⃣ Swagger/OpenAPI Integration
@@ -329,9 +341,7 @@ await server.register(fastifySwagger, {
       description: 'Full-stack TypeScript API with authentication',
       version: '1.0.0'
     },
-    servers: [
-      { url: 'http://localhost:3000', description: 'Development server' }
-    ],
+    servers: [{ url: 'http://localhost:3000', description: 'Development server' }],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -356,6 +366,7 @@ await server.register(fastifySwaggerUi, {
 ### Access Documentation
 
 Once the server is running:
+
 - **URL**: http://localhost:3000/docs
 - **Features**:
   - Interactive API testing
@@ -367,6 +378,7 @@ Once the server is running:
 ### Schema Definition Example
 
 Every route includes a schema definition:
+
 ```typescript
 {
   schema: {
@@ -389,6 +401,7 @@ Every route includes a schema definition:
 **File**: `.eslintrc.json`
 
 Features:
+
 - TypeScript-aware linting
 - Prettier integration
 - Custom rules for consistency
@@ -399,6 +412,7 @@ Features:
 **File**: `.prettierrc`
 
 Settings:
+
 - Single quotes
 - 2-space indentation
 - 100 character line width
@@ -406,6 +420,7 @@ Settings:
 - Consistent formatting across all files
 
 ### Scripts:
+
 - `npm run lint` - Check all TypeScript files
 - `npm run lint:fix` - Auto-fix linting issues
 - `npm run format` - Format all files
@@ -418,6 +433,7 @@ Settings:
 **File**: `apps/server/src/routes/__tests__/auth.test.ts`
 
 Example:
+
 ```typescript
 describe('Auth Routes', () => {
   let server: FastifyInstance;
@@ -445,6 +461,7 @@ describe('Auth Routes', () => {
 **File**: `apps/client/src/__tests__/page.test.tsx`
 
 Example:
+
 ```typescript
 describe('Home Page', () => {
   it('should render login form', () => {
@@ -456,6 +473,7 @@ describe('Home Page', () => {
 ```
 
 ### Running Tests:
+
 - `npm test` - Run all tests
 - `npm run test:watch` - Watch mode
 - `npm run test:server` - Server tests only
@@ -500,12 +518,14 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ## 9️⃣ Development Workflow
 
 1. **Clone and Install**:
+
    ```bash
    cd chikox
    npm install
    ```
 
 2. **Configure Environment**:
+
    ```bash
    cp apps/server/.env.example apps/server/.env
    cp apps/client/.env.example apps/client/.env
@@ -513,6 +533,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
    ```
 
 3. **Setup Database**:
+
    ```bash
    npm run db:generate
    npm run db:push
@@ -526,11 +547,13 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ## 🔟 Production Deployment
 
 1. **Build Applications**:
+
    ```bash
    npm run build
    ```
 
 2. **Run Database Migrations**:
+
    ```bash
    npm run db:migrate
    ```
@@ -545,36 +568,42 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ## ✅ Key Features Delivered
 
 ### ✓ Monorepo Structure
+
 - Clear separation: apps/ and packages/
 - TypeScript configuration inheritance
 - Shared dependencies and scripts
 - Workspace-based package management
 
 ### ✓ Development Environment
+
 - Watch mode with live reload (tsx, Next.js)
 - Concurrent development servers
 - Environment-based configuration
 - Development logging (Pino pretty)
 
 ### ✓ Production Environment
+
 - Production build scripts
 - Optimized bundles
 - Environment-specific configuration
 - Production-ready error handling
 
 ### ✓ Code Quality
+
 - ESLint for all TypeScript files
 - Prettier for consistent formatting
 - Workspace-wide enforcement
 - Pre-configured rules
 
 ### ✓ Testing Framework
+
 - Vitest for unit testing
 - Example tests for server and client
 - Watch mode support
 - Coverage reporting
 
 ### ✓ Authentication Strategy
+
 - JWT with HttpOnly cookies
 - bcrypt password hashing
 - Dual-token system (access + refresh)
@@ -583,12 +612,14 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 - Secure cookie configuration
 
 ### ✓ API Documentation
+
 - OpenAPI/Swagger integration
 - Auto-generated from schemas
 - Interactive testing UI
 - Complete endpoint documentation
 
 ### ✓ Type Safety
+
 - Shared types package
 - End-to-end type safety
 - Prisma type inference

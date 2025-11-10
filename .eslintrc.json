@@ -5,11 +5,7 @@
     "ecmaVersion": 2022,
     "sourceType": "module"
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "prettier/prettier": "error",
@@ -22,10 +18,5 @@
     "node": true,
     "es2022": true
   },
-  "ignorePatterns": [
-    "node_modules/",
-    "dist/",
-    ".next/",
-    "coverage/"
-  ]
+  "ignorePatterns": ["node_modules/", "dist/", ".next/", "coverage/"]
 }

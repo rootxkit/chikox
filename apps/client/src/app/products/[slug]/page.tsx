@@ -18,7 +18,7 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
     'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
     'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
     'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
   ];
 
   const StarIcon = ({ filled = true }: { filled?: boolean }) => (
@@ -143,7 +143,9 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                   </div>
                 </div>
                 <p className="mb-5 md:mb-6">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
+                  in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
+                  interdum nulla, ut commodo diam libero vitae erat.
                 </p>
 
                 {/* Product Form */}
@@ -310,7 +312,10 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                   <h2 className="mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
                     Medium length section heading goes here
                   </h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
+                    in eros elementum tristique.
+                  </p>
                   <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                     <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
                       Button
@@ -384,7 +389,10 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                   <h2 className="mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
                     Medium length section heading goes here
                   </h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
+                    in eros elementum tristique.
+                  </p>
                   <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                     <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
                       Button
@@ -433,7 +441,8 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                       Short heading here
                     </h3>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius
+                      enim in eros elementum tristique.
                     </p>
                   </div>
                 </div>
@@ -462,7 +471,9 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                 Medium length section heading goes here
               </h2>
               <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+                eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
+                nulla, ut commodo diam libero vitae erat.
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                 <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
@@ -505,7 +516,8 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                 ))}
               </div>
               <blockquote className="text-md font-bold leading-[1.4] md:text-xl">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare."
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+                eros elementum tristique. Duis cursus, mi quis viverra ornare."
               </blockquote>
               <div className="mt-6 flex w-full flex-col md:mt-8 md:w-auto">
                 <div className="mb-4">
@@ -568,9 +580,33 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
             </div>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
               {[
-                { price: '$19/mo', features: ['Entry level flight controller', 'Standard motor set', 'Basic frame components'] },
-                { price: '$29/mo', features: ['Advanced flight control system', 'High performance motors', 'Carbon fiber frame', 'Extended warranty'] },
-                { price: '$49/mo', features: ['Custom flight computer', 'Professional grade motors', 'Specialized frame design', 'Priority technical support', 'Comprehensive integration'] },
+                {
+                  price: '$19/mo',
+                  features: [
+                    'Entry level flight controller',
+                    'Standard motor set',
+                    'Basic frame components'
+                  ]
+                },
+                {
+                  price: '$29/mo',
+                  features: [
+                    'Advanced flight control system',
+                    'High performance motors',
+                    'Carbon fiber frame',
+                    'Extended warranty'
+                  ]
+                },
+                {
+                  price: '$49/mo',
+                  features: [
+                    'Custom flight computer',
+                    'Professional grade motors',
+                    'Specialized frame design',
+                    'Priority technical support',
+                    'Comprehensive integration'
+                  ]
+                }
               ].map((plan, index) => (
                 <div
                   key={index}
@@ -614,11 +650,10 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-              FAQs
-            </h2>
+            <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">FAQs</h2>
             <p className="md:text-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+              eros elementum tristique.
             </p>
           </div>
           <div className="mt-12 md:mt-18 lg:mt-20">
@@ -644,7 +679,8 @@ export default function ProductDetailsPage({ params }: { params: { slug: string 
                 Medium length heading goes here
               </h2>
               <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+                eros elementum tristique.
               </p>
             </div>
             <div className="mx-auto mt-6 max-w-sm md:mt-8">

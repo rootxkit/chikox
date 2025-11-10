@@ -300,14 +300,17 @@ ssh -i ~/.ssh/chikox_deploy your-username@your-server-ip
 4. Add the following secrets:
 
 #### PROD_SERVER_HOST
+
 - **Name:** `PROD_SERVER_HOST`
 - **Value:** Your server's IP address or domain (e.g., `123.45.67.89` or `server.your-domain.com`)
 
 #### PROD_SERVER_USERNAME
+
 - **Name:** `PROD_SERVER_USERNAME`
 - **Value:** Your SSH username (e.g., `ubuntu`, `root`, or your custom username)
 
 #### PROD_SERVER_SSH_KEY
+
 - **Name:** `PROD_SERVER_SSH_KEY`
 - **Value:** The content of your **private key** file
 
@@ -319,6 +322,7 @@ cat ~/.ssh/chikox_deploy
 Copy the **entire output** including the `-----BEGIN OPENSSH PRIVATE KEY-----` and `-----END OPENSSH PRIVATE KEY-----` lines.
 
 #### PROD_SERVER_PORT (Optional)
+
 - **Name:** `PROD_SERVER_PORT`
 - **Value:** SSH port (default: `22`)
 
@@ -359,6 +363,7 @@ pm2 logs chikox-admin --lines 50
 ```
 
 Visit your application:
+
 - API: http://your-server-ip:3000 or http://api.your-domain.com
 - Client: http://your-server-ip:3001 or http://your-domain.com
 - Admin: http://your-server-ip:3002 or http://admin.your-domain.com

@@ -47,38 +47,38 @@ export default function ProductsPage() {
       name: 'Flight controller pro',
       category: 'Standard',
       price: '$129',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
     },
     {
       name: 'Brushless motor x1',
       category: 'Compact',
       price: '$89',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
     },
     {
       name: 'Carbon frame ultra',
       category: 'Lightweight',
       price: '$199',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
     },
     {
       name: 'Power distribution board',
       category: 'Compact',
       price: '$45',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
     },
     {
       name: 'Battery management system',
       category: 'Advanced',
       price: '$75',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
     },
     {
       name: 'Complete drone kit',
       category: 'Professional',
       price: '$1,299',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    },
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
+    }
   ];
 
   const pricingPlans = [
@@ -87,9 +87,9 @@ export default function ProductsPage() {
       features: [
         'Flight controller base model',
         'Single motor configuration',
-        'Standard frame support',
+        'Standard frame support'
       ],
-      button: 'Start building',
+      button: 'Start building'
     },
     {
       price: '$499',
@@ -97,9 +97,9 @@ export default function ProductsPage() {
         'Advanced flight controller',
         'Dual motor system',
         'Carbon fiber frame',
-        'Extended battery management',
+        'Extended battery management'
       ],
-      button: 'Upgrade now',
+      button: 'Upgrade now'
     },
     {
       price: '$999',
@@ -108,10 +108,10 @@ export default function ProductsPage() {
         'Multi-motor configuration',
         'Advanced telemetry system',
         'Full sensor integration',
-        'Professional support',
+        'Professional support'
       ],
-      button: 'Contact us',
-    },
+      button: 'Contact us'
+    }
   ];
 
   return (
@@ -126,7 +126,8 @@ export default function ProductsPage() {
             Short heading here
           </h1>
           <p className="md:text-md">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
+            elementum tristique.
           </p>
           <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
             <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative px-6 py-3">
@@ -145,9 +146,7 @@ export default function ProductsPage() {
           <div className="mb-12 md:mb-18 lg:mb-20">
             <div className="mx-auto max-w-lg text-center">
               <h4 className="font-semibold">Tagline</h4>
-              <h1 className="mt-3 text-5xl font-bold md:mt-4 md:text-7xl lg:text-8xl">
-                Products
-              </h1>
+              <h1 className="mt-3 text-5xl font-bold md:mt-4 md:text-7xl lg:text-8xl">Products</h1>
               <p className="mt-5 text-base md:mt-6 md:text-md">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
@@ -195,7 +194,9 @@ export default function ProductsPage() {
                 Medium length section heading goes here
               </h2>
               <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+                eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
+                nulla, ut commodo diam libero vitae erat.
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                 <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
@@ -235,7 +236,9 @@ export default function ProductsPage() {
                 Medium length section heading goes here
               </h2>
               <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+                eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
+                nulla, ut commodo diam libero vitae erat.
               </p>
               <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
                 <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
@@ -258,9 +261,7 @@ export default function ProductsPage() {
             <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
               Customer testimonials
             </h2>
-            <p className="md:text-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="flex w-full flex-col items-start justify-between border border-border-primary p-6 md:p-8">
@@ -273,7 +274,8 @@ export default function ProductsPage() {
                   />
                 </div>
                 <blockquote className="md:text-md">
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare."
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
+                  in eros elementum tristique. Duis cursus, mi quis viverra ornare."
                 </blockquote>
                 <div className="mt-5 flex w-full flex-col items-start gap-4 md:mt-6 md:w-auto md:flex-row md:items-center">
                   <div>
@@ -308,9 +310,7 @@ export default function ProductsPage() {
             <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
               Pricing plan
             </h1>
-            <p className="md:text-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div>
             <div className="flex mx-auto mb-12 w-fit">

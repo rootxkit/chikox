@@ -55,9 +55,15 @@ export default function Navbar() {
           style={{ transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(-100%)' }}
         >
           <div className="flex flex-col">
-            <Link href="#" className="block py-3 text-md">Link One</Link>
-            <Link href="#" className="block py-3 text-md">Link Two</Link>
-            <Link href="#" className="block py-3 text-md">Link Three</Link>
+            <Link href="#" className="block py-3 text-md">
+              Link One
+            </Link>
+            <Link href="#" className="block py-3 text-md">
+              Link Two
+            </Link>
+            <Link href="#" className="block py-3 text-md">
+              Link Three
+            </Link>
 
             <div className="mt-6 flex flex-col gap-4">
               <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-5 py-2">

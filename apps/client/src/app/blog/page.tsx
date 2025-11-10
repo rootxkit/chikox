@@ -6,66 +6,64 @@ export default function BlogPage() {
     {
       id: 1,
       title: 'Motor efficiency in high-speed drone racing',
-      description: 'Deep dive into brushless motor technologies and their impact on racing performance',
+      description:
+        'Deep dive into brushless motor technologies and their impact on racing performance',
       category: 'Performance',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 2,
       title: 'Motor efficiency in high-speed drone racing',
-      description: 'Deep dive into brushless motor technologies and their impact on racing performance',
+      description:
+        'Deep dive into brushless motor technologies and their impact on racing performance',
       category: 'Performance',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 3,
       title: 'Motor efficiency in high-speed drone racing',
-      description: 'Deep dive into brushless motor technologies and their impact on racing performance',
+      description:
+        'Deep dive into brushless motor technologies and their impact on racing performance',
       category: 'Performance',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 4,
       title: 'Motor efficiency in high-speed drone racing',
-      description: 'Deep dive into brushless motor technologies and their impact on racing performance',
+      description:
+        'Deep dive into brushless motor technologies and their impact on racing performance',
       category: 'Performance',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 5,
       title: 'Motor efficiency in high-speed drone racing',
-      description: 'Deep dive into brushless motor technologies and their impact on racing performance',
+      description:
+        'Deep dive into brushless motor technologies and their impact on racing performance',
       category: 'Performance',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       id: 6,
       title: 'Motor efficiency in high-speed drone racing',
-      description: 'Deep dive into brushless motor technologies and their impact on racing performance',
+      description:
+        'Deep dive into brushless motor technologies and their impact on racing performance',
       category: 'Performance',
       readTime: '5 min read',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
-    },
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
+    }
   ];
 
   return (
     <>
       {/* Preload images */}
-      <link
-        rel="preload"
-        as="image"
-        href="https://d22po4pjz3o32e.cloudfront.net/logo-image.svg"
-      />
-      <link
-        rel="preload"
-        as="image"
-        href="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg"
-      />
+      <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/logo-image.svg" />
+      <link rel="preload" as="image" href="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg" />
       <link
         rel="preload"
         as="image"
@@ -113,9 +111,7 @@ export default function BlogPage() {
               <h1 className="mb-5 text-6xl font-bold md:mb-6 md:text-9xl lg:text-10xl">
                 Short heading goes here
               </h1>
-              <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p>
+              <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
           </div>
           <div className="flex flex-col justify-start">
@@ -171,8 +167,8 @@ export default function BlogPage() {
                       </h5>
                     </Link>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse varius enim in eros.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius
+                      enim in eros.
                     </p>
                     <button className="focus-visible:ring-border-primary whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0 mt-6 flex items-center justify-center gap-x-2">
                       Read more
@@ -291,12 +287,10 @@ export default function BlogPage() {
                   />
                 </div>
                 <div>
-                  <h1 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
-                    Short heading here
-                  </h1>
+                  <h1 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">Short heading here</h1>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Suspendisse varius enim in eros elementum tristique.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
+                    in eros elementum tristique.
                   </p>
                 </div>
               </div>
@@ -385,9 +379,7 @@ export default function BlogPage() {
                   Subscribe
                 </button>
               </form>
-              <p className="text-xs">
-                By subscribing you agree to with our Privacy Policy
-              </p>
+              <p className="text-xs">By subscribing you agree to with our Privacy Policy</p>
             </div>
           </div>
           <div className="h-px w-full bg-black"></div>

@@ -71,11 +71,7 @@ export default function LoginPage() {
                 { type: 'email', message: 'Please enter a valid email' }
               ]}
             >
-              <Input
-                prefix={<UserOutlined />}
-                placeholder="Email"
-                data-testid="email-input"
-              />
+              <Input prefix={<UserOutlined />} placeholder="Email" data-testid="email-input" />
             </Form.Item>
 
             <Form.Item

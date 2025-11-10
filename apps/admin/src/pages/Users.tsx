@@ -1,17 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Table,
-  Tag,
-  Space,
-  Typography,
-  Button,
-  Input,
-  Card,
-  Avatar,
-  Spin,
-  Tooltip
-} from 'antd';
+import { Table, Tag, Space, Typography, Button, Input, Card, Avatar, Spin, Tooltip } from 'antd';
 import {
   UserOutlined,
   SearchOutlined,
@@ -122,12 +111,7 @@ export default function UsersPage() {
       key: 'actions',
       render: () => (
         <Space size="middle">
-          <Button
-            type="link"
-            icon={<EditOutlined />}
-            size="small"
-            data-testid="edit-button"
-          >
+          <Button type="link" icon={<EditOutlined />} size="small" data-testid="edit-button">
             Edit
           </Button>
           <Button
@@ -146,12 +130,7 @@ export default function UsersPage() {
 
   return (
     <DashboardLayout>
-      <Space
-        direction="vertical"
-        size="large"
-        style={{ width: '100%' }}
-        data-testid="users-page"
-      >
+      <Space direction="vertical" size="large" style={{ width: '100%' }} data-testid="users-page">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Title level={2} style={{ margin: 0 }}>
             Users Management

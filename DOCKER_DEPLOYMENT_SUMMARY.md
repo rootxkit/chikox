@@ -7,6 +7,7 @@ Your project is now configured for **Docker Compose deployment** via GitHub Acti
 ## 📋 What Was Configured
 
 ### 1. GitHub Actions Workflow
+
 - **File:** `.github/workflows/ci-cd.yml`
 - **Method:** SSH + Docker Compose
 - **Trigger:** Push to main/master branch
@@ -21,6 +22,7 @@ Your project is now configured for **Docker Compose deployment** via GitHub Acti
   8. Shows container status and logs
 
 ### 2. Docker Configuration
+
 - **Files Created:**
   - `docker-compose.yml` - Full stack orchestration
   - `apps/server/Dockerfile` - Server container
@@ -31,6 +33,7 @@ Your project is now configured for **Docker Compose deployment** via GitHub Acti
   - `.env.example` - Production environment template
 
 ### 3. Documentation
+
 - **`DOCKER_COMPOSE_DEPLOYMENT.md`** - Complete deployment guide
 - **`DEPLOYMENT.md`** - All deployment methods
 - **`CHANGELOG_PORTS_AND_DEPLOYMENT.md`** - Port changes log
@@ -72,11 +75,11 @@ Go to: **GitHub → Settings → Secrets and variables → Actions**
 
 Add these 3 secrets:
 
-| Secret Name | Value |
-|-------------|-------|
-| `PROD_SERVER_HOST` | Your server IP or domain |
+| Secret Name            | Value                       |
+| ---------------------- | --------------------------- |
+| `PROD_SERVER_HOST`     | Your server IP or domain    |
 | `PROD_SERVER_USERNAME` | SSH username (e.g., ubuntu) |
-| `PROD_SERVER_SSH_KEY` | Your private SSH key |
+| `PROD_SERVER_SSH_KEY`  | Your private SSH key        |
 
 **📚 How to Generate SSH Key:** See `DOCKER_COMPOSE_DEPLOYMENT.md` Part 2
 
@@ -95,6 +98,7 @@ git push origin main
 ## 🔧 Essential Commands
 
 ### View Status
+
 ```bash
 # On your server
 cd /var/www/chikox
@@ -102,6 +106,7 @@ docker-compose ps
 ```
 
 ### View Logs
+
 ```bash
 docker-compose logs -f
 docker-compose logs -f server    # Server only
@@ -110,12 +115,14 @@ docker-compose logs -f admin     # Admin only
 ```
 
 ### Restart Services
+
 ```bash
 docker-compose restart
 docker-compose restart server    # Server only
 ```
 
 ### Manual Deployment
+
 ```bash
 cd /var/www/chikox
 git pull origin main
@@ -124,6 +131,7 @@ docker-compose exec server npm run db:migrate
 ```
 
 ### Backup Database
+
 ```bash
 docker-compose exec -T database pg_dump -U chikox_user chikox > backup_$(date +%Y%m%d).sql
 ```
@@ -205,6 +213,7 @@ chikox/
 ## 🐛 Troubleshooting
 
 ### Deployment Fails
+
 ```bash
 # Check GitHub Actions logs first
 # Then check server logs:
@@ -213,6 +222,7 @@ docker-compose logs -f
 ```
 
 ### Container Won't Start
+
 ```bash
 # View specific container logs
 docker-compose logs server
@@ -226,6 +236,7 @@ docker-compose up -d --build
 ```
 
 ### Database Issues
+
 ```bash
 # Check database logs
 docker-compose logs database
@@ -239,6 +250,7 @@ docker-compose up -d
 ```
 
 ### Can't Connect to Application
+
 ```bash
 # Check if containers are running
 docker-compose ps
@@ -252,13 +264,13 @@ curl http://localhost:3000/health
 
 ## 📚 Full Documentation
 
-| Document | Purpose |
-|----------|---------|
-| **`DOCKER_COMPOSE_DEPLOYMENT.md`** | Complete step-by-step guide |
-| **`DEPLOYMENT.md`** | Alternative deployment methods |
-| **`README.md`** | Project overview |
-| **`CLAUDE.md`** | Development guide |
-| **`CHANGELOG_PORTS_AND_DEPLOYMENT.md`** | Port changes |
+| Document                                | Purpose                        |
+| --------------------------------------- | ------------------------------ |
+| **`DOCKER_COMPOSE_DEPLOYMENT.md`**      | Complete step-by-step guide    |
+| **`DEPLOYMENT.md`**                     | Alternative deployment methods |
+| **`README.md`**                         | Project overview               |
+| **`CLAUDE.md`**                         | Development guide              |
+| **`CHANGELOG_PORTS_AND_DEPLOYMENT.md`** | Port changes                   |
 
 ## 💡 Pro Tips
 

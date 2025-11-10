@@ -52,12 +52,7 @@ export default function SettingsPage() {
         <Title level={2}>Settings</Title>
 
         <Card title="General Settings" bordered={false} data-testid="general-settings-card">
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-            data-testid="settings-form"
-          >
+          <Form form={form} layout="vertical" onFinish={onFinish} data-testid="settings-form">
             <Form.Item
               label="Site Name"
               name="siteName"
@@ -114,9 +109,7 @@ export default function SettingsPage() {
         </Card>
 
         <Card title="Security" bordered={false} data-testid="security-card">
-          <Paragraph type="secondary">
-            Configure security settings for your application.
-          </Paragraph>
+          <Paragraph type="secondary">Configure security settings for your application.</Paragraph>
           <Button data-testid="change-password-button">Change Password</Button>
         </Card>
       </Space>

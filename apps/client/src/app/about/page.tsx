@@ -13,8 +13,8 @@ export default function AboutPage() {
       image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
       linkedin: '#',
       twitter: '#',
-      website: '#',
-    },
+      website: '#'
+    }
     // Add more team members as needed
   ];
 
@@ -24,7 +24,7 @@ export default function AboutPage() {
     { src: 'https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg', alt: 'Webflow' },
     { src: 'https://d22po4pjz3o32e.cloudfront.net/relume-logo.svg', alt: 'Relume' },
     { src: 'https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg', alt: 'Webflow' },
-    { src: 'https://d22po4pjz3o32e.cloudfront.net/relume-logo.svg', alt: 'Relume' },
+    { src: 'https://d22po4pjz3o32e.cloudfront.net/relume-logo.svg', alt: 'Relume' }
   ];
 
   const testimonials = [
@@ -34,21 +34,21 @@ export default function AboutPage() {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
       avatar: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
       name: 'Name Surname',
-      position: 'Position, Company name',
-    },
+      position: 'Position, Company name'
+    }
   ];
 
   const locations = [
     {
       name: 'Sydney',
       address: 'Level 3, 45 Miller Street, North Sydney NSW 2060',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
     },
     {
       name: 'New York',
       address: 'Suite 1200, 350 Fifth Avenue, Manhattan NY 10118',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg',
-    },
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg'
+    }
   ];
 
   return (
@@ -63,8 +63,8 @@ export default function AboutPage() {
             Short heading here
           </h1>
           <p className="md:text-md text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
-            eros elementum tristique.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
+            elementum tristique.
           </p>
           <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
             <button className="inline-flex items-center justify-center whitespace-nowrap border border-gray-900 bg-gray-900 text-white px-6 py-3 hover:bg-gray-800 transition-colors">
@@ -263,7 +263,13 @@ export default function AboutPage() {
               >
                 <div className="mb-5 md:mb-6 w-full">
                   <div className="mb-8 md:mb-10 lg:mb-12">
-                    <Image src={testimonial.logo} alt="Company logo" width={120} height={48} className="max-h-12" />
+                    <Image
+                      src={testimonial.logo}
+                      alt="Company logo"
+                      width={120}
+                      height={48}
+                      className="max-h-12"
+                    />
                   </div>
                   <blockquote className="md:text-md text-gray-600">
                     &quot;{testimonial.quote}&quot;
@@ -316,9 +322,7 @@ export default function AboutPage() {
         <div className="container mx-auto">
           <div className="mb-12 mr-auto flex max-w-lg flex-col justify-start text-left md:mb-18 lg:mb-20">
             <p className="mb-3 font-semibold md:mb-4 text-gray-600">Locations</p>
-            <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-              Our offices
-            </h2>
+            <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">Our offices</h2>
             <p className="md:text-md text-gray-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>

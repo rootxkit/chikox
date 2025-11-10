@@ -47,7 +47,7 @@ export default function HomePage() {
   const testimonials = Array(6).fill({
     name: 'Michael Chen',
     position: 'Lead engineer, Aerial Research Labs',
-    quote: "These components transformed our research drone's performance beyond expectations.",
+    quote: "These components transformed our research drone's performance beyond expectations."
   });
 
   return (
@@ -68,9 +68,9 @@ export default function HomePage() {
             Medium length hero heading goes here
           </h1>
           <p className="md:text-md">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
-            eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-            nulla, ut commodo diam libero vitae erat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
+            elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+            commodo diam libero vitae erat.
           </p>
           <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
             <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative px-6 py-3">
@@ -92,9 +92,7 @@ export default function HomePage() {
               <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
                 Short heading goes here
               </h2>
-              <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </p>
+              <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 md:gap-8">
@@ -130,12 +128,8 @@ export default function HomePage() {
                 <div className="flex flex-col justify-center p-6">
                   <div>
                     <p className="mb-2 text-sm font-semibold">Durability</p>
-                    <h3 className="mb-2 text-xl font-bold md:text-2xl">
-                      Robust drone frames
-                    </h3>
-                    <p>
-                      Lightweight materials designed to withstand extreme flight conditions
-                    </p>
+                    <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
+                    <p>Lightweight materials designed to withstand extreme flight conditions</p>
                   </div>
                   <div className="mt-5 flex items-center gap-4 md:mt-6">
                     <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
@@ -157,12 +151,8 @@ export default function HomePage() {
                 <div className="flex flex-col justify-center p-6">
                   <div>
                     <p className="mb-2 text-sm font-semibold">Durability</p>
-                    <h3 className="mb-2 text-xl font-bold md:text-2xl">
-                      Robust drone frames
-                    </h3>
-                    <p>
-                      Lightweight materials designed to withstand extreme flight conditions
-                    </p>
+                    <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
+                    <p>Lightweight materials designed to withstand extreme flight conditions</p>
                   </div>
                   <div className="mt-5 flex items-center gap-4 md:mt-6">
                     <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
@@ -205,7 +195,8 @@ export default function HomePage() {
                         Tailored drone solutions for your specific needs
                       </h2>
                       <p className="md:text-md">
-                        Our expert team creates custom drone configurations that meet your unique requirements. From research to racing, we build precision machines.
+                        Our expert team creates custom drone configurations that meet your unique
+                        requirements. From research to racing, we build precision machines.
                       </p>
                       <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                         <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
@@ -248,7 +239,8 @@ export default function HomePage() {
                         Tailored drone solutions for your specific needs
                       </h2>
                       <p className="md:text-md">
-                        Our expert team creates custom drone configurations that meet your unique requirements. From research to racing, we build precision machines.
+                        Our expert team creates custom drone configurations that meet your unique
+                        requirements. From research to racing, we build precision machines.
                       </p>
                       <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                         <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
@@ -291,7 +283,8 @@ export default function HomePage() {
                         Tailored drone solutions for your specific needs
                       </h2>
                       <p className="md:text-md">
-                        Our expert team creates custom drone configurations that meet your unique requirements. From research to racing, we build precision machines.
+                        Our expert team creates custom drone configurations that meet your unique
+                        requirements. From research to racing, we build precision machines.
                       </p>
                       <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
                         <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
@@ -325,9 +318,7 @@ export default function HomePage() {
             <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
               Customer testimonials
             </h2>
-            <p className="md:text-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div className="relative overflow-hidden">
             <div className="relative">
@@ -420,7 +411,8 @@ export default function HomePage() {
                     Precision engineering advantage
                   </h3>
                   <p>
-                    Our components are designed with microscopic tolerances to deliver unparalleled performance and reliability.
+                    Our components are designed with microscopic tolerances to deliver unparalleled
+                    performance and reliability.
                   </p>
                 </button>
               ))}

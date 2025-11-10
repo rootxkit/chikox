@@ -3,6 +3,7 @@
 This guide covers deploying the Chikox application using various methods and platforms.
 
 ## Table of Contents
+
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Docker Deployment](#docker-deployment)
 - [Platform-Specific Deployment](#platform-specific-deployment)
@@ -22,6 +23,7 @@ The project includes a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) t
 ### Workflow Triggers
 
 The pipeline runs on:
+
 - Push to `main` or `master` branch
 - Pull requests to `main` or `master` branch
 
@@ -30,23 +32,28 @@ The pipeline runs on:
 Depending on your deployment platform, add these secrets in GitHub repository settings (Settings → Secrets and variables → Actions):
 
 #### For Vercel Deployment:
+
 - `VERCEL_TOKEN` - Your Vercel token
 - `VERCEL_ORG_ID` - Your Vercel organization ID
 - `VERCEL_CLIENT_PROJECT_ID` - Project ID for client app
 - `VERCEL_ADMIN_PROJECT_ID` - Project ID for admin app
 
 #### For Railway Deployment:
+
 - `RAILWAY_TOKEN` - Your Railway token
 
 #### For AWS Deployment:
+
 - `AWS_ACCESS_KEY_ID` - AWS access key
 - `AWS_SECRET_ACCESS_KEY` - AWS secret key
 
 #### For Heroku Deployment:
+
 - `HEROKU_API_KEY` - Your Heroku API key
 - `HEROKU_EMAIL` - Your Heroku email
 
 #### For Docker Compose SSH Deployment (Currently Enabled):
+
 - `PROD_SERVER_HOST` - Production server IP/domain (required)
 - `PROD_SERVER_USERNAME` - SSH username (required)
 - `PROD_SERVER_SSH_KEY` - Private SSH key (required)
@@ -83,6 +90,7 @@ To use a different deployment method:
 ### ⭐ Recommended Deployment Method
 
 **Docker Compose is the recommended deployment method for this project.** It provides:
+
 - ✅ Consistent environment across development and production
 - ✅ Easy setup and maintenance
 - ✅ Automatic container orchestration
@@ -110,6 +118,7 @@ docker-compose down -v
 ```
 
 Services will be available at:
+
 - Server: http://localhost:3000
 - Client: http://localhost:3001
 - Admin: http://localhost:3002
@@ -131,6 +140,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
 ### Production Docker Deployment
 
 1. **Build and tag images:**
+
    ```bash
    docker build -f apps/server/Dockerfile -t your-registry/chikox-server:latest .
    docker build -f apps/client/Dockerfile -t your-registry/chikox-client:latest .
@@ -138,6 +148,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
    ```
 
 2. **Push to registry:**
+
    ```bash
    docker push your-registry/chikox-server:latest
    docker push your-registry/chikox-client:latest
@@ -145,6 +156,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
    ```
 
 3. **Deploy using docker-compose on production server:**
+
    ```bash
    # Create .env file with production secrets
    cp .env.example .env
@@ -195,19 +207,23 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
 ### Option 2: AWS EC2 + RDS
 
 #### Set up RDS PostgreSQL:
+
 1. Create RDS PostgreSQL instance in AWS Console
 2. Configure security groups to allow connections
 3. Note the connection string
 
 #### Set up EC2 Instance:
+
 1. Launch EC2 instance (Ubuntu 22.04 recommended)
 2. Configure security groups (allow ports 22, 3000, 3001, 3002)
 3. SSH into instance:
+
    ```bash
    ssh -i your-key.pem ubuntu@your-ec2-ip
    ```
 
 4. Install dependencies:
+
    ```bash
    # Update system
    sudo apt update && sudo apt upgrade -y
@@ -224,6 +240,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
    ```
 
 5. Clone and setup:
+
    ```bash
    git clone https://github.com/rootxkit/chikox.git
    cd chikox
@@ -231,6 +248,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
    ```
 
 6. Configure environment variables:
+
    ```bash
    cp apps/server/.env.example apps/server/.env
    # Edit with production values
@@ -238,6 +256,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
    ```
 
 7. Build and start with PM2:
+
    ```bash
    npm run db:generate
    npm run db:migrate
@@ -259,6 +278,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
    ```
 
 8. Set up Nginx reverse proxy (optional but recommended):
+
    ```bash
    sudo apt install -y nginx
    sudo nano /etc/nginx/sites-available/chikox
@@ -312,6 +332,7 @@ docker build -f apps/admin/Dockerfile -t chikox-admin .
 ### Option 3: Heroku
 
 #### Deploy Server:
+
 ```bash
 # Login to Heroku
 heroku login
@@ -342,6 +363,7 @@ heroku run npm run db:migrate
 ```
 
 #### Deploy Client and Admin:
+
 Use Vercel or Netlify for Next.js client and static admin, pointing to your Heroku server URL.
 
 ### Option 4: DigitalOcean App Platform
@@ -354,6 +376,7 @@ Use Vercel or Netlify for Next.js client and static admin, pointing to your Hero
 ## Environment Variables
 
 ### Server (.env)
+
 ```env
 NODE_ENV=production
 PORT=3000
@@ -368,11 +391,13 @@ COOKIE_SECRET=your-strong-secret-min-32-chars
 ```
 
 ### Client (.env)
+
 ```env
 NEXT_PUBLIC_API_URL=https://api.your-domain.com
 ```
 
 ### Admin (.env)
+
 ```env
 VITE_API_URL=https://api.your-domain.com
 ```
@@ -380,6 +405,7 @@ VITE_API_URL=https://api.your-domain.com
 ## Port Configuration
 
 The application uses the following ports:
+
 - **Server (Fastify API):** 3000
 - **Client (Next.js):** 3001
 - **Admin (React + Vite):** 3002
@@ -413,6 +439,7 @@ server.get('/health', async (request, reply) => {
 ## Monitoring and Logs
 
 ### PM2 (if using)
+
 ```bash
 # View logs
 pm2 logs
@@ -425,6 +452,7 @@ pm2 restart chikox-server
 ```
 
 ### Docker
+
 ```bash
 # View logs
 docker-compose logs -f server
@@ -438,12 +466,14 @@ docker-compose logs -f client
 For production, always use HTTPS:
 
 ### With Nginx + Let's Encrypt (Free):
+
 ```bash
 sudo apt install certbot python3-certbot-nginx
 sudo certbot --nginx -d your-domain.com -d admin.your-domain.com
 ```
 
 ### With Cloudflare (Free):
+
 1. Point your domain to Cloudflare nameservers
 2. Enable "Full" or "Full (strict)" SSL mode
 3. Configure origin certificates if needed
@@ -453,6 +483,7 @@ sudo certbot --nginx -d your-domain.com -d admin.your-domain.com
 ### Database Backups
 
 #### Automated daily backups:
+
 ```bash
 # Create backup script
 cat > backup.sh << 'EOF'
@@ -477,19 +508,23 @@ crontab -e
 ### Common Issues
 
 **Issue: Database connection fails**
+
 - Check DATABASE_URL is correct
 - Verify database is running and accessible
 - Check firewall/security group settings
 
 **Issue: CORS errors**
+
 - Verify CORS_ORIGIN includes your client domains
 - Check protocol (http vs https) matches
 
 **Issue: JWT token errors**
+
 - Ensure JWT secrets are set and same across restarts
 - Check token expiration times
 
 **Issue: Build fails**
+
 - Clear node_modules and reinstall: `rm -rf node_modules && npm install`
 - Clear build cache: `rm -rf dist .next`
 - Verify all environment variables are set
