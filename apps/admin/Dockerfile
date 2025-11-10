@@ -14,8 +14,11 @@ COPY apps/admin ./apps/admin
 # Install dependencies
 RUN npm ci
 
+# Build packages first (database and types)
+RUN npm run build:packages
+
 # Build admin
-RUN npm run build:admin
+RUN npm run build --workspace=apps/admin
 
 # Production stage - use nginx to serve static files
 FROM nginx:alpine AS production

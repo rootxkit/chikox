@@ -24,7 +24,6 @@ WORKDIR /app
 
 # Copy built files
 COPY --from=builder /app/apps/client/.next ./apps/client/.next
-COPY --from=builder /app/apps/client/public ./apps/client/public
 COPY --from=builder /app/apps/client/package.json ./apps/client/
 COPY --from=builder /app/apps/client/next.config.js ./apps/client/
 
