@@ -19,21 +19,15 @@ export interface UserDTO {
   id: string;
   email: string;
   name: string | null;
-  role: UserRole;
+  role: string; // Using string to avoid type conflicts with Prisma generated types
   createdAt: string;
-}
-
-export enum UserRole {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-  SUPER_ADMIN = 'SUPER_ADMIN'
 }
 
 // JWT Payload types
 export interface JWTPayload {
   userId: string;
   email: string;
-  role: UserRole;
+  role: string; // Using string instead of UserRole to avoid type conflicts
   iat?: number;
   exp?: number;
 }
