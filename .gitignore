@@ -47,3 +47,6 @@ prisma/migrations/
 
 # TypeScript
 *.tsbuildinfo
+
+#key
+key
