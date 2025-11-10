@@ -17,8 +17,11 @@ RUN npm ci
 # Generate Prisma client
 RUN npm run db:generate
 
+# Build packages first (database and types)
+RUN npm run build:packages
+
 # Build server
-RUN npm run build:server
+RUN npm run build --workspace=apps/server
 
 # Production stage
 FROM node:18-alpine AS production

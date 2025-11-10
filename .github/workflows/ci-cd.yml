@@ -281,6 +281,9 @@ jobs:
             echo "🚀 Starting Docker Compose deployment..."
             cd /var/www/chikox
 
+            echo "🔧 Configuring git safe directory..."
+            git config --global --add safe.directory /var/www/chikox
+
             echo "📥 Pulling latest changes from Git..."
             git pull origin main
 
