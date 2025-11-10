@@ -196,6 +196,6 @@ describe('UsersPage', () => {
       </BrowserRouter>
     );
 
-    expect(mockNavigate).toHaveBeenCalledWith('/login');
+    expect(mockNavigate).toHaveBeenCalledWith('/login', { replace: true });
   });
 });

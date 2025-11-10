@@ -146,7 +146,7 @@ describe('DashboardPage', () => {
       </BrowserRouter>
     );
 
-    expect(mockNavigate).toHaveBeenCalledWith('/login');
+    expect(mockNavigate).toHaveBeenCalledWith('/login', { replace: true });
   });
 
   it('redirects to login when not admin', () => {
@@ -165,6 +165,6 @@ describe('DashboardPage', () => {
       </BrowserRouter>
     );
 
-    expect(mockNavigate).toHaveBeenCalledWith('/login');
+    expect(mockNavigate).toHaveBeenCalledWith('/login', { replace: true });
   });
 });
