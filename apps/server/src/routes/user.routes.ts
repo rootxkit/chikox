@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { prisma } from '@chikox/database';
 import type { JWTPayload, UserDTO, ApiResponse } from '@chikox/types';
-import { authenticate, authorize } from '../utils/auth';
+import { authenticate, authorize } from '../utils/auth.js';
 
 export async function userRoutes(server: FastifyInstance): Promise<void> {
   /**
