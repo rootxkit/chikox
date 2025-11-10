@@ -13,19 +13,24 @@ interface LoginFormValues {
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { isAuthenticated, login, loading } = useAuth();
+  const { isAuthenticated, login, loading, isAdmin } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
+    if (isAuthenticated && isAdmin() && !loading) {
+      navigate('/dashboard', { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, loading, navigate]);
 
   const onFinish = async (values: LoginFormValues) => {
     try {
       await login(values.email, values.password);
-      message.success('Login successful!');
-      navigate('/dashboard');
+      if (!isAdmin()) {
+        message.error('Access denied. Admins only.');
+        return;
+      } else {
+        message.success('Login successful!');
+      }
+      // Navigation handled by useEffect
     } catch (error: any) {
       message.error(error.response?.data?.error?.message || 'Login failed');
     }

@@ -1,0 +1,381 @@
+'use client';
+
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { useState } from 'react';
+import Link from 'next/link';
+
+export default function ProductsPage() {
+  const [pricingTab, setPricingTab] = useState('monthly');
+
+  const ArrowIcon = () => (
+    <svg
+      stroke="currentColor"
+      fill="none"
+      strokeWidth="0"
+      viewBox="0 0 15 15"
+      height="1em"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  );
+
+  const CheckIcon = () => (
+    <svg
+      stroke="currentColor"
+      fill="currentColor"
+      strokeWidth="0"
+      viewBox="0 0 24 24"
+      className="size-6"
+      height="1em"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path>
+    </svg>
+  );
+
+  const products = [
+    {
+      name: 'Flight controller pro',
+      category: 'Standard',
+      price: '$129',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    },
+    {
+      name: 'Brushless motor x1',
+      category: 'Compact',
+      price: '$89',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    },
+    {
+      name: 'Carbon frame ultra',
+      category: 'Lightweight',
+      price: '$199',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    },
+    {
+      name: 'Power distribution board',
+      category: 'Compact',
+      price: '$45',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    },
+    {
+      name: 'Battery management system',
+      category: 'Advanced',
+      price: '$75',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    },
+    {
+      name: 'Complete drone kit',
+      category: 'Professional',
+      price: '$1,299',
+      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
+    },
+  ];
+
+  const pricingPlans = [
+    {
+      price: '$199',
+      features: [
+        'Flight controller base model',
+        'Single motor configuration',
+        'Standard frame support',
+      ],
+      button: 'Start building',
+    },
+    {
+      price: '$499',
+      features: [
+        'Advanced flight controller',
+        'Dual motor system',
+        'Carbon fiber frame',
+        'Extended battery management',
+      ],
+      button: 'Upgrade now',
+    },
+    {
+      price: '$999',
+      features: [
+        'Custom flight controller',
+        'Multi-motor configuration',
+        'Advanced telemetry system',
+        'Full sensor integration',
+        'Professional support',
+      ],
+      button: 'Contact us',
+    },
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+
+      {/* Hero Section */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container max-w-lg text-center">
+          <p className="mb-3 font-semibold md:mb-4">Tagline</p>
+          <h1 className="mb-5 text-6xl font-bold md:mb-6 md:text-9xl lg:text-10xl">
+            Short heading here
+          </h1>
+          <p className="md:text-md">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-x-4 md:mt-8">
+            <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative px-6 py-3">
+              Button
+            </button>
+            <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+              Button
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Grid */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="mb-12 md:mb-18 lg:mb-20">
+            <div className="mx-auto max-w-lg text-center">
+              <h4 className="font-semibold">Tagline</h4>
+              <h1 className="mt-3 text-5xl font-bold md:mt-4 md:text-7xl lg:text-8xl">
+                Products
+              </h1>
+              <p className="mt-5 text-base md:mt-6 md:text-md">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 justify-items-start gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12">
+            {products.map((product, index) => (
+              <Link key={index} href="#" className="text-center font-semibold md:text-md">
+                <div className="mb-3 aspect-[5/6] md:mb-4">
+                  <img
+                    src={product.image}
+                    alt="Relume placeholder image"
+                    className="size-full object-cover"
+                  />
+                </div>
+                <div className="mb-2">
+                  <h3>{product.name}</h3>
+                  <div className="text-sm font-normal">{product.category}</div>
+                </div>
+                <div className="text-md md:text-lg">{product.price}</div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-14 flex justify-center md:mt-20 lg:mt-24">
+            <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+              View all
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Section 1 */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
+            <div>
+              <div className="rb-5 mb-5 md:mb-6">
+                <img
+                  src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg"
+                  className="size-20"
+                  alt="Relume logo"
+                />
+              </div>
+              <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+                Medium length section heading goes here
+              </h2>
+              <p className="md:text-md">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
+                <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+                  Button
+                </button>
+                <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                  Button
+                  <ArrowIcon />
+                </button>
+              </div>
+            </div>
+            <div>
+              <img
+                src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                className="w-full object-cover"
+                alt="Relume placeholder image"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Section 2 */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
+            <div className="order-2 md:order-1">
+              <img
+                src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                className="w-full object-cover"
+                alt="Relume placeholder image"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <p className="mb-3 font-semibold md:mb-4">Tagline</p>
+              <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+                Medium length section heading goes here
+              </h2>
+              <p className="md:text-md">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
+                <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+                  Button
+                </button>
+                <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                  Button
+                  <ArrowIcon />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="mb-12 md:mb-18 lg:mb-20">
+            <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+              Customer testimonials
+            </h2>
+            <p className="md:text-md">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="flex w-full flex-col items-start justify-between border border-border-primary p-6 md:p-8">
+              <div className="rb-5 mb-5 md:mb-6">
+                <div className="mb-8 md:mb-10 lg:mb-12">
+                  <img
+                    src="https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg"
+                    alt="Webflow logo"
+                    className="max-h-12"
+                  />
+                </div>
+                <blockquote className="md:text-md">
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare."
+                </blockquote>
+                <div className="mt-5 flex w-full flex-col items-start gap-4 md:mt-6 md:w-auto md:flex-row md:items-center">
+                  <div>
+                    <img
+                      src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                      alt="Testimonial avatar"
+                      className="size-12 min-h-12 min-w-12 rounded-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Name Surname</p>
+                    <p>Position, Company name</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 md:mt-8">
+                <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                  Read case study
+                  <ArrowIcon />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="mx-auto mb-8 max-w-lg text-center md:mb-10 lg:mb-12">
+            <p className="mb-3 font-semibold md:mb-4">Tagline</p>
+            <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+              Pricing plan
+            </h1>
+            <p className="md:text-md">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div>
+            <div className="flex mx-auto mb-12 w-fit">
+              <button
+                onClick={() => setPricingTab('monthly')}
+                className={`inline-flex items-center justify-center whitespace-nowrap border border-border-primary px-6 py-2 transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${
+                  pricingTab === 'monthly'
+                    ? 'bg-background-alternative text-text-alternative'
+                    : 'bg-background-primary text-text-primary'
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setPricingTab('yearly')}
+                className={`inline-flex items-center justify-center whitespace-nowrap border border-border-primary px-6 py-2 transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${
+                  pricingTab === 'yearly'
+                    ? 'bg-background-alternative text-text-alternative'
+                    : 'bg-background-primary text-text-primary'
+                }`}
+              >
+                Yearly
+              </button>
+            </div>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+              {pricingPlans.map((plan, index) => (
+                <div
+                  key={index}
+                  className="flex h-full flex-col justify-between border border-border-primary px-6 py-8 md:p-8"
+                >
+                  <div>
+                    <div className="rb-4 mb-4 flex flex-col items-end justify-end">
+                      <img
+                        src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg"
+                        alt="Relume icon 1"
+                        className="size-12"
+                      />
+                    </div>
+                    <h3 className="text-6xl font-bold md:text-9xl lg:text-10xl">{plan.price}</h3>
+                    <div className="my-8 h-px w-full shrink-0 bg-border"></div>
+                    <p>Includes</p>
+                    <div className="mb-8 mt-4 grid grid-cols-1 gap-y-4 py-2">
+                      {plan.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex self-start">
+                          <div className="mr-4 flex-none self-start">
+                            <CheckIcon />
+                          </div>
+                          <p>{feature}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative px-6 py-3 w-full">
+                      {plan.button}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

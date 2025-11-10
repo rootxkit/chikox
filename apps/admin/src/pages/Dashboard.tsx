@@ -17,14 +17,14 @@ const { Title, Paragraph } = Typography;
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
+  const { isAuthenticated, isAdmin, loading: authLoading, logout } = useAuth();
   const { users, isLoading } = useUsers();
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      navigate('/login');
-    } else if (!authLoading && !isAdmin()) {
-      navigate('/login');
+      navigate('/login', { replace: true });
+    } else if (!authLoading && isAuthenticated && !isAdmin()) {
+      logout();
     }
   }, [isAuthenticated, isAdmin, authLoading, navigate]);
 

@@ -1,3 +1,118 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-border-primary: 0 0 0;
+    --color-background-primary: 255 255 255;
+    --color-background-alternative: 0 0 0;
+    --color-background-secondary: 245 245 245;
+    --color-text-primary: 0 0 0;
+    --color-text-alternative: 255 255 255;
+    --color-neutral: 115 115 115;
+    --color-neutral-white: 255 255 255;
+    --color-neutral-light: 229 229 229;
+  }
+
+  /* Prose styles for blog content */
+  .prose {
+    color: rgb(var(--color-text-primary));
+    max-width: 65ch;
+  }
+
+  .prose h3 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3333;
+  }
+
+  .prose h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1.75rem;
+    margin-bottom: 0.875rem;
+    line-height: 1.375;
+  }
+
+  .prose h6 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .prose p {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .prose blockquote {
+    font-style: italic;
+    border-left: 4px solid rgb(var(--color-border-primary));
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .prose figure {
+    margin: 2rem 0;
+  }
+
+  .prose figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-neutral));
+    text-align: center;
+  }
+
+  .prose img {
+    width: 100%;
+    height: auto;
+  }
+
+  .prose-md h3 {
+    font-size: 2.25rem;
+  }
+
+  .prose-md h4 {
+    font-size: 1.75rem;
+  }
+
+  .prose-md h6 {
+    font-size: 1.25rem;
+  }
+
+  .prose-md p {
+    font-size: 1.125rem;
+  }
+
+  .prose-md blockquote {
+    font-size: 1.25rem;
+  }
+
+  .prose-lg h3 {
+    font-size: 2.5rem;
+  }
+
+  .prose-lg h4 {
+    font-size: 2rem;
+  }
+
+  .prose-lg h6 {
+    font-size: 1.375rem;
+  }
+
+  .prose-lg p {
+    font-size: 1.25rem;
+  }
+
+  .prose-lg blockquote {
+    font-size: 1.375rem;
+  }
+}

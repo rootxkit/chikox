@@ -14,9 +14,9 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      navigate('/login');
-    } else if (!authLoading && !isAdmin()) {
-      navigate('/login');
+      navigate('/login', { replace: true });
+    } else if (!authLoading && isAuthenticated && !isAdmin()) {
+      navigate('/login', { replace: true });
     }
   }, [isAuthenticated, isAdmin, authLoading, navigate]);
 

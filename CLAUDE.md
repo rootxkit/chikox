@@ -43,6 +43,7 @@ npm run db:generate          # Generate Prisma client (required after schema cha
 npm run db:push              # Push schema changes to database (development)
 npm run db:migrate           # Create and run migrations (production)
 npm run db:studio            # Open Prisma Studio visual database editor
+npm run db:seed              # Seed database with initial data (creates admin user)
 ```
 
 ### Code Quality
@@ -260,3 +261,36 @@ DATABASE_URL=postgresql://user:password@localhost:5432/chikox
 - **Database Client**: Always import Prisma client from `@chikox/database`, never instantiate directly
 - **Test Framework**: All apps use Vitest (not Jest)
 - **Server Module System**: Server uses ES modules (`"type": "module"` in package.json)
+
+## Troubleshooting
+
+### Database Package Build Issues
+
+The `@chikox/database` package must be built before the server can run. If you see errors like:
+```
+Error: Cannot find package '/home/.../node_modules/@chikox/database/dist/index.js'
+```
+
+**Solution**: The database package uses a standalone TypeScript configuration (doesn't extend the parent tsconfig which has `noEmit: true`). Build the package:
+```bash
+cd packages/database && npm run build
+```
+
+### Prisma Client Type Errors
+
+If you see errors like `SyntaxError: The requested module '@prisma/client' does not provide an export named 'UserRole'`:
+
+**Solution**: Regenerate the Prisma client after schema changes:
+```bash
+npm run db:generate
+```
+
+### Initial Setup Checklist
+
+After cloning the repository:
+1. `npm install` - Install all dependencies
+2. `npm run db:generate` - Generate Prisma client
+3. `npm run db:push` - Push schema to database
+4. `npm run db:seed` - Seed database (creates admin user: email=`admin`, password=`admin`)
+5. `cd packages/database && npm run build` - Build database package
+6. `npm run dev` - Start all apps

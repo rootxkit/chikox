@@ -80,7 +80,7 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
  * Authorization middleware - checks user role
  */
 export function authorize(...allowedRoles: string[]) {
-  return async (request: FastifyRequest, reply: FastifyReply): Promise<void> {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
     const user = request.user as JWTPayload;
 
     if (!allowedRoles.includes(user.role)) {
