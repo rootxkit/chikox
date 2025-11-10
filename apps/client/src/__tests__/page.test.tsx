@@ -3,22 +3,17 @@ import { render, screen } from '@testing-library/react';
 import Home from '../app/page';
 
 describe('Home Page', () => {
-  it('should render login form', () => {
+  it('should render navbar with logo', () => {
     render(<Home />);
 
-    expect(screen.getByText('Chikox Login')).toBeDefined();
-    expect(screen.getByLabelText('Email')).toBeDefined();
-    expect(screen.getByLabelText('Password')).toBeDefined();
-    expect(screen.getByRole('button', { name: 'Sign In' })).toBeDefined();
+    expect(screen.getByText('Chikox')).toBeDefined();
+    expect(screen.getByText('Login')).toBeDefined();
+    expect(screen.getByText('Register')).toBeDefined();
   });
 
-  it('should have email and password inputs', () => {
+  it('should render hero section', () => {
     render(<Home />);
 
-    const emailInput = screen.getByLabelText('Email') as HTMLInputElement;
-    const passwordInput = screen.getByLabelText('Password') as HTMLInputElement;
-
-    expect(emailInput.type).toBe('email');
-    expect(passwordInput.type).toBe('password');
+    expect(screen.getByText('Medium length hero heading goes here')).toBeDefined();
   });
 });
