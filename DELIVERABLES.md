@@ -330,7 +330,7 @@ await server.register(fastifySwagger, {
       version: '1.0.0'
     },
     servers: [
-      { url: 'http://localhost:3001', description: 'Development server' }
+      { url: 'http://localhost:3000', description: 'Development server' }
     ],
     components: {
       securitySchemes: {
@@ -356,7 +356,7 @@ await server.register(fastifySwaggerUi, {
 ### Access Documentation
 
 Once the server is running:
-- **URL**: http://localhost:3001/docs
+- **URL**: http://localhost:3000/docs
 - **Features**:
   - Interactive API testing
   - Complete endpoint documentation
@@ -483,7 +483,7 @@ JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
 
 # CORS
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:3001
 
 # Cookies
 COOKIE_SECRET=your-secret
@@ -494,7 +494,7 @@ COOKIE_SECRET=your-secret
 **File**: `apps/client/.env.example`
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 ## 9️⃣ Development Workflow
@@ -607,7 +607,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 3. Setup PostgreSQL database
 4. Run Prisma migrations: `npm run db:push`
 5. Start development: `npm run dev`
-6. Access Swagger docs: http://localhost:3001/docs
+6. Access Swagger docs: http://localhost:3000/docs
 7. Test the applications!
 
 ---

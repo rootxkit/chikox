@@ -55,25 +55,25 @@ npm run dev
 ```
 
 This starts:
-- ✅ API Server at http://localhost:3001
-- ✅ Client App at http://localhost:3000
-- ✅ Admin App at http://localhost:3002 (if configured)
+- ✅ API Server at http://localhost:3000
+- ✅ Client App at http://localhost:3001
+- ✅ Admin App at http://localhost:3002
 
 ## 🎉 You're Ready!
 
 ### Try These:
 
 1. **API Documentation**
-   Visit http://localhost:3001/docs
+   Visit http://localhost:3000/docs
 
 2. **Health Check**
    ```bash
-   curl http://localhost:3001/health
+   curl http://localhost:3000/health
    ```
 
 3. **Register a User**
    ```bash
-   curl -X POST http://localhost:3001/api/auth/register \
+   curl -X POST http://localhost:3000/api/auth/register \
      -H "Content-Type: application/json" \
      -d '{
        "email": "test@example.com",
@@ -84,7 +84,7 @@ This starts:
 
 4. **Login**
    ```bash
-   curl -X POST http://localhost:3001/api/auth/login \
+   curl -X POST http://localhost:3000/api/auth/login \
      -H "Content-Type: application/json" \
      -d '{
        "email": "test@example.com",
@@ -93,7 +93,7 @@ This starts:
    ```
 
 5. **Access Client**
-   Open http://localhost:3000 in your browser
+   Open http://localhost:3001 in your browser
 
 ## 🧪 Run Tests
 
@@ -148,7 +148,7 @@ If ports 3000, 3001, or 3002 are in use:
 2. Or kill processes using those ports:
    ```bash
    # Find process
-   lsof -i :3001
+   lsof -i :3000
 
    # Kill process
    kill -9 <PID>

@@ -63,8 +63,8 @@ chikox/
    ```
 
    This starts:
-   - API Server: http://localhost:3001
-   - Client: http://localhost:3000
+   - API Server: http://localhost:3000
+   - Client: http://localhost:3001
    - Admin: http://localhost:3002
 
 ## 📦 Available Scripts
@@ -198,7 +198,7 @@ server.get('/api/users', {
 
 Once the server is running, access the interactive API documentation at:
 
-**http://localhost:3001/docs**
+**http://localhost:3000/docs**
 
 The Swagger UI provides:
 - Complete API endpoint documentation
@@ -366,21 +366,21 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
 ```env
 NODE_ENV=development
-PORT=3001
+PORT=3000
 HOST=0.0.0.0
 DATABASE_URL="postgresql://..."
 JWT_ACCESS_SECRET=your-secret
 JWT_REFRESH_SECRET=your-secret
 JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
-CORS_ORIGIN=http://localhost:3000,http://localhost:3002
+CORS_ORIGIN=http://localhost:3001,http://localhost:3002
 COOKIE_SECRET=your-secret
 ```
 
 ### Client Environment Variables
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 ## 📝 Code Quality

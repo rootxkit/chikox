@@ -1,0 +1,291 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  NODE_VERSION: '24.x'
+
+jobs:
+  # Job 1: Install dependencies and cache
+  install:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+  # Job 2: Lint and Format Check
+  lint:
+    name: Lint & Format Check
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+  # Job 3: Type Check
+  type-check:
+    name: TypeScript Type Check
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npm run db:generate
+
+      - name: Run type check
+        run: npm run type-check
+
+  # Job 4: Run Tests
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npm run db:generate
+
+      - name: Run all tests
+        run: npm test
+
+  # Job 5: Build All Apps
+  build:
+    name: Build Applications
+    runs-on: ubuntu-latest
+    needs: [lint, type-check, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npm run db:generate
+
+      - name: Build all applications
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            apps/server/dist
+            apps/client/.next
+            apps/admin/dist
+          retention-days: 7
+
+  # Job 6: Deploy (only on push to main/master)
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      # ==============================================
+      # DEPLOYMENT OPTIONS - Uncomment the one you need
+      # ==============================================
+
+      # OPTION 1: Deploy to Vercel (for Client & Admin)
+      # - name: Deploy Client to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_CLIENT_PROJECT_ID }}
+      #     working-directory: ./apps/client
+      #     vercel-args: '--prod'
+      #
+      # - name: Deploy Admin to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_ADMIN_PROJECT_ID }}
+      #     working-directory: ./apps/admin
+      #     vercel-args: '--prod'
+
+      # OPTION 2: Deploy Server to Railway
+      # - name: Deploy Server to Railway
+      #   uses: bervProject/railway-deploy@main
+      #   with:
+      #     railway_token: ${{ secrets.RAILWAY_TOKEN }}
+      #     service: chikox-server
+
+      # OPTION 3: Deploy to AWS using Docker
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
+      #
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v2
+      #
+      # - name: Build and push Docker images
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     docker build -t $ECR_REGISTRY/chikox-server:$IMAGE_TAG ./apps/server
+      #     docker push $ECR_REGISTRY/chikox-server:$IMAGE_TAG
+
+      # OPTION 4: Deploy to Heroku
+      # - name: Deploy Server to Heroku
+      #   uses: akhileshns/heroku-deploy@v3.12.14
+      #   with:
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+      #     heroku_app_name: "chikox-server"
+      #     heroku_email: ${{ secrets.HEROKU_EMAIL }}
+      #     appdir: "apps/server"
+
+      # OPTION 5: Deploy via SSH with Docker Compose
+      - name: Deploy to Production Server with Docker Compose
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.PROD_SERVER_HOST }}
+          username: ${{ secrets.PROD_SERVER_USERNAME }}
+          key: ${{ secrets.PROD_SERVER_SSH_KEY }}
+          port: ${{ secrets.PROD_SERVER_PORT || 22 }}
+          script: |
+            echo "🚀 Starting Docker Compose deployment..."
+            cd /var/www/chikox
+
+            echo "📥 Pulling latest changes from Git..."
+            git pull origin main
+
+            echo "⬇️  Pulling latest Docker images (if using registry)..."
+            docker-compose pull || true
+
+            echo "🔨 Building and starting containers..."
+            docker-compose up -d --build --remove-orphans
+
+            echo "🗄️  Running database migrations..."
+            docker-compose exec -T server npm run db:migrate || echo "⚠️  Migration skipped or failed"
+
+            echo "🧹 Cleaning up old Docker images..."
+            docker image prune -f
+
+            echo "✅ Deployment completed successfully!"
+            echo ""
+            echo "📊 Container Status:"
+            docker-compose ps
+
+            echo ""
+            echo "📋 Recent Logs:"
+            docker-compose logs --tail=50

@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  database:
+    image: postgres:15-alpine
+    container_name: chikox-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: chikox
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chikox-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Fastify API Server
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    container_name: chikox-server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      DATABASE_URL: postgresql://postgres:postgres@database:5432/chikox
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-your-secret-change-in-production}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your-secret-change-in-production}
+      JWT_ACCESS_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      CORS_ORIGIN: http://localhost:3001,http://localhost:3002
+      COOKIE_SECRET: ${COOKIE_SECRET:-your-secret-change-in-production}
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - chikox-network
+
+  # Next.js Client
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    container_name: chikox-client
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+    depends_on:
+      - server
+    networks:
+      - chikox-network
+
+  # React Admin Dashboard
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    container_name: chikox-admin
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      VITE_API_URL: http://localhost:3001
+    depends_on:
+      - server
+    networks:
+      - chikox-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  chikox-network:
+    driver: bridge
