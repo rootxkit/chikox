@@ -290,8 +290,11 @@ jobs:
             echo "⬇️  Pulling latest Docker images (if using registry)..."
             docker-compose pull || true
 
-            echo "🔨 Building and starting containers..."
-            docker-compose up -d --build --remove-orphans
+            echo "🔨 Building containers without cache..."
+            docker-compose build --no-cache
+
+            echo "🚀 Starting containers..."
+            docker-compose up -d --remove-orphans
 
             echo "🗄️  Running database migrations..."
             docker-compose exec -T server npm run db:migrate || echo "⚠️  Migration skipped or failed"
