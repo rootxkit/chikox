@@ -3,6 +3,7 @@ import Fastify, { FastifyInstance } from 'fastify';
 import { authRoutes } from '../auth.routes';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
+import { errorHandler } from '../../utils/error-handler';
 
 describe('Auth Routes', () => {
   let server: FastifyInstance;
@@ -14,6 +15,7 @@ describe('Auth Routes', () => {
     await server.register(fastifyJwt, {
       secret: 'test-secret'
     });
+    server.setErrorHandler(errorHandler);
     await server.register(authRoutes, { prefix: '/auth' });
 
     await server.ready();
