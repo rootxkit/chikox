@@ -110,7 +110,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         orderBy: { createdAt: 'desc' }
       });
 
-      const usersDTO: UserDTO[] = users.map((user) => ({
+      const usersDTO: UserDTO[] = users.map((user: any) => ({
         id: user.id,
         email: user.email,
         name: user.name,

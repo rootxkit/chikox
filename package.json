@@ -28,7 +28,7 @@
     "lint:fix": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
-    "type-check": "tsc --noEmit --workspace=apps/server --workspace=apps/client --workspace=apps/admin",
+    "type-check": "tsc --noEmit -p apps/server && tsc --noEmit -p apps/client && tsc --noEmit -p apps/admin",
     "db:generate": "npm run db:generate --workspace=packages/database",
     "db:push": "npm run db:push --workspace=packages/database",
     "db:migrate": "npm run db:migrate --workspace=packages/database",
