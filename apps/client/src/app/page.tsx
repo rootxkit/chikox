@@ -2,13 +2,11 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   const StarIcon = () => (
     <svg
@@ -359,7 +357,6 @@ export default function HomePage() {
               {[...Array(6)].map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentSlide(index)}
                   className="mx-[3px] inline-block size-2 rounded-full bg-neutral-light"
                   aria-label={`Go to slide ${index + 1}`}
                 ></button>

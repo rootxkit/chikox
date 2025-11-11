@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import { useState } from 'react';
 import Link from 'next/link';
 
-export default function ProductDetailsPage({ params }: { params: { slug: string } }) {
+export default function ProductDetailsPage({ params: _params }: { params: { slug: string } }) {
   const [selectedVariant, setSelectedVariant] = useState('option-one');
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
