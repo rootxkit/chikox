@@ -14,6 +14,6 @@ describe('Home Page', () => {
   it('should render hero section', () => {
     render(<Home />);
 
-    expect(screen.getByText('Medium length hero heading goes here')).toBeDefined();
+    expect(screen.getByText(/Medium length hero heading goes here/i)).toBeDefined();
   });
 });
