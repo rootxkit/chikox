@@ -62,7 +62,6 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - run: npm ci
       - run: npm run db:generate
-      - run: npm run build:packages
       - run: npm test
 
   build:
