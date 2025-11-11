@@ -142,6 +142,7 @@ server.get(
 - React Router for routing
 - Axios for API calls
 - SWR for data fetching/caching
+- Nginx for static file serving in production (Docker)
 
 **Key Files**:
 
@@ -149,12 +150,15 @@ server.get(
 - `apps/admin/src/lib/api.ts` - API client with interceptors
 - `apps/admin/src/hooks/useAuth.ts` - Authentication hook
 - `apps/admin/src/hooks/useUsers.ts` - User data fetching
+- `apps/admin/nginx.conf` - Nginx configuration for production
 
 **API Client**: All API calls go through axios instance in `api.ts` which:
 
 - Automatically attaches access token to requests
 - Handles 401 responses by redirecting to login
 - Uses `withCredentials: true` for cookies
+
+**Production Build**: The admin dashboard builds to static files (`dist/`) and is served via Nginx in Docker
 
 ### Database (Prisma + PostgreSQL)
 
@@ -238,6 +242,16 @@ Contains interfaces used by both server and client:
 # In workspace directory
 cd apps/server && vitest run src/routes/__tests__/auth.test.ts
 cd apps/admin && vitest run src/__tests__/Login.test.tsx
+
+# Or from root with workspace flag
+vitest run apps/server/src/routes/__tests__/auth.test.ts
+vitest run apps/admin/src/__tests__/Login.test.tsx
+```
+
+**Note**: Admin tests use React Testing Library with jsdom environment. Run with UI for debugging:
+
+```bash
+npm run test:ui --workspace=apps/admin
 ```
 
 ## Environment Variables
@@ -333,17 +347,99 @@ The project uses GitHub Actions for continuous integration and deployment.
 - Docker Compose (recommended) - See `DOCKER_COMPOSE_DEPLOYMENT.md`
 - SSH deployment - See `SSH_DEPLOYMENT_SETUP.md`
 
+**Deploy Script**: The CI/CD pipeline uses `docker-compose` commands to:
+
+1. Pull latest code from git
+2. Stop and remove existing containers
+3. Build fresh images with `--no-cache`
+4. Start all services in detached mode
+5. Run database migrations inside server container
+6. Clean up unused Docker resources
+
 ## Important Notes
 
-- **Admin Dashboard**: Recently refactored from Next.js to React + Vite for better performance and simpler architecture
+- **Admin Dashboard**: Recently refactored from Next.js to React + Vite for better performance and simpler architecture. In Docker, admin serves static files via Nginx.
 - **Workspace Dependencies**: Internal packages referenced with `"*"` in package.json (e.g., `"@chikox/types": "*"`)
 - **Type Safety**: All shared types must be defined in `@chikox/types` package
 - **Database Client**: Always import Prisma client from `@chikox/database`, never instantiate directly
 - **Test Framework**: All apps use Vitest (not Jest)
-- **Server Module System**: Server uses ES modules (`"type": "module"` in package.json)
+- **Server Module System**: Server uses ES modules (`"type": "module"` in package.json). All import statements must include `.js` extension.
 - **Build Order**: Always build shared packages before apps using `npm run build:packages`
+- **Docker Builds**: Admin Dockerfile uses multi-stage build with Nginx for production. Server and client use Node.js runtime.
+
+## Docker Deployment
+
+### Prerequisites
+
+**Important**: Docker must be installed on your system:
+
+- **Windows/Mac**: Install Docker Desktop
+- **Linux**: Install Docker Engine + Docker Compose plugin
+- **WSL2**: Use Docker Desktop with WSL2 integration enabled
+
+### Local Docker Deployment
+
+```bash
+# Build and start all services (database, server, client, admin)
+docker compose up -d --build
+
+# View logs
+docker compose logs -f
+
+# Stop services
+docker compose down
+
+# Stop and remove volumes (clears database)
+docker compose down -v
+```
+
+**Services**:
+
+- `database` - PostgreSQL 15 (port 5432)
+- `server` - Fastify API (port 3000)
+- `client` - Next.js (port 3001)
+- `admin` - React + Nginx (port 3002)
+
+**Important Notes**:
+
+- The server waits for database health check before starting
+- Database data persists in Docker volume `postgres_data`
+- All services communicate via `chikox-network` bridge network
+- Environment variables can be overridden with `.env` file or shell exports
+
+### Production Docker Deployment
+
+For production, set these environment variables:
+
+```bash
+export JWT_ACCESS_SECRET="strong-random-secret"
+export JWT_REFRESH_SECRET="another-strong-secret"
+export COOKIE_SECRET="cookie-signing-secret"
+```
+
+Then deploy:
+
+```bash
+docker compose -f docker-compose.yml up -d --build
+```
+
+### Running Database Migrations in Docker
+
+```bash
+# After containers are running
+docker compose exec server npx prisma migrate deploy
+```
 
 ## Troubleshooting
+
+### Docker Not Found
+
+If you see `docker: command not found` or `docker-compose: command not found`:
+
+1. **Check if Docker is installed**: `docker --version`
+2. **WSL2 users**: Ensure Docker Desktop has WSL2 integration enabled
+3. **Linux users**: Install Docker Engine and Docker Compose plugin
+4. **Try newer syntax**: Use `docker compose` instead of `docker-compose`
 
 ### Database Package Build Issues
 
