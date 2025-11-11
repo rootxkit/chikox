@@ -35,6 +35,7 @@ npm run build:admin          # Build packages + React admin (Vite)
 ```
 
 The `build:packages` script runs:
+
 1. `npm run db:generate` - Generate Prisma client
 2. Build `@chikox/database` package
 3. Build `@chikox/types` package
@@ -81,6 +82,7 @@ npm run clean                # Remove all build artifacts and node_modules
 - `packages/types/` - Shared TypeScript interfaces and DTOs
 
 **API Versioning**: All server routes are prefixed with `/api/v1/`
+
 - Auth endpoints: `/api/v1/auth/*`
 - User endpoints: `/api/v1/users/*`
 
@@ -320,12 +322,14 @@ The project uses GitHub Actions for continuous integration and deployment.
 6. **Deploy** - Docker Compose deployment to production (on push to main)
 
 **Key Points**:
+
 - Shared packages (`@chikox/database`, `@chikox/types`) are built before type-check, tests, and build stages
 - All stages must pass before deployment
 - Uses GitHub Actions cache (v4) for faster builds
 - Requires secrets for deployment: `PROD_SERVER_HOST`, `PROD_SERVER_USERNAME`, `PROD_SERVER_SSH_KEY`
 
 **Deployment Methods**:
+
 - Docker Compose (recommended) - See `DOCKER_COMPOSE_DEPLOYMENT.md`
 - SSH deployment - See `SSH_DEPLOYMENT_SETUP.md`
 
