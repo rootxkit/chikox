@@ -17,19 +17,27 @@ Chikox is a full-stack TypeScript monorepo with:
 
 ```bash
 npm run dev                  # Start all apps (server:3000, client:3001, admin:3002)
-npm run dev:server           # Start API server only
-npm run dev:client           # Start client app only
-npm run dev:admin            # Start admin dashboard only
+npm run dev:server           # Start API server only (port 3000)
+npm run dev:client           # Start client app only (port 3001)
+npm run dev:admin            # Start admin dashboard only (port 3002)
 ```
 
 ### Building
 
+**IMPORTANT**: The build process automatically builds shared packages first.
+
 ```bash
-npm run build                # Build all apps
-npm run build:server         # Build server (TypeScript compilation)
-npm run build:client         # Build Next.js client
-npm run build:admin          # Build React admin (Vite)
+npm run build                # Build packages, then all apps
+npm run build:packages       # Build shared packages only (database + types)
+npm run build:server         # Build packages + server (TypeScript compilation)
+npm run build:client         # Build packages + Next.js client
+npm run build:admin          # Build packages + React admin (Vite)
 ```
+
+The `build:packages` script runs:
+1. `npm run db:generate` - Generate Prisma client
+2. Build `@chikox/database` package
+3. Build `@chikox/types` package
 
 ### Testing
 
@@ -72,6 +80,10 @@ npm run clean                # Remove all build artifacts and node_modules
 - `packages/database/` - Prisma client and schema
 - `packages/types/` - Shared TypeScript interfaces and DTOs
 
+**API Versioning**: All server routes are prefixed with `/api/v1/`
+- Auth endpoints: `/api/v1/auth/*`
+- User endpoints: `/api/v1/users/*`
+
 ### Authentication Flow
 
 The system uses **dual-token JWT authentication**:
@@ -92,19 +104,19 @@ The system uses **dual-token JWT authentication**:
 **Entry Point**: `apps/server/src/index.ts`
 
 - Registers plugins (CORS, Cookie, JWT, Swagger)
-- Registers routes with `/api` prefix
+- Registers routes with `/api/v1` prefix (versioned API)
 - Error handling via `errorHandler`
-- Swagger documentation at `/docs`
+- Swagger documentation at `http://localhost:3000/docs`
 
 **Route Structure**:
 
-- `apps/server/src/routes/auth.routes.ts` - Authentication endpoints
-- `apps/server/src/routes/user.routes.ts` - User management endpoints
+- `apps/server/src/routes/auth.routes.ts` - Authentication endpoints (registered at `/api/v1/auth`)
+- `apps/server/src/routes/user.routes.ts` - User management endpoints (registered at `/api/v1/users`)
 
 **Middleware**:
 
-- `authenticate` - Verifies JWT token from Authorization header (apps/server/src/utils/auth.ts:65)
-- `authorize(...roles)` - Checks user role permissions (apps/server/src/utils/auth.ts:82)
+- `authenticate` - Verifies JWT token from Authorization header
+- `authorize(...roles)` - Checks user role permissions
 
 **Protected Route Pattern**:
 
@@ -164,9 +176,11 @@ Contains interfaces used by both server and client:
 
 - `LoginRequest`, `RegisterRequest` - Auth DTOs
 - `AuthResponse` - Login/register response
-- `UserDTO` - User data transfer object
-- `JWTPayload` - JWT token payload structure
+- `UserDTO` - User data transfer object (role field is `string` type)
+- `JWTPayload` - JWT token payload structure (role field is `string` type)
 - `ApiResponse<T>` - Standard API response wrapper
+
+**Important**: The `role` field in `UserDTO` and `JWTPayload` uses `string` type instead of `UserRole` enum to avoid type conflicts with Prisma's generated `UserRole` type. At runtime, values are still `'USER' | 'ADMIN' | 'SUPER_ADMIN'`.
 
 **Usage**: Import as `import type { LoginRequest } from '@chikox/types';`
 
@@ -195,7 +209,7 @@ Contains interfaces used by both server and client:
 
 ### API Documentation
 
-- Swagger/OpenAPI available at `http://localhost:3001/docs`
+- Swagger/OpenAPI available at `http://localhost:3000/docs`
 - Route schemas defined inline with Fastify route definitions
 - Documents all endpoints, request/response schemas, and authentication requirements
 
@@ -230,7 +244,7 @@ cd apps/admin && vitest run src/__tests__/Login.test.tsx
 
 ```
 NODE_ENV=development
-PORT=3001
+PORT=3000
 HOST=0.0.0.0
 DATABASE_URL=postgresql://...
 JWT_ACCESS_SECRET=your-secret
@@ -290,6 +304,31 @@ DATABASE_URL=postgresql://user:password@localhost:5432/chikox
 4. Add SWR hook in `apps/admin/src/hooks/` if needed
 5. Write tests in `__tests__` directory
 
+## CI/CD Pipeline
+
+The project uses GitHub Actions for continuous integration and deployment.
+
+**Workflow**: `.github/workflows/ci-cd.yml`
+
+**Pipeline Stages**:
+
+1. **Install** - Install dependencies and cache `node_modules`
+2. **Lint** - ESLint and Prettier checks
+3. **Type Check** - TypeScript compilation checks (builds packages first)
+4. **Test** - Run all test suites (builds packages first)
+5. **Build** - Build all applications (builds packages first)
+6. **Deploy** - Docker Compose deployment to production (on push to main)
+
+**Key Points**:
+- Shared packages (`@chikox/database`, `@chikox/types`) are built before type-check, tests, and build stages
+- All stages must pass before deployment
+- Uses GitHub Actions cache (v4) for faster builds
+- Requires secrets for deployment: `PROD_SERVER_HOST`, `PROD_SERVER_USERNAME`, `PROD_SERVER_SSH_KEY`
+
+**Deployment Methods**:
+- Docker Compose (recommended) - See `DOCKER_COMPOSE_DEPLOYMENT.md`
+- SSH deployment - See `SSH_DEPLOYMENT_SETUP.md`
+
 ## Important Notes
 
 - **Admin Dashboard**: Recently refactored from Next.js to React + Vite for better performance and simpler architecture
@@ -298,6 +337,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/chikox
 - **Database Client**: Always import Prisma client from `@chikox/database`, never instantiate directly
 - **Test Framework**: All apps use Vitest (not Jest)
 - **Server Module System**: Server uses ES modules (`"type": "module"` in package.json)
+- **Build Order**: Always build shared packages before apps using `npm run build:packages`
 
 ## Troubleshooting
 
@@ -330,8 +370,18 @@ npm run db:generate
 After cloning the repository:
 
 1. `npm install` - Install all dependencies
-2. `npm run db:generate` - Generate Prisma client
-3. `npm run db:push` - Push schema to database
-4. `npm run db:seed` - Seed database (creates admin user: email=`admin`, password=`admin`)
-5. `cd packages/database && npm run build` - Build database package
-6. `npm run dev` - Start all apps
+2. Copy environment files:
+   ```bash
+   cp apps/server/.env.example apps/server/.env
+   cp apps/client/.env.example apps/client/.env
+   cp apps/admin/.env.example apps/admin/.env
+   cp packages/database/.env.example packages/database/.env
+   ```
+3. Configure `packages/database/.env` with your PostgreSQL connection string
+4. `npm run db:generate` - Generate Prisma client
+5. `npm run db:push` - Push schema to database
+6. `npm run db:seed` - Seed database (creates admin user)
+7. `npm run build:packages` - Build shared packages (database + types)
+8. `npm run dev` - Start all apps
+
+**Note**: The `build:packages` step is crucial as it builds the `@chikox/database` and `@chikox/types` packages that other apps depend on.
