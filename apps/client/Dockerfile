@@ -18,7 +18,6 @@ WORKDIR /app
 COPY --from=builder /app/apps/client/.next ./apps/client/.next
 COPY --from=builder /app/apps/client/package.json ./apps/client/
 COPY --from=builder /app/apps/client/next.config.js ./apps/client/
-COPY --from=builder /app/apps/client/public ./apps/client/public
 COPY package*.json ./
 
 RUN npm ci --production --workspace=apps/client
