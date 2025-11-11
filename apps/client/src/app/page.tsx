@@ -63,7 +63,7 @@ export default function HomePage() {
         </div>
         <div className="order-1 mx-[5%] sm:max-w-md md:justify-self-start lg:order-2 lg:ml-20 lg:mr-[5vw]">
           <h1 className="mb-5 text-6xl font-bold md:mb-6 md:text-9xl lg:text-10xl">
-            Medium length hero heading goes here.
+            Medium length hero heading goes here...
           </h1>
           <p className="md:text-md">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
