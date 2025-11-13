@@ -18,13 +18,19 @@ FROM node:18-alpine AS production
 
 WORKDIR /app
 
+# Install wget and openssl for health checks and Prisma
+RUN apk add --no-cache wget openssl
+
 COPY --from=builder /app/apps/server/dist ./apps/server/dist
 COPY --from=builder /app/apps/server/package.json ./apps/server/
 COPY --from=builder /app/packages ./packages
 COPY package*.json ./
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
+# Install production dependencies
 RUN npm ci --production --workspace=apps/server
+
+# Copy Prisma client from builder (must be after npm ci)
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 ENV NODE_ENV=production
 EXPOSE 3000

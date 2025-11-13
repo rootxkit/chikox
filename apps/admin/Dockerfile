@@ -14,6 +14,9 @@ RUN npm run build --workspace=apps/admin
 # Production Stage
 FROM nginx:alpine AS production
 
+# Install wget for health checks
+RUN apk add --no-cache wget
+
 COPY --from=builder /app/apps/admin/dist /usr/share/nginx/html
 COPY apps/admin/nginx.conf /etc/nginx/conf.d/default.conf
 

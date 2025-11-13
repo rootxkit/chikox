@@ -14,7 +14,7 @@ import {
   generateTokens,
   setRefreshTokenCookie,
   clearRefreshTokenCookie
-} from '../utils/auth';
+} from '../utils/auth.js';
 
 // Validation schemas
 const registerSchema = z.object({
