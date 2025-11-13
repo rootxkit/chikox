@@ -57,7 +57,6 @@ npm run db:generate          # Generate Prisma client (required after schema cha
 npm run db:push              # Push schema changes to database (development)
 npm run db:migrate           # Create and run migrations (production)
 npm run db:studio            # Open Prisma Studio visual database editor
-npm run db:seed              # Seed database with initial data (creates admin user)
 ```
 
 ### Code Quality
@@ -480,8 +479,7 @@ After cloning the repository:
 3. Configure `packages/database/.env` with your PostgreSQL connection string
 4. `npm run db:generate` - Generate Prisma client
 5. `npm run db:push` - Push schema to database
-6. `npm run db:seed` - Seed database (creates admin user)
-7. `npm run build:packages` - Build shared packages (database + types)
-8. `npm run dev` - Start all apps
+6. `npm run build:packages` - Build shared packages (database + types)
+7. `npm run dev` - Start all apps
 
 **Note**: The `build:packages` step is crucial as it builds the `@chikox/database` and `@chikox/types` packages that other apps depend on.
