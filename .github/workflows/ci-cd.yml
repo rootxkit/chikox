@@ -107,5 +107,5 @@ jobs:
             docker-compose down --remove-orphans
             docker-compose build --no-cache
             docker-compose up -d --remove-orphans
-            docker-compose exec -T server npx prisma migrate deploy || echo "Migration skipped"
+            docker-compose exec -T server npx prisma migrate deploy --schema=/app/packages/database/prisma/schema.prisma || echo "Migration skipped"
             docker system prune -f
