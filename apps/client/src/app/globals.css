@@ -2,18 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light Mode (Default) */
+:root {
+  --color-border-primary: 221 221 221;
+  --color-background-primary: 248 248 248;
+  --color-background-alternative: 255 255 255;
+  --color-background-secondary: 238 238 238;
+  --color-text-primary: 51 51 51;
+  --color-text-alternative: 26 26 26;
+  --color-neutral: 102 102 102;
+  --color-neutral-white: 255 255 255;
+  --color-neutral-light: 204 204 204;
+  --color-accent: 228 143 32;
+  --color-accent-hover: 255 153 0;
+  --color-accent-light: 255 179 71;
+}
+
+/* Dark Mode - via class or system preference */
+.dark,
+html.dark {
+  --color-border-primary: 51 51 51;
+  --color-background-primary: 26 26 26;
+  --color-background-alternative: 34 34 34;
+  --color-background-secondary: 42 42 42;
+  --color-text-primary: 240 240 240;
+  --color-text-alternative: 26 26 26;
+  --color-neutral: 204 204 204;
+  --color-neutral-white: 255 255 255;
+  --color-neutral-light: 68 68 68;
+  --color-accent: 228 143 32;
+  --color-accent-hover: 255 153 0;
+  --color-accent-light: 255 179 71;
+}
+
+body {
+  background-color: rgb(var(--color-background-primary));
+  color: rgb(var(--color-text-primary));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-background-alternative));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-neutral-light));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-accent));
+}
+
+
 @layer base {
-  :root {
-    --color-border-primary: 0 0 0;
-    --color-background-primary: 255 255 255;
-    --color-background-alternative: 0 0 0;
-    --color-background-secondary: 245 245 245;
-    --color-text-primary: 0 0 0;
-    --color-text-alternative: 255 255 255;
-    --color-neutral: 115 115 115;
-    --color-neutral-white: 255 255 255;
-    --color-neutral-light: 229 229 229;
-  }
 
   /* Prose styles for blog content */
   .prose {

@@ -2,6 +2,7 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Section from '@/components/Section';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -125,7 +126,7 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
 
               {/* Product Info */}
               <div>
-                <h1 className="mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
+                <h1 className="mb-5 text-2xl font-bold leading-[1.2] sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                   Product name
                 </h1>
                 <div className="mb-5 flex flex-col flex-wrap sm:flex-row sm:items-center md:mb-6">
@@ -294,22 +295,21 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
       </header>
 
       {/* Features Grid Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mx-auto mb-12 w-full max-w-lg text-center md:mb-18 lg:mb-20">
-            <p className="mb-3 font-semibold md:mb-4">Tagline</p>
-            <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-              Short heading goes here
-            </h1>
-            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="mx-auto mb-12 w-full max-w-lg text-center md:mb-18 lg:mb-20">
+          <p className="mb-3 font-semibold md:mb-4 text-accent">Tagline</p>
+          <h1 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
+            Short heading goes here
+          </h1>
+          <p className="md:text-md text-neutral">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
           <div className="grid auto-cols-fr grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2">
             {/* Column 1 */}
             <div className="grid auto-cols-fr grid-cols-1 gap-6 md:gap-8">
               <div className="flex flex-col border border-border-primary sm:col-span-2">
                 <div className="block flex-1 p-6 sm:flex sm:flex-col sm:justify-center md:p-8 lg:p-12">
                   <p className="mb-2 font-semibold">Tagline</p>
-                  <h2 className="mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
+                  <h2 className="mb-5 text-2xl font-bold leading-[1.2] sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                     Medium length section heading goes here
                   </h2>
                   <p>
@@ -386,7 +386,7 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               <div className="flex flex-col border border-border-primary sm:col-span-2">
                 <div className="block flex-1 p-6 sm:flex sm:flex-col sm:justify-center md:p-8 lg:p-12">
                   <p className="mb-2 font-semibold">Tagline</p>
-                  <h2 className="mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
+                  <h2 className="mb-5 text-2xl font-bold leading-[1.2] sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                     Medium length section heading goes here
                   </h2>
                   <p>
@@ -412,14 +412,12 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               </div>
             </div>
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* Content with Icon Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 lg:gap-x-20">
-            <div className="order-2 md:order-1">
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 lg:gap-x-20">
+          <div className="order-2 md:order-1">
               <img
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
                 className="w-full object-cover"
@@ -458,16 +456,14 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               </div>
             </div>
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* Stats Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="grid grid-cols-1 gap-y-12 md:items-center md:gap-x-12 lg:grid-cols-2 lg:gap-x-20">
-            <div>
-              <p className="mb-3 font-semibold md:mb-4">Tagline</p>
-              <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="grid grid-cols-1 gap-y-12 md:items-center md:gap-x-12 lg:grid-cols-2 lg:gap-x-20">
+          <div>
+            <p className="mb-3 font-semibold md:mb-4 text-accent">Tagline</p>
+              <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                 Medium length section heading goes here
               </h2>
               <p className="md:text-md">
@@ -487,7 +483,7 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
             </div>
             <div className="grid w-full grid-cols-1 items-start justify-start gap-y-8 py-2 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:gap-x-8 lg:gap-y-12">
               <div className="w-full border-l-2 border-border-primary pl-8">
-                <p className="mb-2 text-10xl font-bold leading-[1.3] md:text-[4rem] lg:text-[5rem]">
+                <p className="mb-2 text-4xl font-bold leading-[1.3] sm:text-5xl md:text-6xl lg:text-7xl">
                   50%
                 </p>
                 <h3 className="text-md font-bold leading-[1.4] md:text-xl">
@@ -496,18 +492,16 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               </div>
             </div>
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* Testimonials Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mb-12 w-full md:mb-18 lg:mb-20">
-            <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-              Customer testimonials
-            </h1>
-            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="mb-12 w-full md:mb-18 lg:mb-20">
+          <h1 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
+            Customer testimonials
+          </h1>
+          <p className="md:text-md text-neutral">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
           <div className="grid grid-cols-1 gap-y-12 md:grid-cols-3 md:gap-x-8 lg:gap-x-12 lg:gap-y-16">
             <div className="flex h-full max-w-lg flex-col items-start justify-start text-left">
               <div className="mb-6 flex md:mb-8">
@@ -542,19 +536,17 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               </div>
             </div>
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* Pricing Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mx-auto mb-8 max-w-lg text-center md:mb-10 lg:mb-12">
-            <p className="mb-3 font-semibold md:mb-4">Tagline</p>
-            <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-              Pricing plan
-            </h1>
-            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="mx-auto mb-8 max-w-lg text-center md:mb-10 lg:mb-12">
+          <p className="mb-3 font-semibold md:mb-4 text-accent">Tagline</p>
+          <h1 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
+            Pricing plan
+          </h1>
+          <p className="md:text-md text-neutral">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
           <div>
             <div className="flex mx-auto mb-12 w-fit">
               <button
@@ -620,7 +612,7 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
                         className="size-12"
                       />
                     </div>
-                    <h3 className="text-6xl font-bold md:text-9xl lg:text-10xl">{plan.price}</h3>
+                    <h3 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">{plan.price}</h3>
                     <div className="my-8 h-px w-full shrink-0 bg-border"></div>
                     <p>Includes:</p>
                     <div className="mb-8 mt-4 grid grid-cols-1 gap-y-4 py-2">
@@ -643,64 +635,59 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               ))}
             </div>
           </div>
-        </div>
-      </section>
+      </Section>
 
       {/* FAQ Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">FAQs</h2>
-            <p className="md:text-md">
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+          <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">FAQs</h2>
+          <p className="md:text-md text-neutral">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+            eros elementum tristique.
+          </p>
+        </div>
+        <div className="mt-12 md:mt-18 lg:mt-20">
+          <h4 className="mb-3 text-2xl font-bold md:mb-4 md:text-3xl md:leading-[1.3] lg:text-4xl">
+            Still have questions?
+          </h4>
+          <p className="md:text-md text-neutral">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <div className="mt-6 md:mt-8">
+            <button className="inline-flex gap-3 items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-alternative px-6 py-3 hover:bg-background-secondary">
+              Contact
+            </button>
+          </div>
+        </div>
+      </Section>
+
+      {/* CTA Section */}
+      <Section paddingVariant="large" horizontalPadding>
+        <div className="flex flex-col items-center border border-border-primary p-8 md:p-12 lg:p-16 hover:border-accent transition-colors">
+          <div className="max-w-lg text-center">
+            <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
+              Medium length heading goes here
+            </h2>
+            <p className="md:text-md text-neutral">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
               eros elementum tristique.
             </p>
           </div>
-          <div className="mt-12 md:mt-18 lg:mt-20">
-            <h4 className="mb-3 text-2xl font-bold md:mb-4 md:text-3xl md:leading-[1.3] lg:text-4xl">
-              Still have questions?
-            </h4>
-            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div className="mt-6 md:mt-8">
-              <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
-                Contact
+          <div className="mx-auto mt-6 max-w-sm md:mt-8">
+            <form className="mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4">
+              <input
+                type="email"
+                className="flex size-full min-h-11 border border-border-primary bg-background-primary py-2 px-3 placeholder:text-neutral focus-visible:outline-none"
+                placeholder="Enter your email"
+              />
+              <button className="inline-flex gap-3 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-accent text-text-alternative items-center justify-center px-6 py-3 hover:bg-accent-hover">
+                Sign up
               </button>
-            </div>
+            </form>
+            <p className="text-xs text-neutral">
+              By clicking Sign Up you're confirming that you agree with our Terms and Conditions.
+            </p>
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="flex flex-col items-center border border-border-primary p-8 md:p-12 lg:p-16">
-            <div className="max-w-lg text-center">
-              <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-                Medium length heading goes here
-              </h2>
-              <p className="md:text-md">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
-                eros elementum tristique.
-              </p>
-            </div>
-            <div className="mx-auto mt-6 max-w-sm md:mt-8">
-              <form className="mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4">
-                <input
-                  type="email"
-                  className="flex size-full min-h-11 border border-border-primary bg-background-primary py-2 px-3 placeholder:text-neutral focus-visible:outline-none"
-                  placeholder="Enter your email"
-                />
-                <button className="focus-visible:ring-border-primary inline-flex gap-3 whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative items-center justify-center px-6 py-3">
-                  Sign up
-                </button>
-              </form>
-              <p className="text-xs">
-                By clicking Sign Up you're confirming that you agree with our Terms and Conditions.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </Section>
 
       <Footer />
     </div>

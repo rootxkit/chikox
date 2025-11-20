@@ -2,11 +2,14 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Section from '@/components/Section';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
+  const { t } = useLanguage();
 
   const StarIcon = () => (
     <svg
@@ -14,7 +17,7 @@ export default function HomePage() {
       fill="currentColor"
       strokeWidth="0"
       viewBox="0 0 24 24"
-      className="size-6"
+      className="size-6 text-accent"
       height="1em"
       width="1em"
       xmlns="http://www.w3.org/2000/svg"
@@ -42,154 +45,148 @@ export default function HomePage() {
     </svg>
   );
 
-  const testimonials = Array(6).fill({
-    name: 'Michael Chen',
-    position: 'Lead engineer, Aerial Research Labs',
-    quote: "These components transformed our research drone's performance beyond expectations."
-  });
+  const testimonials = Array(6).fill(null);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background-primary text-text-primary">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="grid grid-cols-1 items-center gap-y-16 pt-16 md:pt-24 lg:grid-cols-2 lg:pt-0">
-        <div className="order-2 lg:order-1">
-          <img
-            src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-            alt="Relume placeholder image"
-            className="w-full object-cover lg:h-screen lg:max-h-[60rem]"
-          />
-        </div>
-        <div className="order-1 mx-[5%] sm:max-w-md md:justify-self-start lg:order-2 lg:ml-20 lg:mr-[5vw]">
-          <h1 className="mb-5 text-6xl font-bold md:mb-6 md:text-9xl lg:text-10xl">
-            Medium length hero heading goes here
-          </h1>
-          <p className="md:text-md">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
-            elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
-            commodo diam libero vitae erat.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
-            <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative px-6 py-3">
-              Button
-            </button>
-            <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
-              Button
-            </button>
+      <Section id="hero">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="order-2 lg:order-1">
+            <img
+              src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+              alt="Relume placeholder image"
+              className="w-full object-cover rounded-lg aspect-video lg:aspect-square"
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <h1 className="mb-4 text-3xl font-bold sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl">
+              {t('hero.title')}
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-neutral">
+              {t('hero.description')}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3 md:mt-8">
+              <button className="inline-flex gap-2 items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-accent text-text-alternative px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-semibold rounded hover:bg-accent-hover">
+                {t('hero.getStarted')}
+              </button>
+              <button className="inline-flex gap-2 items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-transparent px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded hover:bg-background-alternative">
+                {t('hero.learnMore')}
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Features Grid Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="rb-12 mb-12 md:mb-18 lg:mb-20">
-            <div className="mx-auto max-w-lg text-center">
-              <p className="mb-3 font-semibold md:mb-4">Tagline</p>
-              <h2 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-                Short heading goes here
-              </h2>
-              <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
+      <Section id="features" background="primary">
+        <div className="mb-8 md:mb-12 lg:mb-16">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-sm font-semibold md:mb-3 text-accent">{t('features.tagline')}</p>
+            <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:mb-5 md:text-4xl lg:text-5xl">
+              {t('features.title')}
+            </h2>
+            <p className="text-sm sm:text-base text-neutral">{t('features.description')}</p>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:gap-8">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
-              {/* Large Feature Card */}
-              <div className="grid grid-cols-1 border border-border-primary sm:col-span-2 sm:row-span-1 sm:grid-cols-2">
-                <div className="flex flex-1 flex-col justify-center p-6">
-                  <div>
-                    <p className="mb-2 text-sm font-semibold">Tagline</p>
-                    <h3 className="mb-2 text-xl font-bold md:text-2xl">
-                      Medium length section heading goes here
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </div>
-                  <div className="mt-5 flex flex-wrap items-center gap-4 md:mt-6">
-                    <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
-                      Button
-                      <ArrowIcon />
-                    </button>
-                  </div>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-4">
+            {/* Large Feature Card */}
+            <div className="grid grid-cols-1 border border-border-primary bg-background-alternative sm:col-span-2 sm:row-span-1 sm:grid-cols-2 hover:border-accent transition-colors">
+              <div className="flex flex-1 flex-col justify-center p-6">
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-accent">Tagline</p>
+                  <h3 className="mb-2 text-xl font-bold md:text-2xl">
+                    Medium length section heading goes here
+                  </h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
-                <div className="flex items-center justify-center">
-                  <img
-                    src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-portrait.svg"
-                    alt="Relume placeholder image 3"
-                    className="size-full object-cover"
-                  />
+                <div className="mt-5 flex flex-wrap items-center gap-4 md:mt-6">
+                  <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                    Button
+                    <ArrowIcon />
+                  </button>
                 </div>
               </div>
+              <div className="flex items-center justify-center">
+                <img
+                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-portrait.svg"
+                  alt="Relume placeholder image 3"
+                  className="size-full object-cover"
+                />
+              </div>
+            </div>
 
-              {/* Small Feature Cards */}
-              <div className="flex flex-col border border-border-primary">
-                <div className="flex flex-col justify-center p-6">
-                  <div>
-                    <p className="mb-2 text-sm font-semibold">Durability</p>
-                    <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
-                    <p>Lightweight materials designed to withstand extreme flight conditions</p>
-                  </div>
-                  <div className="mt-5 flex items-center gap-4 md:mt-6">
-                    <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
-                      Explore design
-                      <ArrowIcon />
-                    </button>
-                  </div>
+            {/* Small Feature Cards */}
+            <div className="flex flex-col border border-border-primary bg-background-alternative hover:border-accent transition-colors">
+              <div className="flex flex-col justify-center p-6">
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-accent">Durability</p>
+                  <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
+                  <p>Lightweight materials designed to withstand extreme flight conditions</p>
                 </div>
-                <div className="flex items-center justify-center">
-                  <img
-                    src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                    alt="Relume placeholder image 1"
-                    className="w-full object-cover"
-                  />
+                <div className="mt-5 flex items-center gap-4 md:mt-6">
+                  <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                    Explore design
+                    <ArrowIcon />
+                  </button>
                 </div>
               </div>
+              <div className="flex items-center justify-center">
+                <img
+                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
+                  alt="Relume placeholder image 1"
+                  className="w-full object-cover"
+                />
+              </div>
+            </div>
 
-              <div className="flex flex-col border border-border-primary">
-                <div className="flex flex-col justify-center p-6">
-                  <div>
-                    <p className="mb-2 text-sm font-semibold">Durability</p>
-                    <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
-                    <p>Lightweight materials designed to withstand extreme flight conditions</p>
-                  </div>
-                  <div className="mt-5 flex items-center gap-4 md:mt-6">
-                    <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
-                      Explore design
-                      <ArrowIcon />
-                    </button>
-                  </div>
+            <div className="flex flex-col border border-border-primary bg-background-alternative hover:border-accent transition-colors">
+              <div className="flex flex-col justify-center p-6">
+                <div>
+                  <p className="mb-2 text-sm font-semibold text-accent">Durability</p>
+                  <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
+                  <p className="text-neutral">Lightweight materials designed to withstand extreme flight conditions</p>
                 </div>
-                <div className="flex items-center justify-center">
-                  <img
-                    src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                    alt="Relume placeholder image 2"
-                    className="w-full object-cover"
-                  />
+                <div className="mt-5 flex items-center gap-4 md:mt-6">
+                  <button className="focus-visible:ring-accent inline-flex items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-accent gap-2 p-0 hover:text-accent-light">
+                    Explore design
+                    <ArrowIcon />
+                  </button>
                 </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <img
+                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
+                  alt="Relume placeholder image 2"
+                  className="w-full object-cover"
+                />
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Sticky Services Section */}
-      <section>
+      <Section id="services" noPadding container={false}>
         <div className="sticky top-0">
           <div className="relative -top-32 h-0"></div>
 
           {/* Service 1 */}
-          <div className="relative border-t border-border-primary bg-neutral-white pb-8 md:pb-14 lg:sticky lg:pb-0 top-0 lg:mb-32">
+          <div className="relative border-t border-border-primary bg-background-alternative pb-8 md:pb-14 lg:sticky lg:pb-0 top-0 lg:mb-32">
             <div className="px-[5%]">
               <div className="container">
-                <Link href="#" className="flex h-16 w-full items-center underline">
-                  <span className="mr-5 font-semibold md:mr-6 md:text-md">01</span>
+                <Link href="#" className="flex h-16 w-full items-center underline decoration-accent">
+                  <span className="mr-5 font-semibold md:mr-6 md:text-md text-accent">01</span>
                   <h1 className="font-semibold md:text-md">Custom builds</h1>
                 </Link>
                 <div className="py-8 md:py-10 lg:py-12">
                   <div className="grid grid-cols-1 gap-y-12 md:items-center md:gap-x-12 lg:grid-cols-2 lg:gap-x-20">
                     <div>
-                      <p className="mb-3 font-semibold md:mb-4">Design</p>
-                      <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+                      <p className="mb-3 font-semibold md:mb-4 text-accent">Design</p>
+                      <h2 className="rb-5 mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                         Tailored drone solutions for your specific needs
                       </h2>
                       <p className="md:text-md">
@@ -197,10 +194,10 @@ export default function HomePage() {
                         requirements. From research to racing, we build precision machines.
                       </p>
                       <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-                        <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+                        <button className="focus-visible:ring-accent inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 bg-accent text-text-alternative px-6 py-3 font-semibold hover:bg-accent-hover">
                           Get started
                         </button>
-                        <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                        <button className="focus-visible:ring-accent inline-flex items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-accent gap-2 p-0 hover:text-accent-light">
                           Consult
                           <ArrowIcon />
                         </button>
@@ -222,18 +219,18 @@ export default function HomePage() {
           <div className="relative -top-32 h-0"></div>
 
           {/* Service 2 */}
-          <div className="relative border-t border-border-primary bg-neutral-white pb-8 md:pb-14 lg:sticky lg:pb-0 lg:top-16 lg:-mt-16 lg:mb-16">
+          <div className="relative border-t border-border-primary bg-background-secondary pb-8 md:pb-14 lg:sticky lg:pb-0 lg:top-16 lg:-mt-16 lg:mb-16">
             <div className="px-[5%]">
               <div className="container">
-                <Link href="#" className="flex h-16 w-full items-center underline">
-                  <span className="mr-5 font-semibold md:mr-6 md:text-md">02</span>
+                <Link href="#" className="flex h-16 w-full items-center underline decoration-accent">
+                  <span className="mr-5 font-semibold md:mr-6 md:text-md text-accent">02</span>
                   <h1 className="font-semibold md:text-md">Repair services</h1>
                 </Link>
                 <div className="py-8 md:py-10 lg:py-12">
                   <div className="grid grid-cols-1 gap-y-12 md:items-center md:gap-x-12 lg:grid-cols-2 lg:gap-x-20">
                     <div>
-                      <p className="mb-3 font-semibold md:mb-4">Design</p>
-                      <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+                      <p className="mb-3 font-semibold md:mb-4 text-accent">Design</p>
+                      <h2 className="rb-5 mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                         Tailored drone solutions for your specific needs
                       </h2>
                       <p className="md:text-md">
@@ -241,10 +238,10 @@ export default function HomePage() {
                         requirements. From research to racing, we build precision machines.
                       </p>
                       <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-                        <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+                        <button className="focus-visible:ring-accent inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 bg-accent text-text-alternative px-6 py-3 font-semibold hover:bg-accent-hover">
                           Get started
                         </button>
-                        <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                        <button className="focus-visible:ring-accent inline-flex items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-accent gap-2 p-0 hover:text-accent-light">
                           Consult
                           <ArrowIcon />
                         </button>
@@ -266,18 +263,18 @@ export default function HomePage() {
           <div className="relative -top-32 h-0"></div>
 
           {/* Service 3 */}
-          <div className="relative border-t border-border-primary bg-neutral-white pb-8 md:pb-14 lg:sticky lg:pb-0 lg:top-32 lg:mb-16">
+          <div className="relative border-t border-border-primary bg-background-alternative pb-8 md:pb-14 lg:sticky lg:pb-0 lg:top-32 lg:mb-16">
             <div className="px-[5%]">
               <div className="container">
-                <Link href="#" className="flex h-16 w-full items-center underline">
-                  <span className="mr-5 font-semibold md:mr-6 md:text-md">03</span>
+                <Link href="#" className="flex h-16 w-full items-center underline decoration-accent">
+                  <span className="mr-5 font-semibold md:mr-6 md:text-md text-accent">03</span>
                   <h1 className="font-semibold md:text-md">Technical consulting</h1>
                 </Link>
                 <div className="py-8 md:py-10 lg:py-12">
                   <div className="grid grid-cols-1 gap-y-12 md:items-center md:gap-x-12 lg:grid-cols-2 lg:gap-x-20">
                     <div>
-                      <p className="mb-3 font-semibold md:mb-4">Design</p>
-                      <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+                      <p className="mb-3 font-semibold md:mb-4 text-accent">Design</p>
+                      <h2 className="rb-5 mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
                         Tailored drone solutions for your specific needs
                       </h2>
                       <p className="md:text-md">
@@ -285,10 +282,10 @@ export default function HomePage() {
                         requirements. From research to racing, we build precision machines.
                       </p>
                       <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-                        <button className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3">
+                        <button className="focus-visible:ring-accent inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 bg-accent text-text-alternative px-6 py-3 font-semibold hover:bg-accent-hover">
                           Get started
                         </button>
-                        <button className="focus-visible:ring-border-primary inline-flex items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-text-primary gap-2 p-0">
+                        <button className="focus-visible:ring-accent inline-flex items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-accent gap-2 p-0 hover:text-accent-light">
                           Consult
                           <ArrowIcon />
                         </button>
@@ -307,116 +304,94 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Testimonials Carousel */}
-      <section className="overflow-hidden px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mx-auto mb-12 w-full max-w-lg text-center md:mb-18 lg:mb-20">
-            <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
-              Customer testimonials
-            </h2>
-            <p className="md:text-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-          <div className="relative overflow-hidden">
-            <div className="relative">
-              <div className="flex ml-0 md:mx-3.5">
-                {testimonials.map((testimonial, index) => (
-                  <div
-                    key={index}
-                    className="min-w-0 shrink-0 grow-0 basis-full pl-0 md:basis-1/2 md:px-4 lg:basis-1/3"
-                  >
-                    <div className="flex w-full flex-col items-start justify-between border border-border-primary p-6 md:p-8">
-                      <div className="mb-5 flex md:mb-6">
-                        <StarIcon />
-                        <StarIcon />
-                        <StarIcon />
-                        <StarIcon />
-                        <StarIcon />
-                      </div>
-                      <p className="md:text-md">{testimonial.quote}</p>
-                      <div className="mt-5 flex w-full flex-col items-start gap-4 md:mt-6 md:w-auto md:flex-row md:items-center">
-                        <div>
-                          <img
-                            src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                            alt="Testimonial avatar 1"
-                            className="size-12 min-h-12 min-w-12 rounded-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-semibold">{testimonial.name}</p>
-                          <p>{testimonial.position}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+      {/* Testimonials Section */}
+      <Section id="testimonials" background="primary">
+        <div className="mx-auto mb-8 w-full max-w-2xl text-center md:mb-12 lg:mb-16">
+          <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:mb-5 md:text-4xl lg:text-5xl">
+            {t('testimonials.title')}
+          </h2>
+          <p className="text-sm sm:text-base text-neutral">{t('testimonials.description')}</p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+          {testimonials.slice(0, 3).map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-start justify-between border border-border-primary bg-background-alternative p-4 sm:p-6 rounded-lg hover:border-accent transition-colors"
+            >
+              <div className="mb-4 flex">
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
+                <StarIcon />
+              </div>
+              <p className="text-sm sm:text-base mb-4 flex-grow">{t('testimonials.quote')}</p>
+              <div className="flex w-full items-center gap-3">
+                <img
+                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                  alt="Testimonial avatar"
+                  className="size-10 sm:size-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-semibold text-sm sm:text-base">{t('testimonials.name')}</p>
+                  <p className="text-xs sm:text-sm text-neutral">{t('testimonials.position')}</p>
+                </div>
               </div>
             </div>
-            <div className="mt-[30px] flex items-center justify-center md:mt-[46px]">
-              {[...Array(6)].map((_, index) => (
-                <button
-                  key={index}
-                  className="mx-[3px] inline-block size-2 rounded-full bg-neutral-light"
-                  aria-label={`Go to slide ${index + 1}`}
-                ></button>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </Section>
 
       {/* Tabs Section */}
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="grid grid-cols-1 items-center gap-y-12 md:grid-cols-2 md:gap-x-12 lg:gap-x-20">
-            <div className="max-size-full order-last flex items-center justify-center overflow-hidden md:order-first">
-              <div className={activeTab === 0 ? 'block' : 'hidden'}>
-                <img
-                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                  alt="Relume placeholder image 1"
-                  className="size-full object-cover"
-                />
-              </div>
-              <div className={activeTab === 1 ? 'block' : 'hidden'}>
-                <img
-                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                  alt="Relume placeholder image 2"
-                  className="size-full object-cover"
-                />
-              </div>
-              <div className={activeTab === 2 ? 'block' : 'hidden'}>
-                <img
-                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                  alt="Relume placeholder image 3"
-                  className="size-full object-cover"
-                />
-              </div>
+      <Section id="tabs" background="secondary">
+        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:gap-12">
+          <div className="order-last flex items-center justify-center overflow-hidden md:order-first">
+            <div className={activeTab === 0 ? 'block' : 'hidden'}>
+              <img
+                src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                alt="Relume placeholder image 1"
+                className="w-full object-cover rounded-lg"
+              />
             </div>
-            <div className="flex order-first flex-col gap-8 py-8 md:order-last md:py-0">
-              {[0, 1, 2].map((index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveTab(index)}
-                  className={`inline-flex justify-center px-6 text-text-primary transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 flex-col items-start whitespace-normal border-0 border-l-2 bg-transparent py-0 pl-8 pr-0 text-left ${
-                    activeTab === index
-                      ? 'border-l-border-primary bg-transparent text-text-primary'
-                      : 'border-transparent bg-transparent text-text-primary'
-                  }`}
-                >
-                  <h3 className="mb-3 text-2xl font-bold md:mb-4 md:text-3xl md:leading-[1.3] lg:text-4xl">
-                    Precision engineering advantage
-                  </h3>
-                  <p>
-                    Our components are designed with microscopic tolerances to deliver unparalleled
-                    performance and reliability.
-                  </p>
-                </button>
-              ))}
+            <div className={activeTab === 1 ? 'block' : 'hidden'}>
+              <img
+                src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                alt="Relume placeholder image 2"
+                className="w-full object-cover rounded-lg"
+              />
+            </div>
+            <div className={activeTab === 2 ? 'block' : 'hidden'}>
+              <img
+                src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                alt="Relume placeholder image 3"
+                className="w-full object-cover rounded-lg"
+              />
             </div>
           </div>
+          <div className="flex order-first flex-col gap-4 sm:gap-6 md:order-last">
+            {[0, 1, 2].map((index) => (
+              <button
+                key={index}
+                onClick={() => setActiveTab(index)}
+                className={`flex flex-col items-start text-left transition-all focus-visible:outline-none border-l-2 pl-4 sm:pl-6 ${
+                  activeTab === index
+                    ? 'border-l-accent text-text-primary'
+                    : 'border-transparent text-neutral hover:text-text-primary hover:border-l-neutral-light'
+                }`}
+              >
+                <h3 className="mb-2 text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
+                  {t('tabs.title')}
+                </h3>
+                <p className="text-sm sm:text-base">
+                  {t('tabs.description')}
+                </p>
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
+      </Section>
 
       <Footer />
     </div>

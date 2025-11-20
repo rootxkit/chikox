@@ -34,7 +34,7 @@ const server = Fastify({
 async function registerPlugins() {
   // CORS
   await server.register(fastifyCors, {
-    origin: process.env.CORS_ORIGIN?.split(',') || 'http://localhost:3000',
+    origin: process.env.CORS_ORIGIN?.split(',') || 'http://localhost:3001',
     credentials: true
   });
 
