@@ -59,9 +59,7 @@ export default function RegisterPage() {
           <div className="bg-background-alternative border border-border-primary rounded-lg p-6 sm:p-8">
             <div className="text-center mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('register.title')}</h1>
-              <p className="text-sm sm:text-base text-neutral">
-                {t('register.subtitle')}
-              </p>
+              <p className="text-sm sm:text-base text-neutral">{t('register.subtitle')}</p>
             </div>
 
             {error && <Alert message={error} className="mb-4" />}
@@ -137,11 +135,17 @@ export default function RegisterPage() {
                 />
                 <label htmlFor="terms" className="text-sm text-neutral cursor-pointer">
                   {t('register.terms')}{' '}
-                  <Link href="/terms" className="text-accent hover:text-accent-hover transition-colors">
+                  <Link
+                    href="/terms"
+                    className="text-accent hover:text-accent-hover transition-colors"
+                  >
                     {t('register.termsOfService')}
                   </Link>{' '}
                   {t('register.and')}{' '}
-                  <Link href="/privacy" className="text-accent hover:text-accent-hover transition-colors">
+                  <Link
+                    href="/privacy"
+                    className="text-accent hover:text-accent-hover transition-colors"
+                  >
                     {t('register.privacyPolicy')}
                   </Link>
                 </label>
@@ -158,7 +162,10 @@ export default function RegisterPage() {
 
             <div className="mt-6 text-center text-sm">
               <span className="text-neutral">{t('register.hasAccount')} </span>
-              <Link href="/login" className="text-accent hover:text-accent-hover transition-colors font-medium">
+              <Link
+                href="/login"
+                className="text-accent hover:text-accent-hover transition-colors font-medium"
+              >
                 {t('register.signIn')}
               </Link>
             </div>

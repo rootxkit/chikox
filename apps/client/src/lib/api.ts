@@ -9,19 +9,16 @@ class ApiClient {
     this.baseUrl = baseUrl;
   }
 
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<ApiResponse<T>> {
+  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
 
     const config: RequestInit = {
       ...options,
       headers: {
         'Content-Type': 'application/json',
-        ...options.headers,
+        ...options.headers
       },
-      credentials: 'include', // Include cookies for refresh token
+      credentials: 'include' // Include cookies for refresh token
     };
 
     // Add auth token if available
@@ -29,7 +26,7 @@ class ApiClient {
     if (token) {
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       };
     }
 
@@ -43,32 +40,32 @@ class ApiClient {
   async register(data: RegisterRequest): Promise<ApiResponse<AuthResponse>> {
     return this.request<AuthResponse>('/api/v1/auth/register', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async login(data: LoginRequest): Promise<ApiResponse<AuthResponse>> {
     return this.request<AuthResponse>('/api/v1/auth/login', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
   }
 
   async logout(): Promise<ApiResponse<void>> {
     return this.request<void>('/api/v1/auth/logout', {
-      method: 'POST',
+      method: 'POST'
     });
   }
 
   async refreshToken(): Promise<ApiResponse<{ accessToken: string }>> {
     return this.request<{ accessToken: string }>('/api/v1/auth/refresh', {
-      method: 'POST',
+      method: 'POST'
     });
   }
 
   async getProfile(): Promise<ApiResponse<{ user: AuthResponse['user'] }>> {
     return this.request<{ user: AuthResponse['user'] }>('/api/v1/users/me', {
-      method: 'GET',
+      method: 'GET'
     });
   }
 }

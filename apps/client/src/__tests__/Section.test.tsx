@@ -129,11 +129,7 @@ describe('Section', () => {
 
   it('combines multiple props correctly', () => {
     const { container } = render(
-      <Section
-        id="combined-section"
-        background="secondary"
-        className="extra-class"
-      >
+      <Section id="combined-section" background="secondary" className="extra-class">
         <p>Test content</p>
       </Section>
     );

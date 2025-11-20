@@ -8,7 +8,7 @@ import { LanguageProvider } from '../context/LanguageContext';
 vi.mock('next/link', () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
-  ),
+  )
 }));
 
 const renderHomePage = () => {
@@ -40,7 +40,9 @@ describe('Home Page', () => {
     renderHomePage();
 
     // Use getByRole to target the h1 specifically
-    expect(screen.getByRole('heading', { level: 1, name: /Professional Drone Services/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 1, name: /Professional Drone Services/i })
+    ).toBeInTheDocument();
   });
 
   it('should render features section', () => {

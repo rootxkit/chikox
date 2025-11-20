@@ -156,7 +156,10 @@ export default function AboutPage() {
               </div>
               <p className="text-neutral">{member.description}</p>
               <div className="mt-6 flex gap-3.5">
-                <a href={member.linkedin} className="hover:opacity-70 transition-opacity hover:text-accent">
+                <a
+                  href={member.linkedin}
+                  className="hover:opacity-70 transition-opacity hover:text-accent"
+                >
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
@@ -170,7 +173,10 @@ export default function AboutPage() {
                     <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.339 18.337H5.667v-8.59h2.672v8.59zM7.003 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.763h-2.669V14.16c0-.996-.018-2.277-1.388-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.56v1.174h.037c.355-.675 1.227-1.387 2.524-1.387 2.704 0 3.203 1.778 3.203 4.092v4.71z"></path>
                   </svg>
                 </a>
-                <a href={member.twitter} className="hover:opacity-70 transition-opacity hover:text-accent">
+                <a
+                  href={member.twitter}
+                  className="hover:opacity-70 transition-opacity hover:text-accent"
+                >
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
@@ -184,7 +190,10 @@ export default function AboutPage() {
                     <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>
                   </svg>
                 </a>
-                <a href={member.website} className="hover:opacity-70 transition-opacity hover:text-accent">
+                <a
+                  href={member.website}
+                  className="hover:opacity-70 transition-opacity hover:text-accent"
+                >
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
@@ -315,7 +324,9 @@ export default function AboutPage() {
       <Section paddingVariant="large" horizontalPadding background="secondary">
         <div className="mb-12 mr-auto flex max-w-lg flex-col justify-start text-left md:mb-18 lg:mb-20">
           <p className="mb-3 font-semibold md:mb-4 text-neutral">Locations</p>
-          <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">Our offices</h2>
+          <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
+            Our offices
+          </h2>
           <p className="md:text-md text-neutral">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>

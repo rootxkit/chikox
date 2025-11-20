@@ -3,19 +3,31 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import RegisterPage from '../app/register/page';
 import { ThemeProvider } from '../context/ThemeContext';
 import { LanguageProvider } from '../context/LanguageContext';
+import { AuthProvider } from '../context/AuthContext';
 
 // Mock next/link
 vi.mock('next/link', () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
-  ),
+  )
+}));
+
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn()
+  })
 }));
 
 const renderRegisterPage = () => {
   return render(
     <LanguageProvider>
       <ThemeProvider>
-        <RegisterPage />
+        <AuthProvider>
+          <RegisterPage />
+        </AuthProvider>
       </ThemeProvider>
     </LanguageProvider>
   );
@@ -123,6 +135,8 @@ describe('RegisterPage', () => {
     fireEvent.click(submitButton);
 
     // Error message includes "Password" at the beginning, unlike the hint text
-    expect(await screen.findByText(/^Password must be at least 8 characters$/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/^Password must be at least 8 characters$/i)
+    ).toBeInTheDocument();
   });
 });

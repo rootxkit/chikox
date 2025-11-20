@@ -12,7 +12,10 @@ export default function Navbar() {
     <nav className="border-b border-border-primary bg-background-alternative sticky top-0 z-50">
       <div className="container py-3 sm:py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl sm:text-2xl font-bold text-text-primary hover:text-accent transition-colors">
+          <Link
+            href="/"
+            className="text-xl sm:text-2xl font-bold text-text-primary hover:text-accent transition-colors"
+          >
             <span className="text-accent">Chiko</span>x
           </Link>
           <div className="flex items-center gap-2 sm:gap-4">

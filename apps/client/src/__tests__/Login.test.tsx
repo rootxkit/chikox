@@ -3,19 +3,31 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import LoginPage from '../app/login/page';
 import { ThemeProvider } from '../context/ThemeContext';
 import { LanguageProvider } from '../context/LanguageContext';
+import { AuthProvider } from '../context/AuthContext';
 
 // Mock next/link
 vi.mock('next/link', () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
-  ),
+  )
+}));
+
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn()
+  })
 }));
 
 const renderLoginPage = () => {
   return render(
     <LanguageProvider>
       <ThemeProvider>
-        <LoginPage />
+        <AuthProvider>
+          <LoginPage />
+        </AuthProvider>
       </ThemeProvider>
     </LanguageProvider>
   );

@@ -17,7 +17,7 @@ const variantStyles: Record<AlertVariant, string> = {
   error: 'bg-red-500/10 border-red-500/50 text-red-500',
   warning: 'bg-yellow-500/10 border-yellow-500/50 text-yellow-500',
   info: 'bg-blue-500/10 border-blue-500/50 text-blue-500',
-  success: 'bg-green-500/10 border-green-500/50 text-green-500',
+  success: 'bg-green-500/10 border-green-500/50 text-green-500'
 };
 
 export default function Alert({
@@ -26,7 +26,7 @@ export default function Alert({
   title,
   closable = false,
   onClose,
-  className = '',
+  className = ''
 }: AlertProps) {
   const [isVisible, setIsVisible] = useState(true);
 

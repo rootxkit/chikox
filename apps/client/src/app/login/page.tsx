@@ -46,9 +46,7 @@ export default function LoginPage() {
           <div className="bg-background-alternative border border-border-primary rounded-lg p-6 sm:p-8">
             <div className="text-center mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('login.title')}</h1>
-              <p className="text-sm sm:text-base text-neutral">
-                {t('login.subtitle')}
-              </p>
+              <p className="text-sm sm:text-base text-neutral">{t('login.subtitle')}</p>
             </div>
 
             {error && <Alert message={error} className="mb-4" />}
@@ -92,7 +90,10 @@ export default function LoginPage() {
                   />
                   <span className="text-neutral">{t('login.rememberMe')}</span>
                 </label>
-                <Link href="/forgot-password" className="text-accent hover:text-accent-hover transition-colors">
+                <Link
+                  href="/forgot-password"
+                  className="text-accent hover:text-accent-hover transition-colors"
+                >
                   {t('login.forgotPassword')}
                 </Link>
               </div>
@@ -108,7 +109,10 @@ export default function LoginPage() {
 
             <div className="mt-6 text-center text-sm">
               <span className="text-neutral">{t('login.noAccount')} </span>
-              <Link href="/register" className="text-accent hover:text-accent-hover transition-colors font-medium">
+              <Link
+                href="/register"
+                className="text-accent hover:text-accent-hover transition-colors font-medium"
+              >
                 {t('login.signUp')}
               </Link>
             </div>

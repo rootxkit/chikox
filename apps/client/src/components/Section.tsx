@@ -20,13 +20,13 @@ const backgroundClasses: Record<BackgroundVariant, string> = {
   primary: 'bg-background-primary',
   secondary: 'bg-background-secondary',
   alternative: 'bg-background-alternative',
-  none: '',
+  none: ''
 };
 
 const paddingClasses: Record<PaddingVariant, string> = {
   default: 'py-12 md:py-16 lg:py-24',
   large: 'py-16 md:py-24 lg:py-28',
-  none: '',
+  none: ''
 };
 
 export default function Section({
@@ -37,7 +37,7 @@ export default function Section({
   id,
   noPadding = false,
   paddingVariant = 'default',
-  horizontalPadding = false,
+  horizontalPadding = false
 }: SectionProps) {
   const padding = noPadding ? '' : paddingClasses[paddingVariant];
   const bgClass = backgroundClasses[background];

@@ -65,9 +65,7 @@ export default function HomePage() {
             <h1 className="mb-4 text-3xl font-bold sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl">
               {t('hero.title')}
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-neutral">
-              {t('hero.description')}
-            </p>
+            <p className="text-sm sm:text-base md:text-lg text-neutral">{t('hero.description')}</p>
             <div className="mt-6 flex flex-wrap gap-3 md:mt-8">
               <button className="inline-flex gap-2 items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-accent text-text-alternative px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-semibold rounded hover:bg-accent-hover">
                 {t('hero.getStarted')}
@@ -84,7 +82,9 @@ export default function HomePage() {
       <Section id="features" background="primary">
         <div className="mb-8 md:mb-12 lg:mb-16">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="mb-2 text-sm font-semibold md:mb-3 text-accent">{t('features.tagline')}</p>
+            <p className="mb-2 text-sm font-semibold md:mb-3 text-accent">
+              {t('features.tagline')}
+            </p>
             <h2 className="mb-4 text-2xl font-bold sm:text-3xl md:mb-5 md:text-4xl lg:text-5xl">
               {t('features.title')}
             </h2>
@@ -148,7 +148,9 @@ export default function HomePage() {
                 <div>
                   <p className="mb-2 text-sm font-semibold text-accent">Durability</p>
                   <h3 className="mb-2 text-xl font-bold md:text-2xl">Robust drone frames</h3>
-                  <p className="text-neutral">Lightweight materials designed to withstand extreme flight conditions</p>
+                  <p className="text-neutral">
+                    Lightweight materials designed to withstand extreme flight conditions
+                  </p>
                 </div>
                 <div className="mt-5 flex items-center gap-4 md:mt-6">
                   <button className="focus-visible:ring-accent inline-flex items-center justify-center whitespace-nowrap ring-offset-background-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0 text-accent gap-2 p-0 hover:text-accent-light">
@@ -178,7 +180,10 @@ export default function HomePage() {
           <div className="relative border-t border-border-primary bg-background-alternative pb-8 md:pb-14 lg:sticky lg:pb-0 top-0 lg:mb-32">
             <div className="px-[5%]">
               <div className="container">
-                <Link href="#" className="flex h-16 w-full items-center underline decoration-accent">
+                <Link
+                  href="#"
+                  className="flex h-16 w-full items-center underline decoration-accent"
+                >
                   <span className="mr-5 font-semibold md:mr-6 md:text-md text-accent">01</span>
                   <h1 className="font-semibold md:text-md">Custom builds</h1>
                 </Link>
@@ -222,7 +227,10 @@ export default function HomePage() {
           <div className="relative border-t border-border-primary bg-background-secondary pb-8 md:pb-14 lg:sticky lg:pb-0 lg:top-16 lg:-mt-16 lg:mb-16">
             <div className="px-[5%]">
               <div className="container">
-                <Link href="#" className="flex h-16 w-full items-center underline decoration-accent">
+                <Link
+                  href="#"
+                  className="flex h-16 w-full items-center underline decoration-accent"
+                >
                   <span className="mr-5 font-semibold md:mr-6 md:text-md text-accent">02</span>
                   <h1 className="font-semibold md:text-md">Repair services</h1>
                 </Link>
@@ -266,7 +274,10 @@ export default function HomePage() {
           <div className="relative border-t border-border-primary bg-background-alternative pb-8 md:pb-14 lg:sticky lg:pb-0 lg:top-32 lg:mb-16">
             <div className="px-[5%]">
               <div className="container">
-                <Link href="#" className="flex h-16 w-full items-center underline decoration-accent">
+                <Link
+                  href="#"
+                  className="flex h-16 w-full items-center underline decoration-accent"
+                >
                   <span className="mr-5 font-semibold md:mr-6 md:text-md text-accent">03</span>
                   <h1 className="font-semibold md:text-md">Technical consulting</h1>
                 </Link>
@@ -384,9 +395,7 @@ export default function HomePage() {
                 <h3 className="mb-2 text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
                   {t('tabs.title')}
                 </h3>
-                <p className="text-sm sm:text-base">
-                  {t('tabs.description')}
-                </p>
+                <p className="text-sm sm:text-base">{t('tabs.description')}</p>
               </button>
             ))}
           </div>

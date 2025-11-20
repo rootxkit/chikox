@@ -146,7 +146,9 @@ export default function ProductsPage() {
         <div className="mb-12 md:mb-18 lg:mb-20">
           <div className="mx-auto max-w-lg text-center">
             <h4 className="font-semibold text-accent">Tagline</h4>
-            <h1 className="mt-3 text-2xl font-bold sm:text-3xl md:mt-4 md:text-4xl lg:text-5xl">Products</h1>
+            <h1 className="mt-3 text-2xl font-bold sm:text-3xl md:mt-4 md:text-4xl lg:text-5xl">
+              Products
+            </h1>
             <p className="mt-5 text-base md:mt-6 md:text-md text-neutral">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
@@ -154,7 +156,11 @@ export default function ProductsPage() {
         </div>
         <div className="grid grid-cols-1 justify-items-start gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12">
           {products.map((product, index) => (
-            <Link key={index} href="#" className="text-center font-semibold md:text-md hover:text-accent transition-colors">
+            <Link
+              key={index}
+              href="#"
+              className="text-center font-semibold md:text-md hover:text-accent transition-colors"
+            >
               <div className="mb-3 aspect-[5/6] md:mb-4">
                 <img
                   src={product.image}
@@ -255,7 +261,9 @@ export default function ProductsPage() {
           <h2 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
             Customer testimonials
           </h2>
-          <p className="md:text-md text-neutral">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p className="md:text-md text-neutral">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="flex w-full flex-col items-start justify-between border border-border-primary p-6 md:p-8 hover:border-accent transition-colors">
@@ -268,8 +276,8 @@ export default function ProductsPage() {
                 />
               </div>
               <blockquote className="md:text-md text-neutral">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
-                in eros elementum tristique. Duis cursus, mi quis viverra ornare."
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
+                eros elementum tristique. Duis cursus, mi quis viverra ornare."
               </blockquote>
               <div className="mt-5 flex w-full flex-col items-start gap-4 md:mt-6 md:w-auto md:flex-row md:items-center">
                 <div>
@@ -302,7 +310,9 @@ export default function ProductsPage() {
           <h1 className="mb-5 text-2xl font-bold sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
             Pricing plan
           </h1>
-          <p className="md:text-md text-neutral">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p className="md:text-md text-neutral">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
         </div>
         <div>
           <div className="flex mx-auto mb-12 w-fit">
@@ -341,7 +351,9 @@ export default function ProductsPage() {
                       className="size-12"
                     />
                   </div>
-                  <h3 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl text-accent">{plan.price}</h3>
+                  <h3 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl text-accent">
+                    {plan.price}
+                  </h3>
                   <div className="my-8 h-px w-full shrink-0 bg-border-primary"></div>
                   <p>Includes</p>
                   <div className="mb-8 mt-4 grid grid-cols-1 gap-y-4 py-2">

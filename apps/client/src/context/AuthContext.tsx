@@ -54,13 +54,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         return {
           success: false,
-          error: response.error?.message || 'Login failed',
+          error: response.error?.message || 'Login failed'
         };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Login failed',
+        error: error instanceof Error ? error.message : 'Login failed'
       };
     }
   }, []);
@@ -76,13 +76,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         return {
           success: false,
-          error: response.error?.message || 'Registration failed',
+          error: response.error?.message || 'Registration failed'
         };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Registration failed',
+        error: error instanceof Error ? error.message : 'Registration failed'
       };
     }
   }, []);
@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         login,
         register,
-        logout,
+        logout
       }}
     >
       {children}

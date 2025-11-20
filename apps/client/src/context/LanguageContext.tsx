@@ -20,7 +20,8 @@ const en = {
 
   // Hero
   'hero.title': 'Professional Drone Services for Every Need',
-  'hero.description': 'We provide cutting-edge drone solutions for aerial photography, surveying, inspections, and custom builds. Experience precision and reliability with Chikox.',
+  'hero.description':
+    'We provide cutting-edge drone solutions for aerial photography, surveying, inspections, and custom builds. Experience precision and reliability with Chikox.',
   'hero.getStarted': 'Get Started',
   'hero.learnMore': 'Learn More',
 
@@ -30,10 +31,12 @@ const en = {
   'features.description': 'Comprehensive drone services tailored to your specific requirements.',
   'features.card1.tagline': 'Photography',
   'features.card1.title': 'Aerial Photography & Videography',
-  'features.card1.description': 'Stunning aerial shots for real estate, events, and commercial projects.',
+  'features.card1.description':
+    'Stunning aerial shots for real estate, events, and commercial projects.',
   'features.card2.tagline': 'Durability',
   'features.card2.title': 'Robust drone frames',
-  'features.card2.description': 'Lightweight materials designed to withstand extreme flight conditions.',
+  'features.card2.description':
+    'Lightweight materials designed to withstand extreme flight conditions.',
   'features.button': 'Explore',
 
   // Services
@@ -45,20 +48,23 @@ const en = {
   'services.technicalConsulting': 'Technical consulting',
   'services.tagline': 'Design',
   'services.title': 'Tailored drone solutions for your specific needs',
-  'services.description': 'Our expert team creates custom drone configurations that meet your unique requirements. From research to racing, we build precision machines.',
+  'services.description':
+    'Our expert team creates custom drone configurations that meet your unique requirements. From research to racing, we build precision machines.',
   'services.getStarted': 'Get started',
   'services.consult': 'Consult',
 
   // Testimonials
   'testimonials.title': 'Customer testimonials',
   'testimonials.description': 'See what our clients say about our services.',
-  'testimonials.quote': "These components transformed our research drone's performance beyond expectations.",
+  'testimonials.quote':
+    "These components transformed our research drone's performance beyond expectations.",
   'testimonials.name': 'Michael Chen',
   'testimonials.position': 'Lead engineer, Aerial Research Labs',
 
   // Tabs
   'tabs.title': 'Precision engineering advantage',
-  'tabs.description': 'Our components are designed with microscopic tolerances to deliver unparalleled performance and reliability.',
+  'tabs.description':
+    'Our components are designed with microscopic tolerances to deliver unparalleled performance and reliability.',
 
   // Footer
   'footer.description': 'Professional drone services for every need.',
@@ -104,7 +110,7 @@ const en = {
   'register.hasAccount': 'Already have an account?',
   'register.signIn': 'Sign in',
   'register.passwordMismatch': 'Passwords do not match',
-  'register.passwordTooShort': 'Password must be at least 8 characters',
+  'register.passwordTooShort': 'Password must be at least 8 characters'
 };
 
 // Georgian translations
@@ -115,7 +121,8 @@ const ge: typeof en = {
 
   // Hero
   'hero.title': 'პროფესიონალური დრონის სერვისები ყველა საჭიროებისთვის',
-  'hero.description': 'ჩვენ გთავაზობთ უახლესი დრონის გადაწყვეტილებებს აერო ფოტოგრაფიის, გეოდეზიის, ინსპექციებისა და მორგებული აწყობისთვის. გამოცადეთ სიზუსტე და საიმედოობა Chikox-თან ერთად.',
+  'hero.description':
+    'ჩვენ გთავაზობთ უახლესი დრონის გადაწყვეტილებებს აერო ფოტოგრაფიის, გეოდეზიის, ინსპექციებისა და მორგებული აწყობისთვის. გამოცადეთ სიზუსტე და საიმედოობა Chikox-თან ერთად.',
   'hero.getStarted': 'დაწყება',
   'hero.learnMore': 'გაიგე მეტი',
 
@@ -125,10 +132,12 @@ const ge: typeof en = {
   'features.description': 'ყოვლისმომცველი დრონის სერვისები თქვენი კონკრეტული მოთხოვნებისთვის.',
   'features.card1.tagline': 'ფოტოგრაფია',
   'features.card1.title': 'აერო ფოტო და ვიდეო გადაღება',
-  'features.card1.description': 'შთამბეჭდავი აერო კადრები უძრავი ქონების, ღონისძიებებისა და კომერციული პროექტებისთვის.',
+  'features.card1.description':
+    'შთამბეჭდავი აერო კადრები უძრავი ქონების, ღონისძიებებისა და კომერციული პროექტებისთვის.',
   'features.card2.tagline': 'გამძლეობა',
   'features.card2.title': 'მძლავრი დრონის ჩარჩოები',
-  'features.card2.description': 'მსუბუქი მასალები, რომლებიც შექმნილია ექსტრემალური ფრენის პირობების გადასატანად.',
+  'features.card2.description':
+    'მსუბუქი მასალები, რომლებიც შექმნილია ექსტრემალური ფრენის პირობების გადასატანად.',
   'features.button': 'შესწავლა',
 
   // Services
@@ -140,20 +149,23 @@ const ge: typeof en = {
   'services.technicalConsulting': 'ტექნიკური კონსულტაცია',
   'services.tagline': 'დიზაინი',
   'services.title': 'მორგებული დრონის გადაწყვეტილებები თქვენი კონკრეტული საჭიროებებისთვის',
-  'services.description': 'ჩვენი ექსპერტთა გუნდი ქმნის მორგებულ დრონის კონფიგურაციებს, რომლებიც აკმაყოფილებს თქვენს უნიკალურ მოთხოვნებს. კვლევიდან რბოლამდე, ჩვენ ვაშენებთ ზუსტ მანქანებს.',
+  'services.description':
+    'ჩვენი ექსპერტთა გუნდი ქმნის მორგებულ დრონის კონფიგურაციებს, რომლებიც აკმაყოფილებს თქვენს უნიკალურ მოთხოვნებს. კვლევიდან რბოლამდე, ჩვენ ვაშენებთ ზუსტ მანქანებს.',
   'services.getStarted': 'დაწყება',
   'services.consult': 'კონსულტაცია',
 
   // Testimonials
   'testimonials.title': 'მომხმარებელთა შეფასებები',
   'testimonials.description': 'ნახეთ რას ამბობენ ჩვენი კლიენტები ჩვენს სერვისებზე.',
-  'testimonials.quote': 'ამ კომპონენტებმა გარდაქმნა ჩვენი კვლევითი დრონის შესრულება მოლოდინს მიღმა.',
+  'testimonials.quote':
+    'ამ კომპონენტებმა გარდაქმნა ჩვენი კვლევითი დრონის შესრულება მოლოდინს მიღმა.',
   'testimonials.name': 'მიხეილ ჩენი',
   'testimonials.position': 'წამყვანი ინჟინერი, Aerial Research Labs',
 
   // Tabs
   'tabs.title': 'ზუსტი ინჟინერიის უპირატესობა',
-  'tabs.description': 'ჩვენი კომპონენტები შექმნილია მიკროსკოპული ტოლერანტობით, რათა უზრუნველყოს შეუდარებელი შესრულება და საიმედოობა.',
+  'tabs.description':
+    'ჩვენი კომპონენტები შექმნილია მიკროსკოპული ტოლერანტობით, რათა უზრუნველყოს შეუდარებელი შესრულება და საიმედოობა.',
 
   // Footer
   'footer.description': 'პროფესიონალური დრონის სერვისები ყველა საჭიროებისთვის.',
@@ -199,7 +211,7 @@ const ge: typeof en = {
   'register.hasAccount': 'უკვე გაქვთ ანგარიში?',
   'register.signIn': 'შესვლა',
   'register.passwordMismatch': 'პაროლები არ ემთხვევა',
-  'register.passwordTooShort': 'პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო',
+  'register.passwordTooShort': 'პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო'
 };
 
 const translations = { en, ge };
