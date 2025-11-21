@@ -10,20 +10,24 @@ datasource db {
 }
 
 // User model with authentication fields
+// User model with authentication fields
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  passwordHash  String
-  name          String?
-  role          UserRole  @default(USER)
+  id              String      @id @default(cuid())
+  email           String      @unique
+  passwordHash    String
+  name            String?
+  role            UserRole    @default(USER)
 
   // Timestamps
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  lastLoginAt   DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  lastLoginAt     DateTime?
+  
+  // 🔥 Recommended Addition: Track last password change
+  passwordChangedAt DateTime  @default(now()) 
 
   // Relations
-  sessions      Session[]
+  sessions        Session[]
 
   @@index([email])
   @@map("users")
