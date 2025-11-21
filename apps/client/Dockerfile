@@ -1,25 +1,19 @@
 # ---------------------------------------------------
-# Builder Stage
+# Production Stage (Powred by Node)
 # ---------------------------------------------------
-FROM node:18-alpine AS builder
+FROM node:18-alpine AS production
+WORKDIR /app/apps/client
 
-WORKDIR /app
-COPY package*.json tsconfig.json ./
-COPY packages ./packages
-COPY apps/admin ./apps/admin
+# Copy necessary files and dependencies
+COPY --from=builder /app/apps/client/.next ./.next
+COPY --from=builder /app/apps/client/node_modules ./node_modules
+COPY --from=builder /app/package.json .
+# ... (Copy other required files)
 
-RUN npm ci
-RUN npm run build:packages
-RUN npm run build --workspace=apps/admin
+ENV NODE_ENV=production
+# Vercel's Next.js standard port is 3000, 
+# but we use 3001 in docker-compose.yml
+EXPOSE 3001 
 
-# ---------------------------------------------------
-# Production Stage
-# ---------------------------------------------------
-FROM nginx:alpine AS production
-
-# Copy built static files to Nginx html folder
-COPY --from=builder /app/apps/admin/dist /usr/share/nginx/html
-COPY apps/admin/nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 3002
-CMD ["nginx", "-g", "daemon off;"]
+# CRITICAL: Run the Next.js server using Node, not Nginx
+CMD ["npm", "start"] 
