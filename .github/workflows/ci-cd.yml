@@ -27,7 +27,11 @@ jobs:
       - name: Install dependencies (npm ci)
         # Installs all dependencies across all workspaces
         run: npm ci
-        
+
+      - name: Build shared packages
+        # Required before type-check, lint, and test
+        run: npm run build:packages
+
       # Run checks using centralized Root scripts
       - name: Run Type Checking (tsc --noEmit)
         run: npm run type-check
