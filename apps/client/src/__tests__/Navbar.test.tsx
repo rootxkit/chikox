@@ -53,8 +53,11 @@ describe('Navbar', () => {
   it('renders language switcher', () => {
     renderNavbar();
 
-    expect(screen.getByText('EN')).toBeInTheDocument();
-    expect(screen.getByText('GE')).toBeInTheDocument();
+    // Both desktop and mobile have language switchers
+    const enButtons = screen.getAllByText('EN');
+    const geButtons = screen.getAllByText('GE');
+    expect(enButtons.length).toBeGreaterThanOrEqual(1);
+    expect(geButtons.length).toBeGreaterThanOrEqual(1);
   });
 
   it('renders theme toggle', () => {
