@@ -15,6 +15,9 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 // English translations
 const en = {
   // Navbar
+  'nav.home': 'Home',
+  'nav.products': 'Products',
+  'nav.about': 'About Us',
   'nav.login': 'Login',
   'nav.register': 'Register',
 
@@ -116,6 +119,9 @@ const en = {
 // Georgian translations
 const ge: typeof en = {
   // Navbar
+  'nav.home': 'მთავარი',
+  'nav.products': 'პროდუქტები',
+  'nav.about': 'ჩვენს შესახებ',
   'nav.login': 'შესვლა',
   'nav.register': 'რეგისტრაცია',
 

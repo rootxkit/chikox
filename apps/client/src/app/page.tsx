@@ -62,7 +62,7 @@ export default function HomePage() {
             />
           </div>
           <div className="order-1 lg:order-2">
-            <h1 className="mb-4 text-3xl font-bold sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-7xl">
+            <h1 className="mb-4 text-3xl font-bold sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl">
               {t('hero.title')}
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-neutral">{t('hero.description')}</p>

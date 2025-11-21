@@ -39,6 +39,7 @@ body {
   background-color: rgb(var(--color-background-primary));
   color: rgb(var(--color-text-primary));
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar for dark theme */

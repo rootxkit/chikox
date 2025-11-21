@@ -483,7 +483,7 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
           </div>
           <div className="grid w-full grid-cols-1 items-start justify-start gap-y-8 py-2 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:gap-x-8 lg:gap-y-12">
             <div className="w-full border-l-2 border-border-primary pl-8">
-              <p className="mb-2 text-4xl font-bold leading-[1.3] sm:text-5xl md:text-6xl lg:text-7xl">
+              <p className="mb-2 text-4xl font-bold leading-[1.3] sm:text-5xl md:text-6xl">
                 50%
               </p>
               <h3 className="text-md font-bold leading-[1.4] md:text-xl">
