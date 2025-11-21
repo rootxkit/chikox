@@ -1,31 +1,25 @@
-# Build Stage
+# ---------------------------------------------------
+# Builder Stage
+# ---------------------------------------------------
 FROM node:18-alpine AS builder
 
 WORKDIR /app
-COPY package*.json ./
-COPY tsconfig.json ./
+COPY package*.json tsconfig.json ./
 COPY packages ./packages
-COPY apps/client ./apps/client
+COPY apps/admin ./apps/admin
 
 RUN npm ci
-RUN npm run build:client
+RUN npm run build:packages
+RUN npm run build --workspace=apps/admin
 
+# ---------------------------------------------------
 # Production Stage
-FROM node:18-alpine AS production
+# ---------------------------------------------------
+FROM nginx:alpine AS production
 
-WORKDIR /app
+# Copy built static files to Nginx html folder
+COPY --from=builder /app/apps/admin/dist /usr/share/nginx/html
+COPY apps/admin/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install wget for health checks
-RUN apk add --no-cache wget
-
-COPY --from=builder /app/apps/client/.next ./apps/client/.next
-COPY --from=builder /app/apps/client/package.json ./apps/client/
-COPY --from=builder /app/apps/client/next.config.js ./apps/client/
-COPY package*.json ./
-
-RUN npm ci --production --workspace=apps/client
-
-ENV NODE_ENV=production
-EXPOSE 3001
-
-CMD ["npm", "run", "start:client"]
+EXPOSE 3002
+CMD ["nginx", "-g", "daemon off;"]
