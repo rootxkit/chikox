@@ -16,9 +16,11 @@ ARG NODE_ENV=production
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NODE_ENV=$NODE_ENV
 
-# Copy configuration files for the root and the client package
+# Copy configuration files for root, client, and shared packages
 COPY package.json package-lock.json ./
 COPY apps/client/package.json apps/client/package.json
+COPY packages/database/package.json packages/database/package.json
+COPY packages/types/package.json packages/types/package.json
 
 # Install dependencies
 RUN npm install
@@ -26,9 +28,11 @@ RUN npm install
 # Copy all source code into the builder stage
 COPY . .
 
+# Build shared packages first (required for client build)
+RUN npm run build:packages
+
 # Run the Next.js build command for the client application
-# This is where the build is failing due to missing context/vars.
-RUN npm run build --workspace=apps/client 
+RUN npm run build --workspace=apps/client
 
 
 # ---------------------------------------------------
