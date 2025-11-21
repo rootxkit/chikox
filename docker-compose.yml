@@ -20,7 +20,7 @@ services:
     networks:
       - chikox-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U myuser -d chikox_db"]
+      test: ["CMD-SHELL", "pg_isready -U chikox -d chikox_db"]
       interval: 5s
       timeout: 5s
       retries: 5
