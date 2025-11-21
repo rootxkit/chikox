@@ -10,14 +10,14 @@ RUN apk add --no-cache libc6-compat openssl
 FROM base AS builder
 WORKDIR /app
 
-# Copy configuration files
+# Copy configuration and source files
 COPY package*.json tsconfig.json ./
 COPY packages ./packages
 COPY apps/server ./apps/server
 
 # Install dependencies and build
 RUN npm ci
-RUN npm run db:generate
+RUN npm run db:generate  # Generate Prisma Client after install
 RUN npm run build:packages
 RUN npm run build --workspace=apps/server
 
@@ -33,10 +33,11 @@ COPY --from=builder /app/apps/server/dist ./apps/server/dist
 COPY --from=builder /app/apps/server/package.json ./apps/server/
 COPY --from=builder /app/packages ./packages
 
-# Install only production dependencies
+# Install only production dependencies for the server app
 RUN npm ci --production --workspace=apps/server
 
 # Regenerate Prisma Client in production to ensure binary compatibility
+# (Crucial when using Alpine's linux-musl target)
 COPY packages/database/prisma ./packages/database/prisma
 RUN npx prisma generate --schema=./packages/database/prisma/schema.prisma
 
