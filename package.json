@@ -28,7 +28,7 @@
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
 
-    "type-check": "tsc --noEmit", 
+    "type-check": "tsc --noEmit -p apps/server && tsc --noEmit -p apps/client && tsc --noEmit -p apps/admin",
     
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
