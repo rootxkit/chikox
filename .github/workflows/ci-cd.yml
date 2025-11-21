@@ -10,13 +10,43 @@ env:
 
 jobs:
   # ---------------------------------------------------
-  # Job 1: Build and Push Images to GitHub Registry
+  # Job 1: Setup and Quality Checks (Lint, Test, Type-Check)
+  # ---------------------------------------------------
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (npm ci)
+        # Installs all dependencies across all workspaces
+        run: npm ci
+        
+      # Run checks using centralized Root scripts
+      - name: Run Type Checking (tsc --noEmit)
+        run: npm run type-check
+
+      - name: Run Linting Checks (eslint)
+        run: npm run lint
+        
+      - name: Run Unit Tests (vitest)
+        run: npm run test
+
+  # ---------------------------------------------------
+  # Job 2: Build and Push Images to GitHub Registry
   # ---------------------------------------------------
   build-and-push:
     runs-on: ubuntu-latest
+    needs: quality-check # Ensures we build only after all code quality checks pass
     permissions:
       contents: read
-      packages: write # Required to push to GHCR
+      packages: write 
 
     strategy:
       fail-fast: false
@@ -49,18 +79,16 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          # Tags the image as ghcr.io/rootxkit/chikox/server:latest
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.service }}:latest
-          # Uses GitHub Actions cache to speed up future builds
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
+          
   # ---------------------------------------------------
-  # Job 2: Deploy to VPS via SSH
+  # Job 3: Deploy to VPS via SSH
   # ---------------------------------------------------
   deploy:
     runs-on: ubuntu-latest
-    needs: build-and-push
+    needs: build-and-push # Deploy only after successful images are pushed
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -71,24 +99,17 @@ jobs:
           port: ${{ secrets.PROD_SERVER_PORT || 22 }}
           script: |
             cd /var/www/chikox
-
-            # 1. Pull the latest code (mostly for docker-compose.yml updates)
-            git config --global --add safe.directory /var/www/chikox
             git pull origin main
-
-            # 2. Login to GHCR using the Personal Access Token (CR_PAT)
-            # We use CR_PAT because GITHUB_TOKEN is not available inside the SSH session
+            
+            # Login to GHCR using the Personal Access Token (CR_PAT)
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u rootxkit --password-stdin
 
-            # 3. Pull the new images (Fast operation)
+            # Pull and deploy with minimal downtime
             docker compose pull
-
-            # 4. Recreate containers (Minimal downtime - only seconds)
             docker compose up -d --remove-orphans
-
-            # 5. Run Database Migrations
-            echo "Running Migrations..."
+            
+            # Run Database Migrations
             docker compose exec -T server npx prisma migrate deploy --schema=/app/packages/database/prisma/schema.prisma
 
-            # 6. Cleanup unused images to save space
+            # Cleanup
             docker system prune -f
