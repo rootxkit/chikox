@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Home from '../app/page';
 import { ThemeProvider } from '../context/ThemeContext';
 import { LanguageProvider } from '../context/LanguageContext';
+import { AuthProvider } from '../context/AuthContext';
 
 // Mock next/link
 vi.mock('next/link', () => ({
@@ -11,11 +12,22 @@ vi.mock('next/link', () => ({
   )
 }));
 
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn()
+  })
+}));
+
 const renderHomePage = () => {
   return render(
     <LanguageProvider>
       <ThemeProvider>
-        <Home />
+        <AuthProvider>
+          <Home />
+        </AuthProvider>
       </ThemeProvider>
     </LanguageProvider>
   );
