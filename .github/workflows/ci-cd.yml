@@ -106,14 +106,23 @@ jobs:
           script: |
             cd /var/www/chikox
             git pull origin main
-            
+
             # Login to GHCR using the Personal Access Token (CR_PAT)
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u rootxkit --password-stdin
 
-            # Pull and deploy with minimal downtime
+            # Pull latest images
             docker compose pull
+
+            # Rolling update: recreate services one at a time for minimal downtime
+            # Keep database and proxy running, update app services
+            docker compose up -d --no-deps --force-recreate server
+            sleep 5
+            docker compose up -d --no-deps --force-recreate client
+            docker compose up -d --no-deps --force-recreate admin
+
+            # Ensure proxy picks up any network changes
             docker compose up -d --remove-orphans
-            
+
             # Run Database Migrations
             docker compose exec -T server npx prisma migrate deploy --schema=/app/packages/database/prisma/schema.prisma
 
