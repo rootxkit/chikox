@@ -72,17 +72,49 @@ export default function Navbar() {
               </Link>
             ))}
             {isAuthenticated && user && (
-              <>
-                <span className="text-sm lg:text-base text-text-primary">
-                  {user.name || user.email}
-                </span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-background-primary rounded-full border border-border-primary">
+                  <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-4 h-4 text-text-alternative"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-sm font-medium text-text-primary">
+                    {user.name || user.email.split('@')[0]}
+                  </span>
+                </div>
                 <button
                   onClick={logout}
-                  className="text-sm lg:text-base text-text-primary hover:text-accent transition-colors"
+                  className="p-2 text-text-primary hover:text-accent hover:bg-background-primary rounded-lg transition-colors"
+                  title={t('nav.logout')}
                 >
-                  {t('nav.logout')}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                    />
+                  </svg>
                 </button>
-              </>
+              </div>
             )}
             <div className="flex items-center gap-3 ml-2">
               <LanguageSwitcher />
@@ -158,16 +190,48 @@ export default function Navbar() {
                 ))}
                 {isAuthenticated && user && (
                   <>
-                    <span className="text-sm text-text-primary py-2.5 border-b border-border-primary">
-                      {user.name || user.email}
-                    </span>
+                    <div className="flex items-center gap-3 py-3 border-b border-border-primary">
+                      <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-4 h-4 text-text-alternative"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          />
+                        </svg>
+                      </div>
+                      <span className="text-sm font-medium text-text-primary">
+                        {user.name || user.email.split('@')[0]}
+                      </span>
+                    </div>
                     <button
                       onClick={() => {
                         closeMenu();
                         logout();
                       }}
-                      className="text-sm text-text-primary hover:text-accent transition-colors py-2.5 border-b border-border-primary text-left"
+                      className="flex items-center gap-2 text-sm text-text-primary hover:text-accent transition-colors py-2.5 border-b border-border-primary text-left w-full"
                     >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                        />
+                      </svg>
                       {t('nav.logout')}
                     </button>
                   </>
