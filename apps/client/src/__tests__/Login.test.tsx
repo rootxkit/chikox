@@ -18,7 +18,8 @@ vi.mock('next/navigation', () => ({
     push: vi.fn(),
     replace: vi.fn(),
     prefetch: vi.fn()
-  })
+  }),
+  usePathname: () => '/login'
 }));
 
 const renderLoginPage = () => {

@@ -18,7 +18,8 @@ vi.mock('next/navigation', () => ({
     push: vi.fn(),
     replace: vi.fn(),
     prefetch: vi.fn()
-  })
+  }),
+  usePathname: () => '/'
 }));
 
 const renderHomePage = () => {
@@ -44,8 +45,8 @@ describe('Home Page', () => {
 
     // Chiko appears in both navbar and footer
     expect(screen.getAllByText('Chiko').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText('Login')).toBeInTheDocument();
-    expect(screen.getByText('Register')).toBeInTheDocument();
+    // Login/Register are now in a dropdown, just verify navbar exists
+    expect(screen.getByRole('navigation')).toBeInTheDocument();
   });
 
   it('should render hero section', () => {

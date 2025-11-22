@@ -114,7 +114,37 @@ const en = {
   'register.hasAccount': 'Already have an account?',
   'register.signIn': 'Sign in',
   'register.passwordMismatch': 'Passwords do not match',
-  'register.passwordTooShort': 'Password must be at least 8 characters'
+  'register.passwordTooShort': 'Password must be at least 8 characters',
+
+  // Forgot Password
+  'forgotPassword.title': 'Forgot password',
+  'forgotPassword.subtitle': 'Enter your email to receive a reset link',
+  'forgotPassword.email': 'Email',
+  'forgotPassword.emailPlaceholder': 'Enter your email',
+  'forgotPassword.sendReset': 'Send reset link',
+  'forgotPassword.sending': 'Sending...',
+  'forgotPassword.success': 'If an account exists with this email, a reset link has been sent',
+  'forgotPassword.failed': 'Failed to send reset email',
+  'forgotPassword.backToLogin': 'Back to login',
+
+  // Reset Password
+  'resetPassword.title': 'Reset password',
+  'resetPassword.subtitle': 'Enter your new password',
+  'resetPassword.newPassword': 'New password',
+  'resetPassword.newPasswordPlaceholder': 'Enter new password',
+  'resetPassword.confirmPassword': 'Confirm password',
+  'resetPassword.confirmPasswordPlaceholder': 'Confirm new password',
+  'resetPassword.resetButton': 'Reset password',
+  'resetPassword.resetting': 'Resetting...',
+  'resetPassword.success': 'Password has been reset successfully',
+  'resetPassword.failed': 'Failed to reset password',
+  'resetPassword.invalidToken': 'Invalid or expired reset link',
+  'resetPassword.passwordMismatch': 'Passwords do not match',
+  'resetPassword.passwordTooShort': 'Password must be at least 8 characters',
+  'resetPassword.backToLogin': 'Back to login',
+
+  // Common
+  'login.failed': 'Login failed'
 };
 
 // Georgian translations
@@ -219,7 +249,37 @@ const ge: typeof en = {
   'register.hasAccount': 'უკვე გაქვთ ანგარიში?',
   'register.signIn': 'შესვლა',
   'register.passwordMismatch': 'პაროლები არ ემთხვევა',
-  'register.passwordTooShort': 'პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო'
+  'register.passwordTooShort': 'პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო',
+
+  // Forgot Password
+  'forgotPassword.title': 'დაგავიწყდათ პაროლი',
+  'forgotPassword.subtitle': 'შეიყვანეთ თქვენი ელ-ფოსტა აღდგენის ბმულის მისაღებად',
+  'forgotPassword.email': 'ელ-ფოსტა',
+  'forgotPassword.emailPlaceholder': 'შეიყვანეთ თქვენი ელ-ფოსტა',
+  'forgotPassword.sendReset': 'აღდგენის ბმულის გაგზავნა',
+  'forgotPassword.sending': 'იგზავნება...',
+  'forgotPassword.success': 'თუ ანგარიში არსებობს ამ ელ-ფოსტით, აღდგენის ბმული გაიგზავნა',
+  'forgotPassword.failed': 'აღდგენის ელ-ფოსტის გაგზავნა ვერ მოხერხდა',
+  'forgotPassword.backToLogin': 'შესვლის გვერდზე დაბრუნება',
+
+  // Reset Password
+  'resetPassword.title': 'პაროლის აღდგენა',
+  'resetPassword.subtitle': 'შეიყვანეთ თქვენი ახალი პაროლი',
+  'resetPassword.newPassword': 'ახალი პაროლი',
+  'resetPassword.newPasswordPlaceholder': 'შეიყვანეთ ახალი პაროლი',
+  'resetPassword.confirmPassword': 'პაროლის დადასტურება',
+  'resetPassword.confirmPasswordPlaceholder': 'დაადასტურეთ ახალი პაროლი',
+  'resetPassword.resetButton': 'პაროლის აღდგენა',
+  'resetPassword.resetting': 'აღდგენა...',
+  'resetPassword.success': 'პაროლი წარმატებით აღდგა',
+  'resetPassword.failed': 'პაროლის აღდგენა ვერ მოხერხდა',
+  'resetPassword.invalidToken': 'არასწორი ან ვადაგასული აღდგენის ბმული',
+  'resetPassword.passwordMismatch': 'პაროლები არ ემთხვევა',
+  'resetPassword.passwordTooShort': 'პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო',
+  'resetPassword.backToLogin': 'შესვლის გვერდზე დაბრუნება',
+
+  // Common
+  'login.failed': 'შესვლა ვერ მოხერხდა'
 };
 
 const translations = { en, ge };

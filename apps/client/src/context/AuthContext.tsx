@@ -12,6 +12,8 @@ interface AuthContextType {
   login: (data: LoginRequest) => Promise<{ success: boolean; error?: string }>;
   register: (data: RegisterRequest) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<{ success: boolean; error?: string; message?: string }>;
+  resetPassword: (token: string, password: string) => Promise<{ success: boolean; error?: string; message?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,9 +31,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const response = await api.getProfile();
           if (response.success && response.data) {
-            setUser(response.data.user);
+            setUser(response.data);
           } else {
-            localStorage.removeItem('accessToken');
+            // Token invalid or expired, try to refresh
+            try {
+              const refreshResponse = await api.refreshToken();
+              if (refreshResponse.success && refreshResponse.data) {
+                localStorage.setItem('accessToken', refreshResponse.data.accessToken);
+                // Retry getting profile
+                const retryResponse = await api.getProfile();
+                if (retryResponse.success && retryResponse.data) {
+                  setUser(retryResponse.data);
+                } else {
+                  localStorage.removeItem('accessToken');
+                }
+              } else {
+                localStorage.removeItem('accessToken');
+              }
+            } catch {
+              localStorage.removeItem('accessToken');
+            }
           }
         } catch {
           localStorage.removeItem('accessToken');
@@ -97,6 +116,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [router]);
 
+  const forgotPassword = useCallback(async (email: string) => {
+    try {
+      const response = await api.forgotPassword({ email });
+
+      if (response.success && response.data) {
+        return { success: true, message: response.data.message };
+      } else {
+        return {
+          success: false,
+          error: response.error?.message || 'Failed to send reset email'
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to send reset email'
+      };
+    }
+  }, []);
+
+  const resetPassword = useCallback(async (token: string, password: string) => {
+    try {
+      const response = await api.resetPassword({ token, password });
+
+      if (response.success && response.data) {
+        return { success: true, message: response.data.message };
+      } else {
+        return {
+          success: false,
+          error: response.error?.message || 'Failed to reset password'
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to reset password'
+      };
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -105,7 +164,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         login,
         register,
-        logout
+        logout,
+        forgotPassword,
+        resetPassword
       }}
     >
       {children}

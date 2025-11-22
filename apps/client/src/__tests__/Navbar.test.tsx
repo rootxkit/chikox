@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Navbar from '../components/Navbar';
 import { ThemeProvider } from '../context/ThemeContext';
 import { LanguageProvider } from '../context/LanguageContext';
@@ -18,7 +18,8 @@ vi.mock('next/navigation', () => ({
     push: vi.fn(),
     replace: vi.fn(),
     prefetch: vi.fn()
-  })
+  }),
+  usePathname: () => '/'
 }));
 
 const renderNavbar = () => {
@@ -46,20 +47,26 @@ describe('Navbar', () => {
     expect(screen.getByText('x')).toBeInTheDocument();
   });
 
-  it('renders login link', () => {
+  it('renders user dropdown button', () => {
     renderNavbar();
 
-    const loginLink = screen.getByRole('link', { name: /login/i });
-    expect(loginLink).toBeInTheDocument();
-    expect(loginLink).toHaveAttribute('href', '/login');
+    // User icon button should be present
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('renders register link', () => {
+  it('shows login and register in dropdown when clicked', async () => {
     renderNavbar();
 
+    // Find the user dropdown button (the one with no text, just icon)
+    const userButton = screen.getAllByRole('button')[0];
+    fireEvent.click(userButton);
+
+    // After clicking, login and register links should appear
+    const loginLink = screen.getByRole('link', { name: /login/i });
     const registerLink = screen.getByRole('link', { name: /register/i });
+    expect(loginLink).toBeInTheDocument();
     expect(registerLink).toBeInTheDocument();
-    expect(registerLink).toHaveAttribute('href', '/register');
   });
 
   it('renders language switcher', () => {

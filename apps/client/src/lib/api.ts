@@ -1,4 +1,4 @@
-import type { ApiResponse, AuthResponse, LoginRequest, RegisterRequest } from '@chikox/types';
+import type { ApiResponse, AuthResponse, LoginRequest, RegisterRequest, ForgotPasswordRequest, ResetPasswordRequest } from '@chikox/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
@@ -63,9 +63,23 @@ class ApiClient {
     });
   }
 
-  async getProfile(): Promise<ApiResponse<{ user: AuthResponse['user'] }>> {
-    return this.request<{ user: AuthResponse['user'] }>('/api/v1/users/me', {
+  async getProfile(): Promise<ApiResponse<AuthResponse['user']>> {
+    return this.request<AuthResponse['user']>('/api/v1/users/me', {
       method: 'GET'
+    });
+  }
+
+  async forgotPassword(data: ForgotPasswordRequest): Promise<ApiResponse<{ message: string }>> {
+    return this.request<{ message: string }>('/api/v1/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  }
+
+  async resetPassword(data: ResetPasswordRequest): Promise<ApiResponse<{ message: string }>> {
+    return this.request<{ message: string }>('/api/v1/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify(data)
     });
   }
 }
