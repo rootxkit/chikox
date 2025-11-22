@@ -47,7 +47,7 @@ npm test                     # Run all tests across workspaces
 npm run test:watch           # Watch mode for all tests
 npm run test:server          # Server tests only
 npm run test:client          # Client tests only
-vitest run                   # Run tests in specific workspace
+npm run test:admin           # Admin tests only
 ```
 
 ### Database Operations
@@ -113,6 +113,8 @@ The system uses **dual-token JWT authentication**:
 
 - `apps/server/src/routes/auth.routes.ts` - Authentication endpoints (registered at `/api/v1/auth`)
 - `apps/server/src/routes/user.routes.ts` - User management endpoints (registered at `/api/v1/users`)
+
+**Health Check**: `GET /health` returns server status and timestamp
 
 **Middleware**:
 
@@ -239,12 +241,13 @@ Contains interfaces used by both server and client:
 
 ```bash
 # In workspace directory
-cd apps/server && vitest run src/routes/__tests__/auth.test.ts
-cd apps/admin && vitest run src/__tests__/Login.test.tsx
+cd apps/server && npx vitest run src/routes/__tests__/auth.test.ts
+cd apps/admin && npx vitest run src/__tests__/Login.test.tsx
+cd apps/client && npx vitest run src/__tests__/Login.test.tsx
 
 # Or from root with workspace flag
-vitest run apps/server/src/routes/__tests__/auth.test.ts
-vitest run apps/admin/src/__tests__/Login.test.tsx
+npx vitest run apps/server/src/routes/__tests__/auth.test.ts
+npx vitest run apps/admin/src/__tests__/Login.test.tsx
 ```
 
 **Note**: Admin tests use React Testing Library with jsdom environment. Run with UI for debugging:
@@ -275,6 +278,8 @@ COOKIE_SECRET=your-secret
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
+
+**Note**: The client app includes ThemeContext (dark mode) and LanguageContext (internationalization) providers in `apps/client/src/context/`.
 
 ### Admin (`apps/admin/.env`)
 
@@ -336,10 +341,11 @@ The project uses GitHub Actions for continuous integration and deployment.
 
 **Key Points**:
 
+- CI uses Node.js 22.x (newer than the 18.x minimum in package.json engines)
 - Shared packages (`@chikox/database`, `@chikox/types`) are built before type-check, tests, and build stages
 - All stages must pass before deployment
 - Uses GitHub Actions cache (v4) for faster builds
-- Requires secrets for deployment: `PROD_SERVER_HOST`, `PROD_SERVER_USERNAME`, `PROD_SERVER_SSH_KEY`
+- Requires secrets for deployment: `PROD_SERVER_HOST`, `PROD_SERVER_USERNAME`, `PROD_SERVER_SSH_KEY`, `PROD_SERVER_PORT` (optional, defaults to 22)
 
 **Deployment Methods**:
 
