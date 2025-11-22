@@ -5,9 +5,11 @@ import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar() {
   const { t } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -28,10 +30,15 @@ export default function Navbar() {
   const navLinks = [
     { href: '/', label: t('nav.home') },
     { href: '/products', label: t('nav.products') },
-    { href: '/about', label: t('nav.about') },
-    { href: '/login', label: t('nav.login') },
-    { href: '/register', label: t('nav.register') }
+    { href: '/about', label: t('nav.about') }
   ];
+
+  const authLinks = isAuthenticated
+    ? []
+    : [
+        { href: '/login', label: t('nav.login') },
+        { href: '/register', label: t('nav.register') }
+      ];
 
   return (
     <nav className="border-b border-border-primary bg-background-alternative sticky top-0 z-50">
@@ -55,6 +62,28 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {authLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm lg:text-base text-text-primary hover:text-accent transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            {isAuthenticated && user && (
+              <>
+                <span className="text-sm lg:text-base text-text-primary">
+                  {user.name || user.email}
+                </span>
+                <button
+                  onClick={logout}
+                  className="text-sm lg:text-base text-text-primary hover:text-accent transition-colors"
+                >
+                  {t('nav.logout')}
+                </button>
+              </>
+            )}
             <div className="flex items-center gap-3 ml-2">
               <LanguageSwitcher />
               <ThemeToggle />
@@ -117,6 +146,32 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                {authLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="text-sm text-text-primary hover:text-accent transition-colors py-2.5 border-b border-border-primary"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                {isAuthenticated && user && (
+                  <>
+                    <span className="text-sm text-text-primary py-2.5 border-b border-border-primary">
+                      {user.name || user.email}
+                    </span>
+                    <button
+                      onClick={() => {
+                        closeMenu();
+                        logout();
+                      }}
+                      className="text-sm text-text-primary hover:text-accent transition-colors py-2.5 border-b border-border-primary text-left"
+                    >
+                      {t('nav.logout')}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

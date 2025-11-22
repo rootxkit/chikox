@@ -20,6 +20,7 @@ const en = {
   'nav.about': 'About Us',
   'nav.login': 'Login',
   'nav.register': 'Register',
+  'nav.logout': 'Logout',
 
   // Hero
   'hero.title': 'Professional Drone Services for Every Need',
@@ -124,6 +125,7 @@ const ge: typeof en = {
   'nav.about': 'ჩვენს შესახებ',
   'nav.login': 'შესვლა',
   'nav.register': 'რეგისტრაცია',
+  'nav.logout': 'გასვლა',
 
   // Hero
   'hero.title': 'პროფესიონალური დრონის სერვისები ყველა საჭიროებისთვის',
