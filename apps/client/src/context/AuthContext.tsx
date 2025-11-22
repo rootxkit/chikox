@@ -12,8 +12,13 @@ interface AuthContextType {
   login: (data: LoginRequest) => Promise<{ success: boolean; error?: string }>;
   register: (data: RegisterRequest) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
-  forgotPassword: (email: string) => Promise<{ success: boolean; error?: string; message?: string }>;
-  resetPassword: (token: string, password: string) => Promise<{ success: boolean; error?: string; message?: string }>;
+  forgotPassword: (
+    email: string
+  ) => Promise<{ success: boolean; error?: string; message?: string }>;
+  resetPassword: (
+    token: string,
+    password: string
+  ) => Promise<{ success: boolean; error?: string; message?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

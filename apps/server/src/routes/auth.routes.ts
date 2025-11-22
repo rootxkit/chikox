@@ -262,8 +262,8 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
 
         // Session duration: 30 days if rememberMe, otherwise 7 days
         const sessionDuration = data.rememberMe
-          ? 30 * 24 * 60 * 60 * 1000  // 30 days
-          : 7 * 24 * 60 * 60 * 1000;   // 7 days
+          ? 30 * 24 * 60 * 60 * 1000 // 30 days
+          : 7 * 24 * 60 * 60 * 1000; // 7 days
 
         // Create session
         await prisma.session.create({
