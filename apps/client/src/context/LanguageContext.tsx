@@ -144,7 +144,21 @@ const en = {
   'resetPassword.backToLogin': 'Back to login',
 
   // Common
-  'login.failed': 'Login failed'
+  'login.failed': 'Login failed',
+
+  // Verify Email
+  'verifyEmail.title': 'Verify Email',
+  'verifyEmail.subtitle': 'Confirming your email address',
+  'verifyEmail.verifying': 'Verifying your email...',
+  'verifyEmail.success': 'Email verified successfully',
+  'verifyEmail.failed': 'Failed to verify email',
+  'verifyEmail.invalidToken': 'Invalid or expired verification link',
+  'verifyEmail.tryAgain': 'Please request a new verification email',
+  'verifyEmail.canLogin': 'You can now login to your account',
+  'verifyEmail.goToLogin': 'Go to login',
+
+  // Registration success
+  'register.verificationSent': 'Please check your email to verify your account'
 };
 
 // Georgian translations
@@ -279,7 +293,21 @@ const ge: typeof en = {
   'resetPassword.backToLogin': 'შესვლის გვერდზე დაბრუნება',
 
   // Common
-  'login.failed': 'შესვლა ვერ მოხერხდა'
+  'login.failed': 'შესვლა ვერ მოხერხდა',
+
+  // Verify Email
+  'verifyEmail.title': 'ელ-ფოსტის დადასტურება',
+  'verifyEmail.subtitle': 'თქვენი ელ-ფოსტის მისამართის დადასტურება',
+  'verifyEmail.verifying': 'ელ-ფოსტის დადასტურება...',
+  'verifyEmail.success': 'ელ-ფოსტა წარმატებით დადასტურდა',
+  'verifyEmail.failed': 'ელ-ფოსტის დადასტურება ვერ მოხერხდა',
+  'verifyEmail.invalidToken': 'არასწორი ან ვადაგასული დადასტურების ბმული',
+  'verifyEmail.tryAgain': 'გთხოვთ მოითხოვოთ ახალი დადასტურების ელ-ფოსტა',
+  'verifyEmail.canLogin': 'ახლა შეგიძლიათ შეხვიდეთ თქვენს ანგარიშზე',
+  'verifyEmail.goToLogin': 'შესვლის გვერდზე გადასვლა',
+
+  // Registration success
+  'register.verificationSent': 'გთხოვთ შეამოწმოთ თქვენი ელ-ფოსტა ანგარიშის დასადასტურებლად'
 };
 
 const translations = { en, ge };

@@ -17,8 +17,12 @@ import {
   setRefreshTokenCookie,
   clearRefreshTokenCookie
 } from '../utils/auth.js';
-import { sendPasswordResetEmail } from '../utils/email.js';
+import { sendPasswordResetEmail, sendVerificationEmail } from '../utils/email.js';
 import crypto from 'crypto';
+
+const verifyEmailSchema = z.object({
+  token: z.string()
+});
 
 // Validation schemas
 const registerSchema = z.object({
@@ -118,9 +122,26 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
           data: {
             email: data.email,
             passwordHash,
-            name: data.name
+            name: data.name,
+            emailVerified: false
           }
         });
+
+        // Generate email verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+        // Create verification token
+        await prisma.emailVerificationToken.create({
+          data: {
+            userId: user.id,
+            token: verificationToken,
+            expiresAt: tokenExpiry
+          }
+        });
+
+        // Send verification email
+        await sendVerificationEmail(user.email, verificationToken);
 
         // Generate tokens
         const { accessToken, refreshToken } = await generateTokens(request, {
@@ -532,6 +553,209 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
           success: true,
           data: {
             message: 'Password has been reset successfully'
+          }
+        });
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          return reply.status(400).send({
+            success: false,
+            error: {
+              message: 'Validation failed',
+              code: 'VALIDATION_ERROR',
+              details: error.errors
+            }
+          });
+        }
+        throw error;
+      }
+    }
+  );
+
+  /**
+   * Verify email address
+   */
+  server.post<{
+    Body: { token: string };
+    Reply: ApiResponse<{ message: string }>;
+  }>(
+    '/verify-email',
+    {
+      schema: {
+        description: 'Verify email address with token',
+        tags: ['Authentication'],
+        body: {
+          type: 'object',
+          required: ['token'],
+          properties: {
+            token: { type: 'string' }
+          }
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+              data: {
+                type: 'object',
+                properties: {
+                  message: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    async (request: FastifyRequest<{ Body: { token: string } }>, reply: FastifyReply) => {
+      try {
+        const data = verifyEmailSchema.parse(request.body);
+
+        // Find valid token
+        const verificationToken = await prisma.emailVerificationToken.findUnique({
+          where: { token: data.token },
+          include: { user: true }
+        });
+
+        if (
+          !verificationToken ||
+          verificationToken.used ||
+          verificationToken.expiresAt < new Date()
+        ) {
+          return reply.status(400).send({
+            success: false,
+            error: {
+              message: 'Invalid or expired verification token',
+              code: 'INVALID_TOKEN'
+            }
+          });
+        }
+
+        // Check if already verified
+        if (verificationToken.user.emailVerified) {
+          return reply.send({
+            success: true,
+            data: {
+              message: 'Email is already verified'
+            }
+          });
+        }
+
+        // Update user and mark token as used
+        await prisma.$transaction([
+          prisma.user.update({
+            where: { id: verificationToken.userId },
+            data: { emailVerified: true }
+          }),
+          prisma.emailVerificationToken.update({
+            where: { id: verificationToken.id },
+            data: { used: true }
+          })
+        ]);
+
+        return reply.send({
+          success: true,
+          data: {
+            message: 'Email verified successfully'
+          }
+        });
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          return reply.status(400).send({
+            success: false,
+            error: {
+              message: 'Validation failed',
+              code: 'VALIDATION_ERROR',
+              details: error.errors
+            }
+          });
+        }
+        throw error;
+      }
+    }
+  );
+
+  /**
+   * Resend verification email
+   */
+  server.post<{
+    Body: { email: string };
+    Reply: ApiResponse<{ message: string }>;
+  }>(
+    '/resend-verification',
+    {
+      schema: {
+        description: 'Resend verification email',
+        tags: ['Authentication'],
+        body: {
+          type: 'object',
+          required: ['email'],
+          properties: {
+            email: { type: 'string', format: 'email' }
+          }
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+              data: {
+                type: 'object',
+                properties: {
+                  message: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    async (request: FastifyRequest<{ Body: { email: string } }>, reply: FastifyReply) => {
+      try {
+        const { email } = request.body;
+
+        // Find user
+        const user = await prisma.user.findUnique({
+          where: { email }
+        });
+
+        // Always return success to prevent email enumeration
+        if (!user || user.emailVerified) {
+          return reply.send({
+            success: true,
+            data: {
+              message:
+                'If an unverified account exists with this email, a verification link has been sent'
+            }
+          });
+        }
+
+        // Invalidate any existing tokens
+        await prisma.emailVerificationToken.updateMany({
+          where: { userId: user.id, used: false },
+          data: { used: true }
+        });
+
+        // Generate new verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+        // Create new token
+        await prisma.emailVerificationToken.create({
+          data: {
+            userId: user.id,
+            token: verificationToken,
+            expiresAt: tokenExpiry
+          }
+        });
+
+        // Send verification email
+        await sendVerificationEmail(user.email, verificationToken);
+
+        return reply.send({
+          success: true,
+          data: {
+            message:
+              'If an unverified account exists with this email, a verification link has been sent'
           }
         });
       } catch (error) {

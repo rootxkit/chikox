@@ -10,7 +10,6 @@ datasource db {
 }
 
 // User model with authentication fields
-// User model with authentication fields
 model User {
   id              String      @id @default(cuid())
   email           String      @unique
@@ -18,17 +17,21 @@ model User {
   name            String?
   role            UserRole    @default(USER)
 
+  // Email verification
+  emailVerified   Boolean     @default(false)
+
   // Timestamps
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   lastLoginAt     DateTime?
-  
-  // 🔥 Recommended Addition: Track last password change
-  passwordChangedAt DateTime  @default(now()) 
+
+  // Track last password change
+  passwordChangedAt DateTime  @default(now())
 
   // Relations
-  sessions            Session[]
-  passwordResetTokens PasswordResetToken[]
+  sessions              Session[]
+  passwordResetTokens   PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
 
   @@index([email])
   @@map("users")
@@ -67,6 +70,23 @@ model PasswordResetToken {
   @@index([token])
   @@index([userId])
   @@map("password_reset_tokens")
+}
+
+// Email verification token model
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+  @@map("email_verification_tokens")
 }
 
 // User roles enum

@@ -89,6 +89,20 @@ class ApiClient {
       body: JSON.stringify(data)
     });
   }
+
+  async verifyEmail(token: string): Promise<ApiResponse<{ message: string }>> {
+    return this.request<{ message: string }>('/api/v1/auth/verify-email', {
+      method: 'POST',
+      body: JSON.stringify({ token })
+    });
+  }
+
+  async resendVerification(email: string): Promise<ApiResponse<{ message: string }>> {
+    return this.request<{ message: string }>('/api/v1/auth/resend-verification', {
+      method: 'POST',
+      body: JSON.stringify({ email })
+    });
+  }
 }
 
 export const api = new ApiClient(API_URL);
