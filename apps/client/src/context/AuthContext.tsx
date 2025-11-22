@@ -10,7 +10,9 @@ interface AuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (data: LoginRequest) => Promise<{ success: boolean; error?: string }>;
-  register: (data: RegisterRequest) => Promise<{ success: boolean; error?: string; message?: string }>;
+  register: (
+    data: RegisterRequest
+  ) => Promise<{ success: boolean; error?: string; message?: string }>;
   logout: () => Promise<void>;
   forgotPassword: (
     email: string
