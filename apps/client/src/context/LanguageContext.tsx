@@ -157,8 +157,12 @@ const en = {
   'verifyEmail.canLogin': 'You can now login to your account',
   'verifyEmail.goToLogin': 'Go to login',
 
-  // Registration success
-  'register.verificationSent': 'Please check your email to verify your account'
+  // Registration
+  'register.verificationSent': 'Please check your email to verify your account',
+  'register.failed': 'Registration failed',
+
+  // Login errors
+  'login.emailNotVerified': 'Please verify your email before logging in'
 };
 
 // Georgian translations
@@ -306,8 +310,12 @@ const ge: typeof en = {
   'verifyEmail.canLogin': 'ახლა შეგიძლიათ შეხვიდეთ თქვენს ანგარიშზე',
   'verifyEmail.goToLogin': 'შესვლის გვერდზე გადასვლა',
 
-  // Registration success
-  'register.verificationSent': 'გთხოვთ შეამოწმოთ თქვენი ელ-ფოსტა ანგარიშის დასადასტურებლად'
+  // Registration
+  'register.verificationSent': 'გთხოვთ შეამოწმოთ თქვენი ელ-ფოსტა ანგარიშის დასადასტურებლად',
+  'register.failed': 'რეგისტრაცია ვერ მოხერხდა',
+
+  // Login errors
+  'login.emailNotVerified': 'გთხოვთ დაადასტუროთ თქვენი ელ-ფოსტა შესვლამდე'
 };
 
 const translations = { en, ge };

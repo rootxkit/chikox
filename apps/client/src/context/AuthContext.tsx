@@ -10,7 +10,7 @@ interface AuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (data: LoginRequest) => Promise<{ success: boolean; error?: string }>;
-  register: (data: RegisterRequest) => Promise<{ success: boolean; error?: string }>;
+  register: (data: RegisterRequest) => Promise<{ success: boolean; error?: string; message?: string }>;
   logout: () => Promise<void>;
   forgotPassword: (
     email: string
@@ -93,10 +93,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await api.register(data);
 
-      if (response.success && response.data) {
-        localStorage.setItem('accessToken', response.data.accessToken);
-        setUser(response.data.user);
-        return { success: true };
+      if (response.success) {
+        // Registration successful - user needs to verify email
+        // Don't set user or token - they can't login until verified
+        return {
+          success: true,
+          message:
+            (response.data as { message?: string })?.message ||
+            'Please check your email to verify your account'
+        };
       } else {
         return {
           success: false,

@@ -143,40 +143,11 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
         // Send verification email
         await sendVerificationEmail(user.email, verificationToken);
 
-        // Generate tokens
-        const { accessToken, refreshToken } = await generateTokens(request, {
-          userId: user.id,
-          email: user.email,
-          role: user.role
-        });
-
-        // Create session
-        await prisma.session.create({
-          data: {
-            userId: user.id,
-            refreshToken,
-            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-            userAgent: request.headers['user-agent'],
-            ipAddress: request.ip
-          }
-        });
-
-        // Set refresh token cookie
-        setRefreshTokenCookie(reply, refreshToken);
-
-        const userDTO: UserDTO = {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          createdAt: user.createdAt.toISOString()
-        };
-
+        // Don't log user in - they need to verify email first
         return reply.status(201).send({
           success: true,
           data: {
-            user: userDTO,
-            accessToken
+            message: 'Registration successful. Please check your email to verify your account.'
           }
         });
       } catch (error) {
@@ -270,6 +241,17 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
             error: {
               message: 'Invalid credentials',
               code: 'INVALID_CREDENTIALS'
+            }
+          });
+        }
+
+        // Check if email is verified
+        if (!user.emailVerified) {
+          return reply.status(403).send({
+            success: false,
+            error: {
+              message: 'Please verify your email before logging in',
+              code: 'EMAIL_NOT_VERIFIED'
             }
           });
         }
