@@ -10,11 +10,9 @@ WORKDIR /app
 # Define build arguments that might be required by Next.js during compilation
 # Note: You need to pass these variables during docker build using --build-arg
 ARG NEXT_PUBLIC_API_URL
-ARG NODE_ENV=production
 
 # Set environment variables for the build process
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
-ENV NODE_ENV=$NODE_ENV
 
 # Copy configuration files for root, client, and shared packages
 COPY package.json package-lock.json ./
@@ -22,8 +20,8 @@ COPY apps/client/package.json apps/client/package.json
 COPY packages/database/package.json packages/database/package.json
 COPY packages/types/package.json packages/types/package.json
 
-# Install dependencies
-RUN npm install
+# Install ALL dependencies (including devDependencies for build)
+RUN npm install --include=dev
 
 # Copy all source code into the builder stage
 COPY . .
