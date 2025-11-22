@@ -45,8 +45,10 @@ WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/client/.next ./apps/client/.next
 COPY apps/client/package.json apps/client/package.json
-COPY --from=builder /app/apps/client/public ./apps/client/public
 COPY package.json package-lock.json ./
+
+# Copy public directory if it exists (use wildcard to make it optional)
+COPY --from=builder /app/apps/client/public* ./apps/client/
 
 # Set the correct working directory for running the client application
 WORKDIR /app/apps/client
