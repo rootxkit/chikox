@@ -135,3 +135,81 @@ export async function sendVerificationEmail(email: string, token: string): Promi
     throw new Error('Failed to send verification email');
   }
 }
+
+interface ContactEmailData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export async function sendContactEmail(data: ContactEmailData): Promise<void> {
+  const { name, email, subject, message } = data;
+  const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'info@chikox.net';
+
+  // Development fallback: log to console if no API key
+  if (!resend) {
+    console.log('\n========================================');
+    console.log('CONTACT FORM MESSAGE (dev mode)');
+    console.log('========================================');
+    console.log(`From: ${name} <${email}>`);
+    console.log(`Subject: ${subject}`);
+    console.log(`Message: ${message}`);
+    console.log('========================================\n');
+    return;
+  }
+
+  try {
+    await resend.emails.send({
+      from: `${APP_NAME} Contact <${FROM_EMAIL}>`,
+      to: CONTACT_EMAIL,
+      replyTo: email,
+      subject: `Contact Form: ${subject}`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f8f8;">
+          <div style="background-color: #1a1a1a; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: #E48F20; margin: 0; font-size: 28px; font-weight: bold;">${APP_NAME}</h1>
+          </div>
+
+          <div style="background: #ffffff; padding: 30px; border: 1px solid #dddddd; border-top: none; border-radius: 0 0 10px 10px;">
+            <h2 style="color: #333333; margin-top: 0;">New Contact Form Message</h2>
+
+            <div style="margin-bottom: 20px;">
+              <p style="color: #666666; margin: 5px 0;"><strong>From:</strong> ${name}</p>
+              <p style="color: #666666; margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #E48F20;">${email}</a></p>
+              <p style="color: #666666; margin: 5px 0;"><strong>Subject:</strong> ${subject}</p>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid #dddddd; margin: 20px 0;">
+
+            <div style="background-color: #f8f8f8; padding: 15px; border-radius: 6px;">
+              <p style="color: #333333; margin: 0; white-space: pre-wrap;">${message}</p>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid #dddddd; margin: 20px 0;">
+
+            <p style="color: #666666; font-size: 12px; margin-bottom: 0;">
+              You can reply directly to this email to respond to ${name}.
+            </p>
+          </div>
+
+          <div style="text-align: center; padding: 20px; color: #666666; font-size: 12px;">
+            <p>&copy; ${new Date().getFullYear()} ${APP_NAME}. All rights reserved.</p>
+          </div>
+        </body>
+        </html>
+      `
+    });
+
+    console.log(`Contact email sent from ${email}`);
+  } catch (error) {
+    console.error('Failed to send contact email:', error);
+    throw new Error('Failed to send contact email');
+  }
+}

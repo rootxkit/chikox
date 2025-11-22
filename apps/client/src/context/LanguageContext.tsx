@@ -228,7 +228,28 @@ const en = {
     'We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new policy on our website and updating the "Last updated" date.',
   'privacy.contact.title': '10. Contact Us',
   'privacy.contact.content':
-    'If you have questions about this Privacy Policy or our data practices, please contact us at info@chikox.net.'
+    'If you have questions about this Privacy Policy or our data practices, please contact us at info@chikox.net.',
+
+  // Contact Page
+  'contact.title': 'Contact Us',
+  'contact.subtitle': 'Have a question or want to work with us? Send us a message!',
+  'contact.name': 'Name',
+  'contact.namePlaceholder': 'Enter your name',
+  'contact.email': 'Email',
+  'contact.emailPlaceholder': 'Enter your email',
+  'contact.subject': 'Subject',
+  'contact.subjectPlaceholder': 'Enter subject',
+  'contact.message': 'Message',
+  'contact.messagePlaceholder': 'Enter your message',
+  'contact.send': 'Send Message',
+  'contact.sending': 'Sending...',
+  'contact.success': 'Your message has been sent successfully. We will get back to you soon!',
+  'contact.failed': 'Failed to send message. Please try again.',
+  'contact.otherWays': 'Other Ways to Reach Us',
+  'contact.emailLabel': 'Email',
+  'contact.phoneLabel': 'Phone',
+  'contact.addressLabel': 'Address',
+  'contact.address': 'Tbilisi, Georgia'
 };
 
 // Georgian translations
@@ -447,7 +468,28 @@ const ge: typeof en = {
     'ჩვენ შეიძლება დროდადრო განვაახლოთ ეს კონფიდენციალურობის პოლიტიკა. ჩვენ შეგატყობინებთ ნებისმიერ არსებით ცვლილებებს ახალი პოლიტიკის ჩვენს ვებსაიტზე გამოქვეყნებით და "ბოლო განახლების" თარიღის განახლებით.',
   'privacy.contact.title': '10. დაგვიკავშირდით',
   'privacy.contact.content':
-    'თუ გაქვთ შეკითხვები ამ კონფიდენციალურობის პოლიტიკასთან ან ჩვენს მონაცემთა პრაქტიკასთან დაკავშირებით, გთხოვთ დაგვიკავშირდეთ info@chikox.net-ზე.'
+    'თუ გაქვთ შეკითხვები ამ კონფიდენციალურობის პოლიტიკასთან ან ჩვენს მონაცემთა პრაქტიკასთან დაკავშირებით, გთხოვთ დაგვიკავშირდეთ info@chikox.net-ზე.',
+
+  // Contact Page
+  'contact.title': 'დაგვიკავშირდით',
+  'contact.subtitle': 'გაქვთ შეკითხვა ან გსურთ ჩვენთან თანამშრომლობა? გამოგვიგზავნეთ შეტყობინება!',
+  'contact.name': 'სახელი',
+  'contact.namePlaceholder': 'შეიყვანეთ თქვენი სახელი',
+  'contact.email': 'ელ-ფოსტა',
+  'contact.emailPlaceholder': 'შეიყვანეთ თქვენი ელ-ფოსტა',
+  'contact.subject': 'თემა',
+  'contact.subjectPlaceholder': 'შეიყვანეთ თემა',
+  'contact.message': 'შეტყობინება',
+  'contact.messagePlaceholder': 'შეიყვანეთ თქვენი შეტყობინება',
+  'contact.send': 'შეტყობინების გაგზავნა',
+  'contact.sending': 'იგზავნება...',
+  'contact.success': 'თქვენი შეტყობინება წარმატებით გაიგზავნა. მალე დაგიკავშირდებით!',
+  'contact.failed': 'შეტყობინების გაგზავნა ვერ მოხერხდა. გთხოვთ სცადოთ ხელახლა.',
+  'contact.otherWays': 'დაკავშირების სხვა გზები',
+  'contact.emailLabel': 'ელ-ფოსტა',
+  'contact.phoneLabel': 'ტელეფონი',
+  'contact.addressLabel': 'მისამართი',
+  'contact.address': 'თბილისი, საქართველო'
 };
 
 const translations = { en, ge };

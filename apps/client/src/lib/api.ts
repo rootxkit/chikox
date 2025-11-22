@@ -103,6 +103,18 @@ class ApiClient {
       body: JSON.stringify({ email })
     });
   }
+
+  async sendContactMessage(data: {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  }): Promise<ApiResponse<{ message: string }>> {
+    return this.request<{ message: string }>('/api/v1/contact', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  }
 }
 
 export const api = new ApiClient(API_URL);
