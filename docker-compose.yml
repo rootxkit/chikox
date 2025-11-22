@@ -79,10 +79,13 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      # Nginx config ფაილი
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot:ro
+    depends_on:
+      - client
+      - admin
+      - server
     networks:
       - chikox-network
 
