@@ -27,9 +27,9 @@ function VerifyEmailContent() {
         const result = await api.verifyEmail(token);
 
         if (result.success) {
-          setSuccess(result.data?.message || t('verifyEmail.success'));
+          setSuccess(t('verifyEmail.success'));
         } else {
-          setError(result.error?.message || t('verifyEmail.failed'));
+          setError(t('verifyEmail.failed'));
         }
       } catch {
         setError(t('verifyEmail.failed'));

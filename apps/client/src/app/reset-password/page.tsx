@@ -52,7 +52,7 @@ function ResetPasswordForm() {
       const result = await resetPassword(token, password);
 
       if (result.success) {
-        setSuccess(result.message || t('resetPassword.success'));
+        setSuccess(t('resetPassword.success'));
         setTimeout(() => {
           router.push('/login');
         }, 2000);

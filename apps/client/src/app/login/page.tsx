@@ -29,7 +29,14 @@ export default function LoginPage() {
       if (result.success) {
         router.push('/');
       } else {
-        setError(result.error || t('login.failed'));
+        // Check for specific error codes and translate them
+        if (result.errorCode === 'EMAIL_NOT_VERIFIED') {
+          setError(t('login.emailNotVerified'));
+        } else if (result.errorCode === 'INVALID_CREDENTIALS') {
+          setError(t('login.invalidCredentials'));
+        } else {
+          setError(result.error || t('login.failed'));
+        }
       }
     } catch {
       setError(t('login.failed'));

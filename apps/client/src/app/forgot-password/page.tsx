@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
       const result = await forgotPassword(email);
 
       if (result.success) {
-        setSuccess(result.message || t('forgotPassword.success'));
+        setSuccess(t('forgotPassword.success'));
         setEmail('');
       } else {
         setError(result.error || t('forgotPassword.failed'));

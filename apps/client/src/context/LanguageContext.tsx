@@ -145,6 +145,7 @@ const en = {
 
   // Common
   'login.failed': 'Login failed',
+  'login.invalidCredentials': 'Invalid email or password',
 
   // Verify Email
   'verifyEmail.title': 'Verify Email',
@@ -298,6 +299,7 @@ const ge: typeof en = {
 
   // Common
   'login.failed': 'შესვლა ვერ მოხერხდა',
+  'login.invalidCredentials': 'არასწორი ელ-ფოსტა ან პაროლი',
 
   // Verify Email
   'verifyEmail.title': 'ელ-ფოსტის დადასტურება',

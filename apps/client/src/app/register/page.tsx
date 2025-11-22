@@ -38,7 +38,7 @@ export default function RegisterPage() {
       const result = await register({ email, password, name: name || undefined });
 
       if (result.success) {
-        setSuccess(result.message || t('register.verificationSent'));
+        setSuccess(t('register.verificationSent'));
       } else {
         setError(result.error || t('register.failed'));
       }

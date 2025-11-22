@@ -9,7 +9,7 @@ interface AuthContextType {
   user: UserDTO | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (data: LoginRequest) => Promise<{ success: boolean; error?: string }>;
+  login: (data: LoginRequest) => Promise<{ success: boolean; error?: string; errorCode?: string }>;
   register: (
     data: RegisterRequest
   ) => Promise<{ success: boolean; error?: string; message?: string }>;
@@ -80,7 +80,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         return {
           success: false,
-          error: response.error?.message || 'Login failed'
+          error: response.error?.message || 'Login failed',
+          errorCode: response.error?.code
         };
       }
     } catch (error) {
