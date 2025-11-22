@@ -32,31 +32,31 @@ export async function sendPasswordResetEmail(email: string, token: string): Prom
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">${APP_NAME}</h1>
+        <body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f8f8;">
+          <div style="background-color: #1a1a1a; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: #E48F20; margin: 0; font-size: 28px; font-weight: bold;">${APP_NAME}</h1>
           </div>
 
-          <div style="background: #ffffff; padding: 30px; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 10px 10px;">
-            <h2 style="color: #333; margin-top: 0;">Reset Your Password</h2>
+          <div style="background: #ffffff; padding: 30px; border: 1px solid #dddddd; border-top: none; border-radius: 0 0 10px 10px;">
+            <h2 style="color: #333333; margin-top: 0;">Reset Your Password</h2>
 
-            <p>You requested to reset your password. Click the button below to create a new password:</p>
+            <p style="color: #666666;">You requested to reset your password. Click the button below to create a new password:</p>
 
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${resetUrl}" style="background: #667eea; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Reset Password</a>
+              <a href="${resetUrl}" style="background: #E48F20; color: #1a1a1a; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Reset Password</a>
             </div>
 
-            <p style="color: #666; font-size: 14px;">If the button doesn't work, copy and paste this link into your browser:</p>
-            <p style="color: #667eea; font-size: 14px; word-break: break-all;">${resetUrl}</p>
+            <p style="color: #666666; font-size: 14px;">If the button doesn't work, copy and paste this link into your browser:</p>
+            <p style="color: #E48F20; font-size: 14px; word-break: break-all;">${resetUrl}</p>
 
-            <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
+            <hr style="border: none; border-top: 1px solid #dddddd; margin: 30px 0;">
 
-            <p style="color: #999; font-size: 12px; margin-bottom: 0;">
+            <p style="color: #666666; font-size: 12px; margin-bottom: 0;">
               This link will expire in 1 hour. If you didn't request this password reset, you can safely ignore this email.
             </p>
           </div>
 
-          <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+          <div style="text-align: center; padding: 20px; color: #666666; font-size: 12px;">
             <p>&copy; ${new Date().getFullYear()} ${APP_NAME}. All rights reserved.</p>
           </div>
         </body>
@@ -97,31 +97,31 @@ export async function sendVerificationEmail(email: string, token: string): Promi
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">${APP_NAME}</h1>
+        <body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f8f8;">
+          <div style="background-color: #1a1a1a; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: #E48F20; margin: 0; font-size: 28px; font-weight: bold;">${APP_NAME}</h1>
           </div>
 
-          <div style="background: #ffffff; padding: 30px; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 10px 10px;">
-            <h2 style="color: #333; margin-top: 0;">Welcome to ${APP_NAME}!</h2>
+          <div style="background: #ffffff; padding: 30px; border: 1px solid #dddddd; border-top: none; border-radius: 0 0 10px 10px;">
+            <h2 style="color: #333333; margin-top: 0;">Welcome to ${APP_NAME}!</h2>
 
-            <p>Thank you for registering. Please verify your email address by clicking the button below:</p>
+            <p style="color: #666666;">Thank you for registering. Please verify your email address by clicking the button below:</p>
 
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${verifyUrl}" style="background: #667eea; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Verify Email</a>
+              <a href="${verifyUrl}" style="background: #E48F20; color: #1a1a1a; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Verify Email</a>
             </div>
 
-            <p style="color: #666; font-size: 14px;">If the button doesn't work, copy and paste this link into your browser:</p>
-            <p style="color: #667eea; font-size: 14px; word-break: break-all;">${verifyUrl}</p>
+            <p style="color: #666666; font-size: 14px;">If the button doesn't work, copy and paste this link into your browser:</p>
+            <p style="color: #E48F20; font-size: 14px; word-break: break-all;">${verifyUrl}</p>
 
-            <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
+            <hr style="border: none; border-top: 1px solid #dddddd; margin: 30px 0;">
 
-            <p style="color: #999; font-size: 12px; margin-bottom: 0;">
+            <p style="color: #666666; font-size: 12px; margin-bottom: 0;">
               This link will expire in 24 hours. If you didn't create an account, you can safely ignore this email.
             </p>
           </div>
 
-          <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+          <div style="text-align: center; padding: 20px; color: #666666; font-size: 12px;">
             <p>&copy; ${new Date().getFullYear()} ${APP_NAME}. All rights reserved.</p>
           </div>
         </body>
