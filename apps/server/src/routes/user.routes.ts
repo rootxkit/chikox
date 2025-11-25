@@ -199,6 +199,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
                     email: { type: 'string' },
                     name: { type: 'string', nullable: true },
                     role: { type: 'string' },
+                    emailVerified: { type: 'boolean' },
                     createdAt: { type: 'string' }
                   }
                 }
