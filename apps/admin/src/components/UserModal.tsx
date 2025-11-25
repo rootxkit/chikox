@@ -94,11 +94,9 @@ export default function UserModal({ open, editingUser, onCancel, onSubmit }: Use
           </Select>
         </Form.Item>
 
-        {isEditing && (
-          <Form.Item name="emailVerified" valuePropName="checked">
-            <Checkbox>Email Verified</Checkbox>
-          </Form.Item>
-        )}
+        <Form.Item name="emailVerified" valuePropName="checked">
+          <Checkbox>Email Verified</Checkbox>
+        </Form.Item>
       </Form>
     </Modal>
   );
