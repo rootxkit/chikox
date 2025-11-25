@@ -293,6 +293,7 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
           email: user.email,
           name: user.name,
           role: user.role,
+          emailVerified: user.emailVerified,
           createdAt: user.createdAt.toISOString()
         };
 

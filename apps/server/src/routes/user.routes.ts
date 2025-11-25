@@ -59,6 +59,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         email: user.email,
         name: user.name,
         role: user.role,
+        emailVerified: user.emailVerified,
         createdAt: user.createdAt.toISOString()
       };
 
@@ -160,6 +161,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         email: updatedUser.email,
         name: updatedUser.name,
         role: updatedUser.role,
+        emailVerified: updatedUser.emailVerified,
         createdAt: updatedUser.createdAt.toISOString()
       };
 
@@ -216,6 +218,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         email: user.email,
         name: user.name,
         role: user.role,
+        emailVerified: user.emailVerified,
         createdAt: user.createdAt.toISOString()
       }));
 
@@ -288,6 +291,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         email: user.email,
         name: user.name,
         role: user.role,
+        emailVerified: user.emailVerified,
         createdAt: user.createdAt.toISOString()
       };
 
@@ -380,6 +384,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         email: user.email,
         name: user.name,
         role: user.role,
+        emailVerified: user.emailVerified,
         createdAt: user.createdAt.toISOString()
       };
 
@@ -524,6 +529,71 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
       return reply.send({
         success: true,
         data: { message: 'Password changed successfully' }
+      });
+    }
+  );
+
+  /**
+   * Toggle user activation status (Admin only)
+   */
+  server.patch<{
+    Params: { id: string };
+    Reply: ApiResponse<UserDTO>;
+  }>(
+    '/:id/toggle-activation',
+    {
+      onRequest: [authenticate, authorize('ADMIN', 'SUPER_ADMIN')],
+      schema: {
+        description: 'Toggle user email verification status (Admin only)',
+        tags: ['Users'],
+        security: [{ bearerAuth: [] }],
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' }
+          },
+          required: ['id']
+        }
+      }
+    },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      const { id } = request.params as any;
+
+      // Get user
+      const user = await prisma.user.findUnique({
+        where: { id }
+      });
+
+      if (!user) {
+        return reply.status(404).send({
+          success: false,
+          error: {
+            message: 'User not found',
+            code: 'USER_NOT_FOUND'
+          }
+        });
+      }
+
+      // Toggle emailVerified status
+      const updatedUser = await prisma.user.update({
+        where: { id },
+        data: {
+          emailVerified: !user.emailVerified
+        }
+      });
+
+      const userDTO: UserDTO = {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        name: updatedUser.name,
+        role: updatedUser.role,
+        emailVerified: updatedUser.emailVerified,
+        createdAt: updatedUser.createdAt.toISOString()
+      };
+
+      return reply.send({
+        success: true,
+        data: userDTO
       });
     }
   );

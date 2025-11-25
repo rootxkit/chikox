@@ -93,5 +93,12 @@ export const usersApi = {
       data
     );
     return response.data.data!;
+  },
+
+  toggleActivation: async (id: string): Promise<UserDTO> => {
+    const response = await api.patch<ApiResponse<UserDTO>>(
+      `/api/v1/users/${id}/toggle-activation`
+    );
+    return response.data.data!;
   }
 };

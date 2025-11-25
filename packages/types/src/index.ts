@@ -30,6 +30,7 @@ export interface UserDTO {
   email: string;
   name: string | null;
   role: string; // Using string to avoid type conflicts with Prisma generated types
+  emailVerified: boolean;
   createdAt: string;
 }
 

@@ -129,6 +129,20 @@ export default function UsersPage() {
     });
   };
 
+  const handleToggleActivation = async (user: UserDTO) => {
+    try {
+      await usersApi.toggleActivation(user.id);
+      message.success(
+        user.emailVerified ? 'User deactivated successfully' : 'User activated successfully'
+      );
+      mutate(); // Refresh the users list
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.error?.message || error.message || 'Failed to toggle activation';
+      message.error(errorMessage);
+    }
+  };
+
   const filteredUsers = users?.filter(
     (user) =>
       user.email.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -167,6 +181,21 @@ export default function UsersPage() {
       )
     },
     {
+      title: 'Status',
+      dataIndex: 'emailVerified',
+      key: 'emailVerified',
+      filters: [
+        { text: 'Activated', value: true },
+        { text: 'Not Activated', value: false }
+      ],
+      onFilter: (value, record) => record.emailVerified === value,
+      render: (emailVerified: boolean) => (
+        <Tag color={emailVerified ? 'success' : 'warning'} data-testid="status-tag">
+          {emailVerified ? 'Activated' : 'Not Activated'}
+        </Tag>
+      )
+    },
+    {
       title: 'Created',
       dataIndex: 'createdAt',
       key: 'createdAt',
@@ -182,6 +211,16 @@ export default function UsersPage() {
       key: 'actions',
       render: (_, record: UserDTO) => (
         <Space size="middle">
+          <Tooltip title={record.emailVerified ? 'Deactivate user' : 'Activate user'}>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => handleToggleActivation(record)}
+              data-testid="toggle-activation-button"
+            >
+              {record.emailVerified ? 'Deactivate' : 'Activate'}
+            </Button>
+          </Tooltip>
           <Button
             type="link"
             icon={<EditOutlined />}
