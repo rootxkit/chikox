@@ -14,6 +14,7 @@ interface AuthContextType {
     data: RegisterRequest
   ) => Promise<{ success: boolean; error?: string; message?: string }>;
   logout: () => Promise<void>;
+  updateUser: (userData: UserDTO) => void;
   forgotPassword: (
     email: string
   ) => Promise<{ success: boolean; error?: string; message?: string }>;
@@ -169,6 +170,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const updateUser = useCallback((userData: UserDTO) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -178,6 +184,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         register,
         logout,
+        updateUser,
         forgotPassword,
         resetPassword
       }}

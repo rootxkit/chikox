@@ -115,6 +115,28 @@ class ApiClient {
       body: JSON.stringify(data)
     });
   }
+
+  async updateProfile(data: {
+    name?: string;
+    email?: string;
+  }): Promise<ApiResponse<AuthResponse['user']>> {
+    const user =
+      typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user') || '{}') : {};
+    return this.request<AuthResponse['user']>(`/api/v1/users/${user.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    });
+  }
+
+  async changePassword(data: {
+    currentPassword: string;
+    newPassword: string;
+  }): Promise<ApiResponse<{ message: string }>> {
+    return this.request<{ message: string }>('/api/v1/users/me/password', {
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    });
+  }
 }
 
 export const api = new ApiClient(API_URL);

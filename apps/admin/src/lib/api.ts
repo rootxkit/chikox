@@ -82,5 +82,16 @@ export const usersApi = {
 
   delete: async (id: string): Promise<void> => {
     await api.delete(`/api/v1/users/${id}`);
+  },
+
+  changePassword: async (data: {
+    currentPassword: string;
+    newPassword: string;
+  }): Promise<{ message: string }> => {
+    const response = await api.patch<ApiResponse<{ message: string }>>(
+      '/api/v1/users/me/password',
+      data
+    );
+    return response.data.data!;
   }
 };

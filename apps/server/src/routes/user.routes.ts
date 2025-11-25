@@ -353,4 +353,79 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
       });
     }
   );
+
+  /**
+   * Change password (Authenticated users)
+   */
+  server.patch<{
+    Body: { currentPassword: string; newPassword: string };
+    Reply: ApiResponse<{ message: string }>;
+  }>(
+    '/me/password',
+    {
+      onRequest: [authenticate],
+      schema: {
+        description: 'Change password for current user',
+        tags: ['Users'],
+        security: [{ bearerAuth: [] }],
+        body: {
+          type: 'object',
+          required: ['currentPassword', 'newPassword'],
+          properties: {
+            currentPassword: { type: 'string' },
+            newPassword: { type: 'string', minLength: 8 }
+          }
+        }
+      }
+    },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      const { currentPassword, newPassword } = request.body as any;
+      const currentUser = request.user as JWTPayload;
+
+      // Get user from database
+      const user = await prisma.user.findUnique({
+        where: { id: currentUser.userId }
+      });
+
+      if (!user) {
+        return reply.status(404).send({
+          success: false,
+          error: {
+            message: 'User not found',
+            code: 'USER_NOT_FOUND'
+          }
+        });
+      }
+
+      // Verify current password
+      const bcrypt = await import('bcryptjs');
+      const isValidPassword = await bcrypt.compare(currentPassword, user.passwordHash);
+
+      if (!isValidPassword) {
+        return reply.status(400).send({
+          success: false,
+          error: {
+            message: 'Current password is incorrect',
+            code: 'INVALID_PASSWORD'
+          }
+        });
+      }
+
+      // Hash new password
+      const newPasswordHash = await bcrypt.hash(newPassword, 10);
+
+      // Update password
+      await prisma.user.update({
+        where: { id: currentUser.userId },
+        data: {
+          passwordHash: newPasswordHash
+        }
+      });
+
+      return reply.send({
+        success: true,
+        data: { message: 'Password changed successfully' }
+      });
+    }
+  );
 }

@@ -249,7 +249,33 @@ const en = {
   'contact.emailLabel': 'Email',
   'contact.phoneLabel': 'Phone',
   'contact.addressLabel': 'Address',
-  'contact.address': 'Tbilisi, Georgia'
+  'contact.address': 'Tbilisi, Georgia',
+
+  // Profile
+  'nav.profile': 'Profile',
+  'profile.title': 'My Profile',
+  'profile.personalInfo': 'Personal Information',
+  'profile.security': 'Security',
+  'profile.name': 'Name',
+  'profile.email': 'Email',
+  'profile.role': 'Role',
+  'profile.notSet': 'Not set',
+  'profile.edit': 'Edit Profile',
+  'profile.save': 'Save Changes',
+  'profile.cancel': 'Cancel',
+  'profile.saving': 'Saving...',
+  'profile.changePassword': 'Change Password',
+  'profile.changing': 'Changing...',
+  'profile.currentPassword': 'Current Password',
+  'profile.newPassword': 'New Password',
+  'profile.confirmPassword': 'Confirm Password',
+  'profile.passwordHint': 'Keep your password secure and change it regularly.',
+  'profile.passwordMinLength': 'Minimum 8 characters',
+  'profile.passwordMismatch': 'Passwords do not match',
+  'profile.updateSuccess': 'Profile updated successfully',
+  'profile.updateError': 'Failed to update profile',
+  'profile.passwordChangeSuccess': 'Password changed successfully',
+  'profile.passwordChangeError': 'Failed to change password'
 };
 
 // Georgian translations
@@ -489,7 +515,33 @@ const ge: typeof en = {
   'contact.emailLabel': 'ელ-ფოსტა',
   'contact.phoneLabel': 'ტელეფონი',
   'contact.addressLabel': 'მისამართი',
-  'contact.address': 'თბილისი, საქართველო'
+  'contact.address': 'თბილისი, საქართველო',
+
+  // Profile
+  'nav.profile': 'პროფილი',
+  'profile.title': 'ჩემი პროფილი',
+  'profile.personalInfo': 'პირადი ინფორმაცია',
+  'profile.security': 'უსაფრთხოება',
+  'profile.name': 'სახელი',
+  'profile.email': 'ელ-ფოსტა',
+  'profile.role': 'როლი',
+  'profile.notSet': 'არ არის დაყენებული',
+  'profile.edit': 'პროფილის რედაქტირება',
+  'profile.save': 'ცვლილებების შენახვა',
+  'profile.cancel': 'გაუქმება',
+  'profile.saving': 'მიმდინარეობს შენახვა...',
+  'profile.changePassword': 'პაროლის შეცვლა',
+  'profile.changing': 'მიმდინარეობს შეცვლა...',
+  'profile.currentPassword': 'ამჟამინდელი პაროლი',
+  'profile.newPassword': 'ახალი პაროლი',
+  'profile.confirmPassword': 'პაროლის დადასტურება',
+  'profile.passwordHint': 'შეინახეთ თქვენი პაროლი უსაფრთხოდ და რეგულარულად შეცვალეთ.',
+  'profile.passwordMinLength': 'მინიმუმ 8 სიმბოლო',
+  'profile.passwordMismatch': 'პაროლები არ ემთხვევა',
+  'profile.updateSuccess': 'პროფილი წარმატებით განახლდა',
+  'profile.updateError': 'პროფილის განახლება ვერ მოხერხდა',
+  'profile.passwordChangeSuccess': 'პაროლი წარმატებით შეიცვალა',
+  'profile.passwordChangeError': 'პაროლის შეცვლა ვერ მოხერხდა'
 };
 
 const translations = { en, ge };

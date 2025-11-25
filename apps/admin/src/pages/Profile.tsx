@@ -12,9 +12,16 @@ import {
   Spin,
   Tag,
   Descriptions,
-  Divider
+  Divider,
+  Modal
 } from 'antd';
-import { UserOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  EditOutlined,
+  SaveOutlined,
+  CloseOutlined,
+  LockOutlined
+} from '@ant-design/icons';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useAuth } from '@/hooks/useAuth';
 import { usersApi } from '@/lib/api';
@@ -27,7 +34,10 @@ export default function ProfilePage() {
   const { isAuthenticated, user, loading: authLoading, refreshUser } = useAuth();
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
   const [form] = Form.useForm();
+  const [passwordForm] = Form.useForm();
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -104,6 +114,28 @@ export default function ProfilePage() {
     setEditing(false);
   };
 
+  const handlePasswordChange = async () => {
+    try {
+      const values = await passwordForm.validateFields();
+      setChangingPassword(true);
+
+      await usersApi.changePassword({
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword
+      });
+
+      message.success('Password changed successfully');
+      setPasswordModalOpen(false);
+      passwordForm.resetFields();
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.error?.message || error.message || 'Failed to change password';
+      message.error(errorMessage);
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+
   return (
     <DashboardLayout>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -112,9 +144,14 @@ export default function ProfilePage() {
             My Profile
           </Title>
           {!editing && (
-            <Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-              Edit Profile
-            </Button>
+            <Space>
+              <Button icon={<LockOutlined />} onClick={() => setPasswordModalOpen(true)}>
+                Change Password
+              </Button>
+              <Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
+                Edit Profile
+              </Button>
+            </Space>
           )}
         </div>
 
@@ -192,6 +229,59 @@ export default function ProfilePage() {
           )}
         </Card>
       </Space>
+
+      <Modal
+        open={passwordModalOpen}
+        title="Change Password"
+        okText="Change Password"
+        cancelText="Cancel"
+        onCancel={() => {
+          setPasswordModalOpen(false);
+          passwordForm.resetFields();
+        }}
+        onOk={handlePasswordChange}
+        confirmLoading={changingPassword}
+      >
+        <Form form={passwordForm} layout="vertical" style={{ marginTop: 24 }}>
+          <Form.Item
+            name="currentPassword"
+            label="Current Password"
+            rules={[{ required: true, message: 'Please enter current password' }]}
+          >
+            <Input.Password size="large" placeholder="Enter current password" />
+          </Form.Item>
+
+          <Form.Item
+            name="newPassword"
+            label="New Password"
+            rules={[
+              { required: true, message: 'Please enter new password' },
+              { min: 8, message: 'Password must be at least 8 characters' }
+            ]}
+          >
+            <Input.Password size="large" placeholder="Enter new password (min 8 characters)" />
+          </Form.Item>
+
+          <Form.Item
+            name="confirmPassword"
+            label="Confirm New Password"
+            dependencies={['newPassword']}
+            rules={[
+              { required: true, message: 'Please confirm new password' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('newPassword') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Passwords do not match'));
+                }
+              })
+            ]}
+          >
+            <Input.Password size="large" placeholder="Confirm new password" />
+          </Form.Item>
+        </Form>
+      </Modal>
     </DashboardLayout>
   );
 }
