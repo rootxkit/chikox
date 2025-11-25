@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { prisma } from '@chikox/database';
 import type { JWTPayload, UserDTO, ApiResponse } from '@chikox/types';
-import { authenticate, authorize } from '../utils/auth.js';
+import { authenticate, authorize, hashPassword, verifyPassword } from '../utils/auth.js';
 
 export async function userRoutes(server: FastifyInstance): Promise<void> {
   /**
@@ -398,8 +398,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
       }
 
       // Verify current password
-      const bcrypt = await import('bcryptjs');
-      const isValidPassword = await bcrypt.compare(currentPassword, user.passwordHash);
+      const isValidPassword = await verifyPassword(currentPassword, user.passwordHash);
 
       if (!isValidPassword) {
         return reply.status(400).send({
@@ -412,7 +411,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
       }
 
       // Hash new password
-      const newPasswordHash = await bcrypt.hash(newPassword, 10);
+      const newPasswordHash = await hashPassword(newPassword);
 
       // Update password
       await prisma.user.update({
