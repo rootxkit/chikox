@@ -48,11 +48,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     navigate(key);
   };
 
+  const handleDropdownClick = (key: string) => {
+    if (key === 'profile') {
+      navigate('/dashboard/profile');
+    } else if (key === 'settings') {
+      navigate('/dashboard/settings');
+    } else if (key === 'logout') {
+      logout();
+    }
+  };
+
   const dropdownItems: MenuProps['items'] = [
     {
       key: 'profile',
       icon: <UserOutlined />,
-      label: 'Profile'
+      label: 'My Profile'
     },
     {
       key: 'settings',
@@ -66,8 +76,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       key: 'logout',
       icon: <LogoutOutlined />,
       label: 'Logout',
-      danger: true,
-      onClick: logout
+      danger: true
     }
   ];
 
@@ -139,15 +148,42 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             )}
           </div>
 
-          <Dropdown menu={{ items: dropdownItems }} placement="bottomRight">
-            <Space style={{ cursor: 'pointer' }} data-testid="user-dropdown">
-              <Avatar icon={<UserOutlined />} />
-              <div>
-                <Text strong>{user?.name || user?.email}</Text>
-                <br />
-                <Text type="secondary" style={{ fontSize: 12 }}>
-                  {user?.role}
-                </Text>
+          <Dropdown
+            menu={{ items: dropdownItems, onClick: ({ key }) => handleDropdownClick(key) }}
+            placement="bottomRight"
+            trigger={['click']}
+          >
+            <Space
+              style={{
+                cursor: 'pointer',
+                padding: '8px 12px',
+                borderRadius: 8,
+                transition: 'background 0.3s'
+              }}
+              data-testid="user-dropdown"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#f5f5f5';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+              }}
+            >
+              <Avatar
+                size={40}
+                icon={<UserOutlined />}
+                style={{ backgroundColor: '#1890ff' }}
+              />
+              <div style={{ lineHeight: 1.2 }}>
+                <div>
+                  <Text strong style={{ fontSize: 14 }}>
+                    {user?.name || user?.email}
+                  </Text>
+                </div>
+                <div>
+                  <Text type="secondary" style={{ fontSize: 12 }}>
+                    {user?.role?.replace('_', ' ')}
+                  </Text>
+                </div>
               </div>
             </Space>
           </Dropdown>

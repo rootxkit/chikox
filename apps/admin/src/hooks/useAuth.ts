@@ -50,6 +50,17 @@ export function useAuth() {
     }
   };
 
+  const refreshUser = async () => {
+    try {
+      const currentUser = await authApi.getCurrentUser();
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      setUser(currentUser);
+    } catch (error) {
+      console.error('Failed to refresh user:', error);
+      throw error;
+    }
+  };
+
   const isAdmin = () => {
     return user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
   };
@@ -59,6 +70,7 @@ export function useAuth() {
     loading,
     login,
     logout,
+    refreshUser,
     isAdmin,
     isAuthenticated: !!user
   };
