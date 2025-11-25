@@ -135,7 +135,7 @@ export default function UsersPage() {
 
       // Update cache optimistically without refetching
       mutate(
-        users?.map(u => u.id === user.id ? updatedUser : u),
+        users?.map((u) => (u.id === user.id ? updatedUser : u)),
         false
       );
 
