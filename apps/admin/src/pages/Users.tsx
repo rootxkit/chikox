@@ -131,13 +131,19 @@ export default function UsersPage() {
 
   const handleToggleActivation = async (user: UserDTO) => {
     try {
-      await usersApi.toggleActivation(user.id);
-      message.success(
-        user.emailVerified
-          ? 'User marked as unverified successfully'
-          : 'User marked as verified successfully'
+      const updatedUser = await usersApi.toggleActivation(user.id);
+
+      // Update cache optimistically without refetching
+      mutate(
+        users?.map(u => u.id === user.id ? updatedUser : u),
+        false
       );
-      await mutate(); // Refresh the users list
+
+      message.success(
+        updatedUser.emailVerified
+          ? 'User marked as verified successfully'
+          : 'User marked as unverified successfully'
+      );
     } catch (error: any) {
       const errorMessage =
         error.response?.data?.error?.message || error.message || 'Failed to toggle verification';
