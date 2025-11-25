@@ -133,6 +133,33 @@ server.get(
 );
 ```
 
+### Client App Architecture (Next.js)
+
+**Tech Stack**:
+- Next.js 14 with App Router
+- TypeScript
+- Tailwind CSS for styling
+- Context API for state management
+
+**Context Providers** (in `apps/client/src/context/`):
+- `AuthContext` - User authentication state
+- `LanguageContext` - i18n translations (English/Georgian)
+- `ThemeContext` - Theme management (light/dark, defaults to light)
+
+**Key Components** (in `apps/client/src/components/`):
+- `Navbar` - Responsive navigation with burger menu for mobile (hidden on md+ breakpoint)
+- `Footer` - Site footer with translations
+- `Section` - Reusable section wrapper with background/padding variants
+- `ThemeToggle` - Dark/light mode switcher
+- `LanguageSwitcher` - EN/GE language toggle
+
+**Adding Translations**:
+1. Add keys to both `en` and `ge` objects in `apps/client/src/context/LanguageContext.tsx`
+2. Use `const { t } = useLanguage()` hook in components
+3. Call `t('key.name')` to get translated string
+
+**Mobile Menu**: When burger menu is open, body scroll is disabled and the menu covers full viewport height.
+
 ### Admin Dashboard (React + Vite)
 
 **Tech Stack**:
@@ -229,6 +256,14 @@ Contains interfaces used by both server and client:
 - Test authentication and authorization middleware
 - Test validation and error handling
 
+### Client Tests (Vitest + React Testing Library)
+
+- Located in `apps/client/src/__tests__/`
+- Component tests for Navbar, Footer, Section, ThemeToggle, LanguageSwitcher
+- Page tests for Login, Register, Home
+- Test setup in `apps/client/src/__tests__/setup.ts`
+- **Note**: When testing components that appear in both desktop and mobile (like LanguageSwitcher in Navbar), use `getAllByText()` instead of `getByText()` to handle multiple instances
+
 ### Admin Tests (Vitest + React Testing Library)
 
 - Located in `apps/admin/src/__tests__/`
@@ -316,6 +351,14 @@ DATABASE_URL=postgresql://user:password@localhost:5432/chikox
 3. Run `npm run db:push` (dev) or `npm run db:migrate` (prod)
 4. Update affected TypeScript types if needed
 
+### Adding Client Page/Feature
+
+1. Create page in `apps/client/src/app/[route]/page.tsx`
+2. Add translation keys to `LanguageContext.tsx` (both `en` and `ge` objects)
+3. Create components in `apps/client/src/components/`
+4. Write tests in `apps/client/src/__tests__/`
+5. Update Navbar `navLinks` array if navigation link needed
+
 ### Adding Admin Dashboard Feature
 
 1. Create page component in `apps/admin/src/pages/`
@@ -341,11 +384,12 @@ The project uses GitHub Actions for continuous integration and deployment.
 
 **Key Points**:
 
-- CI uses Node.js 22.x (newer than the 18.x minimum in package.json engines)
-- Shared packages (`@chikox/database`, `@chikox/types`) are built before type-check, tests, and build stages
-- All stages must pass before deployment
+- **CRITICAL**: `npm run build:packages` MUST run before type-check, lint, and test. Without this, shared packages won't be available and builds will fail.
+- CI uses Node.js 20.x
+- Shared packages (`@chikox/database`, `@chikox/types`) are built in the quality-check job before any checks
+- All quality checks must pass before Docker images are built
 - Uses GitHub Actions cache (v4) for faster builds
-- Requires secrets for deployment: `PROD_SERVER_HOST`, `PROD_SERVER_USERNAME`, `PROD_SERVER_SSH_KEY`, `PROD_SERVER_PORT` (optional, defaults to 22)
+- Requires secrets: `PROD_SERVER_HOST`, `PROD_SERVER_USERNAME`, `PROD_SERVER_SSH_KEY`, `PROD_SERVER_PORT` (optional, defaults to 22), `CR_PAT` (GitHub Container Registry token), `NEXT_PUBLIC_API_URL` (optional, for client build)
 
 **Deployment Methods**:
 
@@ -364,13 +408,18 @@ The project uses GitHub Actions for continuous integration and deployment.
 ## Important Notes
 
 - **Admin Dashboard**: Recently refactored from Next.js to React + Vite for better performance and simpler architecture. In Docker, admin serves static files via Nginx.
+- **Client i18n**: Client supports English and Georgian (GE) translations via LanguageContext. Theme defaults to light mode (not system).
 - **Workspace Dependencies**: Internal packages referenced with `"*"` in package.json (e.g., `"@chikox/types": "*"`)
 - **Type Safety**: All shared types must be defined in `@chikox/types` package
 - **Database Client**: Always import Prisma client from `@chikox/database`, never instantiate directly
 - **Test Framework**: All apps use Vitest (not Jest)
 - **Server Module System**: Server uses ES modules (`"type": "module"` in package.json). All import statements must include `.js` extension.
 - **Build Order**: Always build shared packages before apps using `npm run build:packages`
-- **Docker Builds**: Admin Dockerfile uses multi-stage build with Nginx for production. Server and client use Node.js runtime.
+- **Docker Builds**:
+  - Admin: Multi-stage build with Nginx for static file serving
+  - Client: Builds shared packages first, then Next.js. Requires `npm install --include=dev` to have TypeScript available.
+  - Server: Node.js runtime
+  - All Dockerfiles must copy shared package definitions and build them before building the app
 
 ## Docker Deployment
 
@@ -462,12 +511,27 @@ cd packages/database && npm run build
 
 ### Prisma Client Type Errors
 
-If you see errors like `SyntaxError: The requested module '@prisma/client' does not provide an export named 'UserRole'`:
+If you see errors like `SyntaxError: The requested module '@prisma/client' does not provide an export named 'UserRole'` or `Cannot find module '@chikox/database'`:
 
-**Solution**: Regenerate the Prisma client after schema changes:
+**Solution**: Regenerate and build the Prisma client:
 
 ```bash
 npm run db:generate
+npm run build:packages
+```
+
+### Docker Build: TypeScript Not Found
+
+If Docker build fails with `sh: tsc: not found` when building shared packages:
+
+**Solution**: Install ALL dependencies including devDependencies in the builder stage:
+
+```dockerfile
+# Wrong - skips devDependencies
+RUN npm install
+
+# Correct - includes TypeScript and other build tools
+RUN npm install --include=dev
 ```
 
 ### Initial Setup Checklist
