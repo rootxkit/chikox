@@ -133,12 +133,14 @@ export default function UsersPage() {
     try {
       await usersApi.toggleActivation(user.id);
       message.success(
-        user.emailVerified ? 'User deactivated successfully' : 'User activated successfully'
+        user.emailVerified
+          ? 'User marked as unverified successfully'
+          : 'User marked as verified successfully'
       );
       mutate(); // Refresh the users list
     } catch (error: any) {
       const errorMessage =
-        error.response?.data?.error?.message || error.message || 'Failed to toggle activation';
+        error.response?.data?.error?.message || error.message || 'Failed to toggle verification';
       message.error(errorMessage);
     }
   };
@@ -181,17 +183,17 @@ export default function UsersPage() {
       )
     },
     {
-      title: 'Status',
+      title: 'Email Verified',
       dataIndex: 'emailVerified',
       key: 'emailVerified',
       filters: [
-        { text: 'Activated', value: true },
-        { text: 'Not Activated', value: false }
+        { text: 'Verified', value: true },
+        { text: 'Not Verified', value: false }
       ],
       onFilter: (value, record) => record.emailVerified === value,
       render: (emailVerified: boolean) => (
         <Tag color={emailVerified ? 'success' : 'warning'} data-testid="status-tag">
-          {emailVerified ? 'Activated' : 'Not Activated'}
+          {emailVerified ? 'Verified' : 'Not Verified'}
         </Tag>
       )
     },
@@ -211,14 +213,14 @@ export default function UsersPage() {
       key: 'actions',
       render: (_, record: UserDTO) => (
         <Space size="middle">
-          <Tooltip title={record.emailVerified ? 'Deactivate user' : 'Activate user'}>
+          <Tooltip title={record.emailVerified ? 'Mark as unverified' : 'Mark as verified'}>
             <Button
               type="link"
               size="small"
               onClick={() => handleToggleActivation(record)}
               data-testid="toggle-activation-button"
             >
-              {record.emailVerified ? 'Deactivate' : 'Activate'}
+              {record.emailVerified ? 'Unverify' : 'Verify'}
             </Button>
           </Tooltip>
           <Button
