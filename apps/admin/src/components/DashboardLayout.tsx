@@ -156,17 +156,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <Space
               style={{
                 cursor: 'pointer',
-                padding: '8px 12px',
+                padding: '0 12px',
                 borderRadius: 8,
                 transition: 'background 0.3s'
               }}
               data-testid="user-dropdown"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#f5f5f5';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent';
-              }}
             >
               <Avatar size={40} icon={<UserOutlined />} style={{ backgroundColor: '#1890ff' }} />
               <div style={{ lineHeight: 1.2 }}>
