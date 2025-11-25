@@ -129,28 +129,6 @@ export default function UsersPage() {
     });
   };
 
-  const handleToggleActivation = async (user: UserDTO) => {
-    try {
-      const updatedUser = await usersApi.toggleActivation(user.id);
-
-      // Update cache optimistically without refetching
-      mutate(
-        users?.map((u) => (u.id === user.id ? updatedUser : u)),
-        false
-      );
-
-      message.success(
-        updatedUser.emailVerified
-          ? 'User marked as verified successfully'
-          : 'User marked as unverified successfully'
-      );
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.error?.message || error.message || 'Failed to toggle verification';
-      message.error(errorMessage);
-    }
-  };
-
   const filteredUsers = users?.filter(
     (user) =>
       user.email.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -189,21 +167,6 @@ export default function UsersPage() {
       )
     },
     {
-      title: 'Email Verified',
-      dataIndex: 'emailVerified',
-      key: 'emailVerified',
-      filters: [
-        { text: 'Verified', value: true },
-        { text: 'Not Verified', value: false }
-      ],
-      onFilter: (value, record) => record.emailVerified === value,
-      render: (emailVerified: boolean) => (
-        <Tag color={emailVerified ? 'success' : 'warning'} data-testid="status-tag">
-          {emailVerified ? 'Verified' : 'Not Verified'}
-        </Tag>
-      )
-    },
-    {
       title: 'Created',
       dataIndex: 'createdAt',
       key: 'createdAt',
@@ -219,16 +182,6 @@ export default function UsersPage() {
       key: 'actions',
       render: (_, record: UserDTO) => (
         <Space size="middle">
-          <Tooltip title={record.emailVerified ? 'Mark as unverified' : 'Mark as verified'}>
-            <Button
-              type="link"
-              size="small"
-              onClick={() => handleToggleActivation(record)}
-              data-testid="toggle-activation-button"
-            >
-              {record.emailVerified ? 'Unverify' : 'Verify'}
-            </Button>
-          </Tooltip>
           <Button
             type="link"
             icon={<EditOutlined />}
