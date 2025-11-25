@@ -308,7 +308,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
    */
   server.patch<{
     Params: { id: string };
-    Body: { email?: string; name?: string; role?: string };
+    Body: { email?: string; name?: string; role?: string; emailVerified?: boolean };
     Reply: ApiResponse<UserDTO>;
   }>(
     '/:id',
@@ -329,14 +329,15 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
           properties: {
             email: { type: 'string', format: 'email' },
             name: { type: 'string' },
-            role: { type: 'string', enum: ['USER', 'ADMIN', 'SUPER_ADMIN'] }
+            role: { type: 'string', enum: ['USER', 'ADMIN', 'SUPER_ADMIN'] },
+            emailVerified: { type: 'boolean' }
           }
         }
       }
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id } = request.params as any;
-      const { email, name, role } = request.body as any;
+      const { email, name, role, emailVerified } = request.body as any;
 
       // Check if user exists
       const existingUser = await prisma.user.findUnique({
@@ -376,7 +377,8 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         data: {
           ...(email && { email }),
           ...(name !== undefined && { name }),
-          ...(role && { role })
+          ...(role && { role }),
+          ...(emailVerified !== undefined && { emailVerified })
         }
       });
 

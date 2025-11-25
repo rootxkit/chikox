@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Modal, Form, Input, Select, message } from 'antd';
+import { Modal, Form, Input, Select, Checkbox, message } from 'antd';
 import type { UserDTO } from '@chikox/types';
 
 interface UserModalProps {
@@ -19,7 +19,8 @@ export default function UserModal({ open, editingUser, onCancel, onSubmit }: Use
         form.setFieldsValue({
           email: editingUser.email,
           name: editingUser.name || '',
-          role: editingUser.role
+          role: editingUser.role,
+          emailVerified: editingUser.emailVerified
         });
       } else {
         form.resetFields();
@@ -92,6 +93,12 @@ export default function UserModal({ open, editingUser, onCancel, onSubmit }: Use
             <Select.Option value="SUPER_ADMIN">Super Admin</Select.Option>
           </Select>
         </Form.Item>
+
+        {isEditing && (
+          <Form.Item name="emailVerified" valuePropName="checked">
+            <Checkbox>Email Verified</Checkbox>
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   );
