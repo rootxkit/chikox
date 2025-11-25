@@ -11,7 +11,7 @@ import api from '@/lib/api';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, isAuthenticated, updateUser } = useAuth();
+  const { user, isAuthenticated, isLoading, updateUser } = useAuth();
   const { t } = useLanguage();
   const [editing, setEditing] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
@@ -27,13 +27,13 @@ export default function ProfilePage() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isLoading && !isAuthenticated) {
       router.push('/login');
     } else if (user) {
       setName(user.name || '');
       setEmail(user.email);
     }
-  }, [isAuthenticated, user, router]);
+  }, [isLoading, isAuthenticated, user, router]);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +95,20 @@ export default function ProfilePage() {
       setLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col bg-background-primary">
+        <Navbar />
+        <main className="flex-grow container mx-auto px-4 py-8">
+          <div className="max-w-2xl mx-auto flex justify-center items-center h-64">
+            <div className="text-text-primary">{t('common.loading') || 'Loading...'}</div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!isAuthenticated || !user) {
     return null;
