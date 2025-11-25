@@ -137,7 +137,7 @@ export default function UsersPage() {
           ? 'User marked as unverified successfully'
           : 'User marked as verified successfully'
       );
-      mutate(); // Refresh the users list
+      await mutate(); // Refresh the users list
     } catch (error: any) {
       const errorMessage =
         error.response?.data?.error?.message || error.message || 'Failed to toggle verification';
