@@ -271,8 +271,7 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
       }
 
       // Hash password
-      const bcrypt = await import('bcryptjs');
-      const passwordHash = await bcrypt.hash(password, 10);
+      const passwordHash = await hashPassword(password);
 
       // Create user
       const user = await prisma.user.create({
