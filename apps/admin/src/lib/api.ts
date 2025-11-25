@@ -60,5 +60,27 @@ export const usersApi = {
   getById: async (id: string): Promise<UserDTO> => {
     const response = await api.get<ApiResponse<UserDTO>>(`/api/v1/users/${id}`);
     return response.data.data!;
+  },
+
+  create: async (data: {
+    email: string;
+    password: string;
+    name?: string;
+    role?: string;
+  }): Promise<UserDTO> => {
+    const response = await api.post<ApiResponse<UserDTO>>('/api/v1/users', data);
+    return response.data.data!;
+  },
+
+  update: async (
+    id: string,
+    data: { email?: string; name?: string; role?: string }
+  ): Promise<UserDTO> => {
+    const response = await api.patch<ApiResponse<UserDTO>>(`/api/v1/users/${id}`, data);
+    return response.data.data!;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/api/v1/users/${id}`);
   }
 };

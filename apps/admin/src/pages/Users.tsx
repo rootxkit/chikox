@@ -1,17 +1,33 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table, Tag, Space, Typography, Button, Input, Card, Avatar, Spin, Tooltip } from 'antd';
+import {
+  Table,
+  Tag,
+  Space,
+  Typography,
+  Button,
+  Input,
+  Card,
+  Avatar,
+  Spin,
+  Tooltip,
+  Modal,
+  message
+} from 'antd';
 import {
   UserOutlined,
   SearchOutlined,
   PlusOutlined,
   EditOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  ExclamationCircleOutlined
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import DashboardLayout from '@/components/DashboardLayout';
+import UserModal from '@/components/UserModal';
 import { useAuth } from '@/hooks/useAuth';
 import { useUsers } from '@/hooks/useUsers';
+import { usersApi } from '@/lib/api';
 import type { UserDTO } from '@chikox/types';
 import dayjs from 'dayjs';
 
@@ -20,8 +36,10 @@ const { Title } = Typography;
 export default function UsersPage() {
   const navigate = useNavigate();
   const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
-  const { users, isLoading } = useUsers();
+  const { users, isLoading, mutate } = useUsers();
   const [searchText, setSearchText] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<UserDTO | null>(null);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -56,6 +74,59 @@ export default function UsersPage() {
       default:
         return 'blue';
     }
+  };
+
+  const handleOpenModal = (user?: UserDTO) => {
+    setEditingUser(user || null);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setEditingUser(null);
+  };
+
+  const handleSubmit = async (values: any) => {
+    try {
+      if (editingUser) {
+        // Update existing user
+        await usersApi.update(editingUser.id, values);
+        message.success('User updated successfully');
+      } else {
+        // Create new user
+        await usersApi.create(values);
+        message.success('User created successfully');
+      }
+      mutate(); // Refresh the users list
+      handleCloseModal();
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.error?.message || error.message || 'Failed to save user';
+      message.error(errorMessage);
+      throw error;
+    }
+  };
+
+  const handleDelete = (user: UserDTO) => {
+    Modal.confirm({
+      title: 'Delete User',
+      icon: <ExclamationCircleOutlined />,
+      content: `Are you sure you want to delete ${user.name || user.email}?`,
+      okText: 'Delete',
+      okType: 'danger',
+      cancelText: 'Cancel',
+      onOk: async () => {
+        try {
+          await usersApi.delete(user.id);
+          message.success('User deleted successfully');
+          mutate(); // Refresh the users list
+        } catch (error: any) {
+          const errorMessage =
+            error.response?.data?.error?.message || error.message || 'Failed to delete user';
+          message.error(errorMessage);
+        }
+      }
+    });
   };
 
   const filteredUsers = users?.filter(
@@ -109,9 +180,15 @@ export default function UsersPage() {
     {
       title: 'Actions',
       key: 'actions',
-      render: () => (
+      render: (_, record: UserDTO) => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} size="small" data-testid="edit-button">
+          <Button
+            type="link"
+            icon={<EditOutlined />}
+            size="small"
+            onClick={() => handleOpenModal(record)}
+            data-testid="edit-button"
+          >
             Edit
           </Button>
           <Button
@@ -119,6 +196,7 @@ export default function UsersPage() {
             danger
             icon={<DeleteOutlined />}
             size="small"
+            onClick={() => handleDelete(record)}
             data-testid="delete-button"
           >
             Delete
@@ -135,7 +213,12 @@ export default function UsersPage() {
           <Title level={2} style={{ margin: 0 }}>
             Users Management
           </Title>
-          <Button type="primary" icon={<PlusOutlined />} data-testid="add-user-button">
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => handleOpenModal()}
+            data-testid="add-user-button"
+          >
             Add User
           </Button>
         </div>
@@ -167,6 +250,13 @@ export default function UsersPage() {
           </Space>
         </Card>
       </Space>
+
+      <UserModal
+        open={modalOpen}
+        editingUser={editingUser}
+        onCancel={handleCloseModal}
+        onSubmit={handleSubmit}
+      />
     </DashboardLayout>
   );
 }
