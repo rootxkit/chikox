@@ -168,11 +168,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 e.currentTarget.style.background = 'transparent';
               }}
             >
-              <Avatar
-                size={40}
-                icon={<UserOutlined />}
-                style={{ backgroundColor: '#1890ff' }}
-              />
+              <Avatar size={40} icon={<UserOutlined />} style={{ backgroundColor: '#1890ff' }} />
               <div style={{ lineHeight: 1.2 }}>
                 <div>
                   <Text strong style={{ fontSize: 14 }}>
