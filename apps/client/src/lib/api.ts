@@ -120,9 +120,7 @@ class ApiClient {
     name?: string;
     email?: string;
   }): Promise<ApiResponse<AuthResponse['user']>> {
-    const user =
-      typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user') || '{}') : {};
-    return this.request<AuthResponse['user']>(`/api/v1/users/${user.id}`, {
+    return this.request<AuthResponse['user']>('/api/v1/users/me', {
       method: 'PATCH',
       body: JSON.stringify(data)
     });

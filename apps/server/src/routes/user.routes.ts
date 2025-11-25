@@ -70,6 +70,107 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
   );
 
   /**
+   * Update current user profile
+   */
+  server.patch<{
+    Body: { name?: string; email?: string };
+    Reply: ApiResponse<UserDTO>;
+  }>(
+    '/me',
+    {
+      onRequest: [authenticate],
+      schema: {
+        description: 'Update current authenticated user profile',
+        tags: ['Users'],
+        security: [{ bearerAuth: [] }],
+        body: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            email: { type: 'string', format: 'email' }
+          }
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+              data: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string' },
+                  email: { type: 'string' },
+                  name: { type: 'string', nullable: true },
+                  role: { type: 'string' },
+                  createdAt: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      const { userId } = request.user as JWTPayload;
+      const { name, email } = request.body as any;
+
+      // Check if user exists
+      const existingUser = await prisma.user.findUnique({
+        where: { id: userId }
+      });
+
+      if (!existingUser) {
+        return reply.status(404).send({
+          success: false,
+          error: {
+            message: 'User not found',
+            code: 'USER_NOT_FOUND'
+          }
+        });
+      }
+
+      // If email is being changed, check if new email is available
+      if (email && email !== existingUser.email) {
+        const emailTaken = await prisma.user.findUnique({
+          where: { email }
+        });
+
+        if (emailTaken) {
+          return reply.status(400).send({
+            success: false,
+            error: {
+              message: 'Email already in use',
+              code: 'EMAIL_TAKEN'
+            }
+          });
+        }
+      }
+
+      // Update user
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          ...(name !== undefined && { name }),
+          ...(email !== undefined && { email })
+        }
+      });
+
+      const userDTO: UserDTO = {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        name: updatedUser.name,
+        role: updatedUser.role,
+        createdAt: updatedUser.createdAt.toISOString()
+      };
+
+      return reply.send({
+        success: true,
+        data: userDTO
+      });
+    }
+  );
+
+  /**
    * Get all users (Admin only)
    */
   server.get<{
