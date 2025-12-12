@@ -19,12 +19,14 @@ function mapProductToDTO(product: any): ProductDTO {
     sku: product.sku,
     stock: product.stock,
     isActive: product.isActive,
-    images: (product.images || []).map((img: any): ProductImageDTO => ({
-      id: img.id,
-      url: img.url,
-      alt: img.alt,
-      order: img.order
-    })),
+    images: (product.images || []).map(
+      (img: any): ProductImageDTO => ({
+        id: img.id,
+        url: img.url,
+        alt: img.alt,
+        order: img.order
+      })
+    ),
     createdAt: product.createdAt.toISOString(),
     updatedAt: product.updatedAt.toISOString()
   };

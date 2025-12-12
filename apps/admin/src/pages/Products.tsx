@@ -180,9 +180,7 @@ export default function ProductsPage() {
       dataIndex: 'price',
       key: 'price',
       sorter: (a, b) => a.price - b.price,
-      render: (price: number) => (
-        <span style={{ fontWeight: 500 }}>${price.toFixed(2)}</span>
-      )
+      render: (price: number) => <span style={{ fontWeight: 500 }}>${price.toFixed(2)}</span>
     },
     {
       title: 'Stock',
@@ -190,9 +188,7 @@ export default function ProductsPage() {
       key: 'stock',
       sorter: (a, b) => a.stock - b.stock,
       render: (stock: number) => (
-        <Tag color={stock > 10 ? 'green' : stock > 0 ? 'orange' : 'red'}>
-          {stock} in stock
-        </Tag>
+        <Tag color={stock > 10 ? 'green' : stock > 0 ? 'orange' : 'red'}>{stock} in stock</Tag>
       )
     },
     {
@@ -256,7 +252,12 @@ export default function ProductsPage() {
 
   return (
     <DashboardLayout>
-      <Space direction="vertical" size="large" style={{ width: '100%' }} data-testid="products-page">
+      <Space
+        direction="vertical"
+        size="large"
+        style={{ width: '100%' }}
+        data-testid="products-page"
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Title level={2} style={{ margin: 0 }}>
             Products Management

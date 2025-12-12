@@ -136,7 +136,9 @@ export const productsApi = {
   },
 
   toggleActive: async (id: string): Promise<ProductDTO> => {
-    const response = await api.patch<ApiResponse<ProductDTO>>(`/api/v1/products/${id}/toggle-active`);
+    const response = await api.patch<ApiResponse<ProductDTO>>(
+      `/api/v1/products/${id}/toggle-active`
+    );
     return response.data.data!;
   }
 };
