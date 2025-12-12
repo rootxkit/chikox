@@ -166,9 +166,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ slug:
                   <li className="text-text-primary">
                     <ArrowIcon />
                   </li>
-                  <li className="inline-flex items-center gap-1.5 text-neutral">
-                    {product.name}
-                  </li>
+                  <li className="inline-flex items-center gap-1.5 text-neutral">{product.name}</li>
                 </ol>
               </nav>
 
