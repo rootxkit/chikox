@@ -70,6 +70,11 @@ npm run type-check           # Run TypeScript compiler checks
 npm run clean                # Remove all build artifacts and node_modules
 ```
 
+**Pre-commit Hook**: The project uses husky + lint-staged to automatically fix linting and formatting issues on staged files before each commit. This runs:
+
+- `eslint --fix` and `prettier --write` on `*.ts` and `*.tsx` files
+- `prettier --write` on `*.js`, `*.json`, and `*.md` files
+
 ## Architecture
 
 ### Monorepo Structure

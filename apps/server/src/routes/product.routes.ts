@@ -24,20 +24,23 @@ function generateSlug(text: string): string {
 async function ensureUniqueSlug(baseSlug: string, excludeId?: string): Promise<string> {
   let slug = baseSlug;
   let counter = 1;
+  let isUnique = false;
 
-  while (true) {
+  while (!isUnique) {
     const existing = await prisma.product.findUnique({
       where: { slug },
       select: { id: true }
     });
 
     if (!existing || (excludeId && existing.id === excludeId)) {
-      return slug;
+      isUnique = true;
+    } else {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
     }
-
-    slug = `${baseSlug}-${counter}`;
-    counter++;
   }
+
+  return slug;
 }
 
 // Helper function to map product to DTO
@@ -261,8 +264,16 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
       }
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
-      const { name, slug: providedSlug, description, price, sku, stock, isActive, images } =
-        request.body as CreateProductRequest;
+      const {
+        name,
+        slug: providedSlug,
+        description,
+        price,
+        sku,
+        stock,
+        isActive,
+        images
+      } = request.body as CreateProductRequest;
 
       // Check if SKU already exists
       const existingProduct = await prisma.product.findUnique({
@@ -362,8 +373,15 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id } = request.params as { id: string };
-      const { name, slug: providedSlug, description, price, stock, isActive, images } =
-        request.body as UpdateProductRequest;
+      const {
+        name,
+        slug: providedSlug,
+        description,
+        price,
+        stock,
+        isActive,
+        images
+      } = request.body as UpdateProductRequest;
 
       // Check if product exists
       const existingProduct = await prisma.product.findUnique({

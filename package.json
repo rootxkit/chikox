@@ -34,7 +34,8 @@
     "start:server": "npm run start --workspace=apps/server",
     "start:client": "npm run start --workspace=apps/client",
     "start:admin": "npm run start --workspace=apps/admin",
-    "clean": "rm -rf node_modules apps/*/node_modules apps/*/.next apps/*/dist packages/*/node_modules packages/*/dist"
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/.next apps/*/dist packages/*/node_modules packages/*/dist",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
@@ -44,6 +45,8 @@
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.1.0",
     "typescript": "^5.3.3",
     "vitest": "^1.0.4"
@@ -51,5 +54,14 @@
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write"
+    ]
   }
 }
