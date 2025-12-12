@@ -28,17 +28,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const menuItems = [
     {
-      key: '/dashboard',
+      key: '/',
       icon: <DashboardOutlined />,
       label: 'Dashboard'
     },
     {
-      key: '/dashboard/users',
+      key: '/users',
       icon: <TeamOutlined />,
       label: 'Users'
     },
     {
-      key: '/dashboard/settings',
+      key: '/settings',
       icon: <SettingOutlined />,
       label: 'Settings'
     }
@@ -50,9 +50,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const handleDropdownClick = (key: string) => {
     if (key === 'profile') {
-      navigate('/dashboard/profile');
+      navigate('/profile');
     } else if (key === 'settings') {
-      navigate('/dashboard/settings');
+      navigate('/settings');
     } else if (key === 'logout') {
       logout();
     }

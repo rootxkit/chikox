@@ -121,7 +121,7 @@ export default function DashboardPage() {
                   type="primary"
                   icon={<UserOutlined />}
                   block
-                  onClick={() => navigate('/dashboard/users')}
+                  onClick={() => navigate('/users')}
                   data-testid="manage-users-button"
                 >
                   Manage Users
@@ -129,7 +129,7 @@ export default function DashboardPage() {
                 <Button
                   icon={<SettingOutlined />}
                   block
-                  onClick={() => navigate('/dashboard/settings')}
+                  onClick={() => navigate('/settings')}
                   data-testid="settings-button"
                 >
                   Settings

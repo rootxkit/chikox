@@ -12,7 +12,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    useLocation: () => ({ pathname: '/dashboard' })
+    useLocation: () => ({ pathname: '/' })
   };
 });
 
@@ -125,6 +125,6 @@ describe('DashboardLayout', () => {
     const usersMenuItem = screen.getByText('Users');
     fireEvent.click(usersMenuItem);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard/users');
+    expect(mockNavigate).toHaveBeenCalledWith('/users');
   });
 });

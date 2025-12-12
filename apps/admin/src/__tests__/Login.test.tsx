@@ -93,7 +93,7 @@ describe('LoginPage', () => {
       </BrowserRouter>
     );
 
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard', { replace: true });
+    expect(mockNavigate).toHaveBeenCalledWith('/', { replace: true });
   });
 
   it('calls login function with email and password', async () => {

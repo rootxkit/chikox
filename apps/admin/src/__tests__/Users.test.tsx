@@ -14,7 +14,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    useLocation: () => ({ pathname: '/dashboard/users' })
+    useLocation: () => ({ pathname: '/users' })
   };
 });
 
