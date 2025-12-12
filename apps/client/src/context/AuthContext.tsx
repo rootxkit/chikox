@@ -22,6 +22,7 @@ interface AuthContextType {
     token: string,
     password: string
   ) => Promise<{ success: boolean; error?: string; message?: string }>;
+  setTokenAndFetchUser: (token: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -175,6 +176,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('user', JSON.stringify(userData));
   }, []);
 
+  const setTokenAndFetchUser = useCallback(async (token: string): Promise<boolean> => {
+    localStorage.setItem('accessToken', token);
+    try {
+      const response = await api.getProfile();
+      if (response.success && response.data) {
+        setUser(response.data);
+        return true;
+      }
+      localStorage.removeItem('accessToken');
+      return false;
+    } catch {
+      localStorage.removeItem('accessToken');
+      return false;
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -186,7 +203,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         updateUser,
         forgotPassword,
-        resetPassword
+        resetPassword,
+        setTokenAndFetchUser
       }}
     >
       {children}

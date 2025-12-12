@@ -2,30 +2,37 @@
 
 import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 function OAuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setTokenAndFetchUser } = useAuth();
 
   useEffect(() => {
-    const token = searchParams?.get('token');
-    const error = searchParams?.get('error');
+    const handleCallback = async () => {
+      const token = searchParams?.get('token');
+      const error = searchParams?.get('error');
 
-    if (error) {
-      router.push(`/login?error=${error}`);
-      return;
-    }
+      if (error) {
+        router.push(`/login?error=${error}`);
+        return;
+      }
 
-    if (token) {
-      // Store the access token
-      localStorage.setItem('accessToken', token);
+      if (token) {
+        const success = await setTokenAndFetchUser(token);
+        if (success) {
+          router.push('/');
+        } else {
+          router.push('/login?error=oauth_failed');
+        }
+      } else {
+        router.push('/login');
+      }
+    };
 
-      // Redirect to home
-      router.push('/');
-    } else {
-      router.push('/login');
-    }
-  }, [router, searchParams]);
+    handleCallback();
+  }, [router, searchParams, setTokenAndFetchUser]);
 
   return (
     <div className="text-center">
