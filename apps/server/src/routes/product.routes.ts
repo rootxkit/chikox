@@ -91,6 +91,7 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
                   properties: {
                     id: { type: 'string' },
                     name: { type: 'string' },
+                    slug: { type: 'string' },
                     description: { type: 'string', nullable: true },
                     price: { type: 'number' },
                     sku: { type: 'string' },
