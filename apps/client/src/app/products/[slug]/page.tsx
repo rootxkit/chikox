@@ -3,13 +3,12 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Section from '@/components/Section';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import api from '@/lib/api';
 import type { ProductDTO } from '@chikox/types';
 
-export default function ProductDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params);
+export default function ProductDetailsPage({ params }: { params: { slug: string } }) {
   const [product, setProduct] = useState<ProductDTO | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +20,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ slug:
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await api.getProduct(resolvedParams.slug);
+        const response = await api.getProduct(params.slug);
         if (response.success && response.data) {
           setProduct(response.data);
         } else {
@@ -35,7 +34,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ slug:
     };
 
     fetchProduct();
-  }, [resolvedParams.slug]);
+  }, [params.slug]);
 
   const images =
     product?.images && product.images.length > 0
