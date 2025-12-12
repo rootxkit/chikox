@@ -7,6 +7,7 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import dotenv from 'dotenv';
 import { authRoutes } from './routes/auth.routes.js';
 import { userRoutes } from './routes/user.routes.js';
+import { oauthRoutes } from './routes/oauth.routes.js';
 import contactRoutes from './routes/contact.routes.js';
 import { errorHandler } from './utils/error-handler.js';
 
@@ -95,6 +96,7 @@ async function registerPlugins() {
 // Register routes
 async function registerRoutes() {
   await server.register(authRoutes, { prefix: '/api/v1/auth' });
+  await server.register(oauthRoutes, { prefix: '/api/v1/auth/oauth' });
   await server.register(userRoutes, { prefix: '/api/v1/users' });
   await server.register(contactRoutes, { prefix: '/api/v1/contact' });
 }

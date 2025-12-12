@@ -31,6 +31,7 @@ export interface UserDTO {
   name: string | null;
   role: string; // Using string to avoid type conflicts with Prisma generated types
   emailVerified: boolean;
+  avatar?: string | null;
   createdAt: string;
 }
 
@@ -79,4 +80,17 @@ export interface PaginatedResponse<T> {
     total: number;
     totalPages: number;
   };
+}
+
+// OAuth types
+export interface OAuthCallbackQuery {
+  code: string;
+  state?: string;
+}
+
+export interface OAuthUserProfile {
+  id: string;
+  email: string;
+  name?: string;
+  avatar?: string;
 }
