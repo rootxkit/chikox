@@ -13,9 +13,9 @@
   --color-neutral: 102 102 102;
   --color-neutral-white: 255 255 255;
   --color-neutral-light: 204 204 204;
-  --color-accent: 228 143 32;
-  --color-accent-hover: 255 153 0;
-  --color-accent-light: 255 179 71;
+  --color-accent: 255 223 34;
+  --color-accent-hover: 230 200 0;
+  --color-accent-light: 255 240 140;
 }
 
 /* Dark Mode - via class or system preference */
@@ -30,9 +30,9 @@ html.dark {
   --color-neutral: 204 204 204;
   --color-neutral-white: 255 255 255;
   --color-neutral-light: 68 68 68;
-  --color-accent: 228 143 32;
-  --color-accent-hover: 255 153 0;
-  --color-accent-light: 255 179 71;
+  --color-accent: 255 223 34;
+  --color-accent-hover: 230 200 0;
+  --color-accent-light: 255 240 140;
 }
 
 body {
