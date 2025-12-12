@@ -1,5 +1,13 @@
 import axios from 'axios';
-import type { LoginRequest, AuthResponse, UserDTO, ApiResponse } from '@chikox/types';
+import type {
+  LoginRequest,
+  AuthResponse,
+  UserDTO,
+  ApiResponse,
+  ProductDTO,
+  CreateProductRequest,
+  UpdateProductRequest
+} from '@chikox/types';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 
@@ -97,6 +105,38 @@ export const usersApi = {
 
   toggleActivation: async (id: string): Promise<UserDTO> => {
     const response = await api.patch<ApiResponse<UserDTO>>(`/api/v1/users/${id}/toggle-activation`);
+    return response.data.data!;
+  }
+};
+
+// Products API
+export const productsApi = {
+  getAll: async (): Promise<ProductDTO[]> => {
+    const response = await api.get<ApiResponse<ProductDTO[]>>('/api/v1/products');
+    return response.data.data!;
+  },
+
+  getById: async (id: string): Promise<ProductDTO> => {
+    const response = await api.get<ApiResponse<ProductDTO>>(`/api/v1/products/${id}`);
+    return response.data.data!;
+  },
+
+  create: async (data: CreateProductRequest): Promise<ProductDTO> => {
+    const response = await api.post<ApiResponse<ProductDTO>>('/api/v1/products', data);
+    return response.data.data!;
+  },
+
+  update: async (id: string, data: UpdateProductRequest): Promise<ProductDTO> => {
+    const response = await api.patch<ApiResponse<ProductDTO>>(`/api/v1/products/${id}`, data);
+    return response.data.data!;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/api/v1/products/${id}`);
+  },
+
+  toggleActive: async (id: string): Promise<ProductDTO> => {
+    const response = await api.patch<ApiResponse<ProductDTO>>(`/api/v1/products/${id}/toggle-active`);
     return response.data.data!;
   }
 };

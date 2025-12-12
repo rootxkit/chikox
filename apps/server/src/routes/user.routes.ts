@@ -505,6 +505,17 @@ export async function userRoutes(server: FastifyInstance): Promise<void> {
         });
       }
 
+      // Check if user has a password (OAuth users may not have one)
+      if (!user.passwordHash) {
+        return reply.status(400).send({
+          success: false,
+          error: {
+            message: 'No password set. Please set a password first.',
+            code: 'NO_PASSWORD'
+          }
+        });
+      }
+
       // Verify current password
       const isValidPassword = await verifyPassword(currentPassword, user.passwordHash);
 

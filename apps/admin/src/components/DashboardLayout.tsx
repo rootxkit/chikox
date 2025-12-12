@@ -8,7 +8,8 @@ import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  TeamOutlined
+  TeamOutlined,
+  ShoppingOutlined
 } from '@ant-design/icons';
 import { useAuth } from '@/hooks/useAuth';
 import type { MenuProps } from 'antd';
@@ -36,6 +37,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       key: '/users',
       icon: <TeamOutlined />,
       label: 'Users'
+    },
+    {
+      key: '/products',
+      icon: <ShoppingOutlined />,
+      label: 'Products'
     },
     {
       key: '/settings',

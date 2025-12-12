@@ -232,6 +232,17 @@ export async function authRoutes(server: FastifyInstance): Promise<void> {
           });
         }
 
+        // Check if user has a password (OAuth users may not have one)
+        if (!user.passwordHash) {
+          return reply.status(401).send({
+            success: false,
+            error: {
+              message: 'Please use OAuth to sign in',
+              code: 'NO_PASSWORD'
+            }
+          });
+        }
+
         // Verify password
         const isValidPassword = await verifyPassword(data.password, user.passwordHash);
 

@@ -5,12 +5,14 @@ This guide explains the OAuth implementation for Google and Facebook authenticat
 ## Changes Made
 
 ### 1. Database Schema Updates (`packages/database/prisma/schema.prisma`)
+
 - Made `passwordHash` optional for OAuth users
 - Added `avatar` field to User model
 - Made `passwordChangedAt` optional
 - Created new `OAuthAccount` model to store OAuth provider data
 
 ### 2. Type Definitions (`packages/types/src/index.ts`)
+
 - Added `avatar` field to `UserDTO`
 - Created `OAuthCallbackQuery` interface
 - Created `OAuthUserProfile` interface
@@ -18,22 +20,27 @@ This guide explains the OAuth implementation for Google and Facebook authenticat
 ### 3. Server Changes
 
 #### Dependencies
+
 - Installed `@fastify/oauth2` package
 
 #### New Files
+
 - `apps/server/src/routes/oauth.routes.ts` - OAuth route handlers for Google and Facebook
 
 #### Updated Files
+
 - `apps/server/src/index.ts` - Registered OAuth routes at `/api/v1/auth/oauth`
 - `apps/server/.env.example` - Added OAuth environment variables
 
 ### 4. OAuth Routes Available
 
 **Google OAuth:**
+
 - `GET /api/v1/auth/oauth/google` - Redirects to Google login
 - `GET /api/v1/auth/oauth/google/callback` - Handles Google callback
 
 **Facebook OAuth:**
+
 - `GET /api/v1/auth/oauth/facebook` - Redirects to Facebook login
 - `GET /api/v1/auth/oauth/facebook/callback` - Handles Facebook callback
 
@@ -112,9 +119,7 @@ Update `apps/client/src/app/login/page.tsx` to add OAuth login buttons:
       <div className="w-full border-t border-border-primary"></div>
     </div>
     <div className="relative flex justify-center text-sm">
-      <span className="px-2 bg-background-alternative text-neutral">
-        Or continue with
-      </span>
+      <span className="px-2 bg-background-alternative text-neutral">Or continue with</span>
     </div>
   </div>
 
@@ -149,7 +154,7 @@ Update `apps/client/src/app/login/page.tsx` to add OAuth login buttons:
       className="flex items-center justify-center gap-2 w-full bg-[#1877F2] text-white py-2.5 px-4 rounded font-medium text-sm hover:bg-[#166FE5] transition-colors"
     >
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
       </svg>
       Facebook
     </a>
@@ -256,19 +261,23 @@ Make sure your `AuthContext` can handle OAuth-authenticated users. The OAuth flo
 ## Troubleshooting
 
 **"Email not provided by Facebook"**
+
 - Ensure you've requested `email` scope
 - User must have a verified email on Facebook
 
 **"Failed to exchange code for tokens"**
+
 - Check client ID and secret are correct
 - Verify redirect URI matches exactly
 - Check OAuth app is not in development mode (for production)
 
 **Redirect loop**
+
 - Verify CLIENT_URL is set correctly
 - Check that callback page exists at `/auth/callback`
 
 **User created but not logged in**
+
 - Check JWT secrets are configured
 - Verify tokens are being generated correctly
 - Check browser console for localStorage issues

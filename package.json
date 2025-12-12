@@ -12,32 +12,25 @@
     "dev:server": "npm run dev --workspace=apps/server",
     "dev:client": "npm run dev --workspace=apps/client",
     "dev:admin": "npm run dev --workspace=apps/admin",
-   
     "build": "npm run build:packages && npm run build --workspaces --if-present",
     "build:packages": "npm run db:generate && npm run build --workspace=packages/database && npm run build --workspace=packages/types",
     "build:server": "npm run build:packages && npm run build --workspace=apps/server",
     "build:client": "npm run build:packages && npm run build --workspace=apps/client",
     "build:admin": "npm run build:packages && npm run build --workspace=apps/admin",
-    
     "test": "npm run test --workspaces --if-present",
     "test:watch": "npm run test:watch --workspace=apps/server",
     "test:server": "npm run test --workspace=apps/server",
     "test:client": "npm run test --workspace=apps/client",
     "test:admin": "npm run test --workspace=apps/admin",
-
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
-
     "type-check": "tsc --noEmit -p apps/server && tsc --noEmit -p apps/client && tsc --noEmit -p apps/admin",
-    
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
-
     "db:generate": "npm run db:generate --workspace=packages/database",
     "db:push": "npm run db:push --workspace=packages/database",
     "db:migrate": "npm run db:migrate --workspace=packages/database",
     "db:studio": "npm run db:studio --workspace=packages/database",
-    
     "start:server": "npm run start --workspace=apps/server",
     "start:client": "npm run start --workspace=apps/client",
     "start:admin": "npm run start --workspace=apps/admin",

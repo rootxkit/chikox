@@ -94,3 +94,43 @@ export interface OAuthUserProfile {
   name?: string;
   avatar?: string;
 }
+
+// Product types
+export interface ProductImageDTO {
+  id: string;
+  url: string;
+  alt: string | null;
+  order: number;
+}
+
+export interface ProductDTO {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  sku: string;
+  stock: number;
+  isActive: boolean;
+  images: ProductImageDTO[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateProductRequest {
+  name: string;
+  description?: string;
+  price: number;
+  sku: string;
+  stock?: number;
+  isActive?: boolean;
+  images?: { url: string; alt?: string; order?: number }[];
+}
+
+export interface UpdateProductRequest {
+  name?: string;
+  description?: string;
+  price?: number;
+  stock?: number;
+  isActive?: boolean;
+  images?: { url: string; alt?: string; order?: number }[];
+}

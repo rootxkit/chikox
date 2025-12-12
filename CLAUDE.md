@@ -84,6 +84,8 @@ npm run clean                # Remove all build artifacts and node_modules
 
 - Auth endpoints: `/api/v1/auth/*`
 - User endpoints: `/api/v1/users/*`
+- OAuth endpoints: `/api/v1/oauth/*` (Google, Facebook)
+- Contact endpoints: `/api/v1/contact`
 
 ### Authentication Flow
 
@@ -100,6 +102,12 @@ The system uses **dual-token JWT authentication**:
    - Used to obtain new access tokens
    - Not accessible via JavaScript (XSS protection)
 
+3. **OAuth Authentication** (Google, Facebook)
+   - User redirected to provider's login page via `/api/v1/oauth/google` or `/api/v1/oauth/facebook`
+   - After successful login, callback redirects to `/api/v1/oauth/{provider}/callback`
+   - Server creates/links OAuth account, generates JWT tokens, redirects to client with access token
+   - OAuth users may not have a password (passwordHash is optional in User model)
+
 ### Server Architecture (Fastify)
 
 **Entry Point**: `apps/server/src/index.ts`
@@ -113,6 +121,8 @@ The system uses **dual-token JWT authentication**:
 
 - `apps/server/src/routes/auth.routes.ts` - Authentication endpoints (registered at `/api/v1/auth`)
 - `apps/server/src/routes/user.routes.ts` - User management endpoints (registered at `/api/v1/users`)
+- `apps/server/src/routes/oauth.routes.ts` - OAuth endpoints for Google/Facebook (registered at `/api/v1/oauth`)
+- `apps/server/src/routes/contact.routes.ts` - Contact form endpoint (registered at `/api/v1/contact`)
 
 **Health Check**: `GET /health` returns server status and timestamp
 
@@ -136,17 +146,20 @@ server.get(
 ### Client App Architecture (Next.js)
 
 **Tech Stack**:
+
 - Next.js 14 with App Router
 - TypeScript
 - Tailwind CSS for styling
 - Context API for state management
 
 **Context Providers** (in `apps/client/src/context/`):
+
 - `AuthContext` - User authentication state
 - `LanguageContext` - i18n translations (English/Georgian)
 - `ThemeContext` - Theme management (light/dark, defaults to light)
 
 **Key Components** (in `apps/client/src/components/`):
+
 - `Navbar` - Responsive navigation with burger menu for mobile (hidden on md+ breakpoint)
 - `Footer` - Site footer with translations
 - `Section` - Reusable section wrapper with background/padding variants
@@ -154,6 +167,7 @@ server.get(
 - `LanguageSwitcher` - EN/GE language toggle
 
 **Adding Translations**:
+
 1. Add keys to both `en` and `ge` objects in `apps/client/src/context/LanguageContext.tsx`
 2. Use `const { t } = useLanguage()` hook in components
 3. Call `t('key.name')` to get translated string
@@ -194,8 +208,11 @@ server.get(
 
 **Models**:
 
-- `User` - User accounts with email, passwordHash (bcrypt), name, role, timestamps
+- `User` - User accounts with email, passwordHash (optional for OAuth users), name, role, avatar, emailVerified, timestamps
 - `Session` - Refresh token sessions with userId foreign key, expiresAt, userAgent, ipAddress
+- `OAuthAccount` - Third-party authentication accounts (Google, Facebook) linked to users
+- `PasswordResetToken` - Tokens for password reset flow
+- `EmailVerificationToken` - Tokens for email verification
 - `UserRole` enum - USER, ADMIN, SUPER_ADMIN
 
 **Prisma Client**: Singleton instance exported from `packages/database/src/index.ts`
@@ -209,10 +226,12 @@ server.get(
 Contains interfaces used by both server and client:
 
 - `LoginRequest`, `RegisterRequest` - Auth DTOs
+- `ForgotPasswordRequest`, `ResetPasswordRequest` - Password reset DTOs
 - `AuthResponse` - Login/register response
-- `UserDTO` - User data transfer object (role field is `string` type)
+- `UserDTO` - User data transfer object (role field is `string` type, includes `emailVerified` and `avatar`)
 - `JWTPayload` - JWT token payload structure (role field is `string` type)
 - `ApiResponse<T>` - Standard API response wrapper
+- `OAuthCallbackQuery`, `OAuthUserProfile` - OAuth types for third-party authentication
 
 **Important**: The `role` field in `UserDTO` and `JWTPayload` uses `string` type instead of `UserRole` enum to avoid type conflicts with Prisma's generated `UserRole` type. At runtime, values are still `'USER' | 'ADMIN' | 'SUPER_ADMIN'`.
 
@@ -306,6 +325,17 @@ JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
 CORS_ORIGIN=http://localhost:3001,http://localhost:3002
 COOKIE_SECRET=your-secret
+CLIENT_URL=http://localhost:3001
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_REDIRECT_URI=http://localhost:3000/api/v1/oauth/google/callback
+
+# Facebook OAuth
+FACEBOOK_APP_ID=your-facebook-app-id
+FACEBOOK_APP_SECRET=your-facebook-app-secret
+FACEBOOK_REDIRECT_URI=http://localhost:3000/api/v1/oauth/facebook/callback
 ```
 
 ### Client (`apps/client/.env`)
