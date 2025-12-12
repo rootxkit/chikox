@@ -3,11 +3,36 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Section from '@/components/Section';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import api from '@/lib/api';
+import type { ProductDTO } from '@chikox/types';
 
 export default function ProductsPage() {
   const [pricingTab, setPricingTab] = useState('monthly');
+  const [products, setProducts] = useState<ProductDTO[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.getProducts();
+        if (response.success && response.data) {
+          // Only show active products
+          setProducts(response.data.filter((p) => p.isActive));
+        } else {
+          setError(response.error?.message || 'Failed to load products');
+        }
+      } catch {
+        setError('Failed to load products');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const ArrowIcon = () => (
     <svg
@@ -43,44 +68,12 @@ export default function ProductsPage() {
     </svg>
   );
 
-  const products = [
-    {
-      name: 'Flight controller pro',
-      category: 'Standard',
-      price: '$129',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-    },
-    {
-      name: 'Brushless motor x1',
-      category: 'Compact',
-      price: '$89',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-    },
-    {
-      name: 'Carbon frame ultra',
-      category: 'Lightweight',
-      price: '$199',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-    },
-    {
-      name: 'Power distribution board',
-      category: 'Compact',
-      price: '$45',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-    },
-    {
-      name: 'Battery management system',
-      category: 'Advanced',
-      price: '$75',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-    },
-    {
-      name: 'Complete drone kit',
-      category: 'Professional',
-      price: '$1,299',
-      image: 'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-    }
-  ];
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(price);
+  };
 
   const pricingPlans = [
     {
@@ -145,42 +138,61 @@ export default function ProductsPage() {
       <Section paddingVariant="large" horizontalPadding>
         <div className="mb-12 md:mb-18 lg:mb-20">
           <div className="mx-auto max-w-lg text-center">
-            <h4 className="font-semibold text-accent">Tagline</h4>
+            <h4 className="font-semibold text-accent">Our Collection</h4>
             <h1 className="mt-3 text-2xl font-bold sm:text-3xl md:mt-4 md:text-4xl lg:text-5xl">
               Products
             </h1>
             <p className="mt-5 text-base md:mt-6 md:text-md text-neutral">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Browse our selection of high-quality products.
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 justify-items-start gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12">
-          {products.map((product, index) => (
-            <Link
-              key={index}
-              href="#"
-              className="text-center font-semibold md:text-md hover:text-accent transition-colors"
-            >
-              <div className="mb-3 aspect-[5/6] md:mb-4">
-                <img
-                  src={product.image}
-                  alt="Relume placeholder image"
-                  className="size-full object-cover"
-                />
-              </div>
-              <div className="mb-2">
-                <h3>{product.name}</h3>
-                <div className="text-sm font-normal text-neutral">{product.category}</div>
-              </div>
-              <div className="text-md md:text-lg text-accent">{product.price}</div>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-14 flex justify-center md:mt-20 lg:mt-24">
-          <button className="inline-flex gap-3 items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-alternative px-6 py-3 hover:bg-background-secondary">
-            View all
-          </button>
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-20">
+            <p className="text-red-500">{error}</p>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-neutral">No products available at the moment.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 justify-items-start gap-x-5 gap-y-12 md:grid-cols-2 md:gap-x-8 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12">
+            {products.map((product) => (
+              <Link
+                key={product.id}
+                href={`/products/${product.id}`}
+                className="text-center font-semibold md:text-md hover:text-accent transition-colors w-full"
+              >
+                <div className="mb-3 aspect-[5/6] md:mb-4 bg-background-secondary">
+                  <img
+                    src={
+                      product.images[0]?.url ||
+                      'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
+                    }
+                    alt={product.images[0]?.alt || product.name}
+                    className="size-full object-cover"
+                  />
+                </div>
+                <div className="mb-2">
+                  <h3>{product.name}</h3>
+                  {product.description && (
+                    <div className="text-sm font-normal text-neutral line-clamp-2">
+                      {product.description}
+                    </div>
+                  )}
+                </div>
+                <div className="text-md md:text-lg text-accent">{formatPrice(product.price)}</div>
+                {product.stock === 0 && (
+                  <div className="text-sm text-red-500 mt-1">Out of stock</div>
+                )}
+              </Link>
+            ))}
+          </div>
+        )}
       </Section>
 
       {/* Content Section 1 */}

@@ -4,7 +4,8 @@ import type {
   LoginRequest,
   RegisterRequest,
   ForgotPasswordRequest,
-  ResetPasswordRequest
+  ResetPasswordRequest,
+  ProductDTO
 } from '@chikox/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
@@ -133,6 +134,18 @@ class ApiClient {
     return this.request<{ message: string }>('/api/v1/users/me/password', {
       method: 'PATCH',
       body: JSON.stringify(data)
+    });
+  }
+
+  async getProducts(): Promise<ApiResponse<ProductDTO[]>> {
+    return this.request<ProductDTO[]>('/api/v1/products', {
+      method: 'GET'
+    });
+  }
+
+  async getProduct(id: string): Promise<ApiResponse<ProductDTO>> {
+    return this.request<ProductDTO>(`/api/v1/products/${id}`, {
+      method: 'GET'
     });
   }
 }

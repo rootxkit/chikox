@@ -3,24 +3,51 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Section from '@/components/Section';
-import { useState } from 'react';
+import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
+import api from '@/lib/api';
+import type { ProductDTO } from '@chikox/types';
 
-export default function ProductDetailsPage({ params: _params }: { params: { slug: string } }) {
-  const [selectedVariant, setSelectedVariant] = useState('option-one');
+export default function ProductDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = use(params);
+  const [product, setProduct] = useState<ProductDTO | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [pricingTab, setPricingTab] = useState('monthly');
   const [accordionOpen, setAccordionOpen] = useState<string | null>(null);
+  const [pricingTab, setPricingTab] = useState('monthly');
 
-  const images = [
-    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg',
-    'https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'
-  ];
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await api.getProduct(resolvedParams.slug);
+        if (response.success && response.data) {
+          setProduct(response.data);
+        } else {
+          setError(response.error?.message || 'Product not found');
+        }
+      } catch {
+        setError('Failed to load product');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [resolvedParams.slug]);
+
+  const images =
+    product?.images && product.images.length > 0
+      ? product.images.map((img) => img.url)
+      : ['https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg'];
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(price);
+  };
 
   const StarIcon = ({ filled = true }: { filled?: boolean }) => (
     <svg
@@ -94,6 +121,33 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
     </svg>
   );
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex flex-col justify-center items-center">
+          <p className="text-red-500 mb-4">{error || 'Product not found'}</p>
+          <Link href="/products" className="text-accent hover:underline">
+            Back to products
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -107,19 +161,13 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               <nav aria-label="breadcrumb" className="mb-6 flex flex-wrap items-center text-sm">
                 <ol className="flex flex-wrap items-center gap-1.5 break-words text-text-primary sm:gap-2">
                   <li className="inline-flex items-center gap-1.5">
-                    <Link href="#">Shop all</Link>
+                    <Link href="/products">Products</Link>
                   </li>
                   <li className="text-text-primary">
                     <ArrowIcon />
                   </li>
-                  <li className="inline-flex items-center gap-1.5">
-                    <Link href="#">Category</Link>
-                  </li>
-                  <li className="text-text-primary">
-                    <ArrowIcon />
-                  </li>
-                  <li className="inline-flex items-center gap-1.5">
-                    <Link href="#">Product name</Link>
+                  <li className="inline-flex items-center gap-1.5 text-neutral">
+                    {product.name}
                   </li>
                 </ol>
               </nav>
@@ -127,109 +175,62 @@ export default function ProductDetailsPage({ params: _params }: { params: { slug
               {/* Product Info */}
               <div>
                 <h1 className="mb-5 text-2xl font-bold leading-[1.2] sm:text-3xl md:mb-6 md:text-4xl lg:text-5xl">
-                  Product name
+                  {product.name}
                 </h1>
                 <div className="mb-5 flex flex-col flex-wrap sm:flex-row sm:items-center md:mb-6">
-                  <p className="text-xl font-bold md:text-2xl">$55</p>
+                  <p className="text-xl font-bold md:text-2xl text-accent">
+                    {formatPrice(product.price)}
+                  </p>
                   <div className="mx-4 hidden w-px self-stretch bg-background-alternative sm:block"></div>
                   <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon />
-                      <StarIcon filled={false} />
-                      <StarIcon filled={false} />
-                    </div>
-                    <p className="text-sm">(3.5 stars) • 10 reviews</p>
+                    <span className="text-sm text-neutral">SKU: {product.sku}</span>
+                    {product.stock > 0 ? (
+                      <span className="text-sm text-green-600">{product.stock} in stock</span>
+                    ) : (
+                      <span className="text-sm text-red-500">Out of stock</span>
+                    )}
                   </div>
                 </div>
-                <p className="mb-5 md:mb-6">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
-                  in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
-                  interdum nulla, ut commodo diam libero vitae erat.
-                </p>
+                {product.description && (
+                  <p className="mb-5 md:mb-6 text-neutral">{product.description}</p>
+                )}
 
                 {/* Product Form */}
                 <form className="mb-8">
                   <div className="grid grid-cols-1 gap-6">
                     <div className="flex flex-col">
-                      <label className="mb-2">Variant</label>
-                      <div className="flex flex-wrap gap-4">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedVariant('option-one')}
-                          className={`focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary px-4 py-2 ${
-                            selectedVariant === 'option-one'
-                              ? 'bg-background-alternative text-text-alternative'
-                              : 'text-text-primary bg-background-primary'
-                          }`}
-                        >
-                          Option one
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setSelectedVariant('option-two')}
-                          className={`focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary px-4 py-2 ${
-                            selectedVariant === 'option-two'
-                              ? 'bg-background-alternative text-text-alternative'
-                              : 'text-text-primary bg-background-primary'
-                          }`}
-                        >
-                          Option two
-                        </button>
-                        <button
-                          type="button"
-                          disabled
-                          className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-4 py-2 pointer-events-none opacity-25"
-                        >
-                          Option three
-                        </button>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-[1fr_4rem] gap-x-4">
-                      <div className="flex flex-col">
-                        <label className="mb-2">Variant</label>
-                        <select
-                          value={selectedSize}
-                          onChange={(e) => setSelectedSize(e.target.value)}
-                          className="flex min-h-11 w-full items-center justify-between gap-1 whitespace-nowrap border border-border-primary bg-transparent px-3 py-2 text-text-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                          <option value="">Select</option>
-                          <option value="small">Small</option>
-                          <option value="medium">Medium</option>
-                          <option value="large">Large</option>
-                        </select>
-                      </div>
-                      <div className="flex flex-col">
-                        <label className="mb-2" htmlFor="quantity">
-                          Qty
-                        </label>
-                        <input
-                          type="number"
-                          value={quantity}
-                          onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                          className="flex size-full min-h-11 border border-border-primary bg-background-primary py-2 align-middle px-3 w-16"
-                          id="quantity"
-                          min="1"
-                        />
-                      </div>
+                      <label className="mb-2" htmlFor="quantity">
+                        Quantity
+                      </label>
+                      <input
+                        type="number"
+                        value={quantity}
+                        onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                        className="flex min-h-11 border border-border-primary bg-background-primary py-2 px-3 w-24"
+                        id="quantity"
+                        min="1"
+                        max={product.stock}
+                        disabled={product.stock === 0}
+                      />
                     </div>
                   </div>
                   <div className="mb-4 mt-8 flex flex-col gap-y-4">
                     <button
                       type="button"
+                      disabled={product.stock === 0}
                       className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary bg-background-alternative text-text-alternative px-6 py-3"
                     >
                       Add to cart
                     </button>
                     <button
                       type="button"
+                      disabled={product.stock === 0}
                       className="focus-visible:ring-border-primary inline-flex gap-3 items-center justify-center whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border-primary text-text-primary bg-background-primary px-6 py-3"
                     >
                       Buy now
                     </button>
                   </div>
-                  <p className="text-center text-xs">Free shipping over $50</p>
+                  <p className="text-center text-xs text-neutral">Free shipping over $50</p>
                 </form>
 
                 {/* Accordion */}
