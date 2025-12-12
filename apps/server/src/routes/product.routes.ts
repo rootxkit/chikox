@@ -9,11 +9,43 @@ import type {
 } from '@chikox/types';
 import { authenticate, authorize } from '../utils/auth.js';
 
+// Helper function to generate URL-friendly slug from text
+function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .replace(/^-+|-+$/g, ''); // Trim hyphens from start and end
+}
+
+// Helper function to ensure slug is unique by appending a suffix if needed
+async function ensureUniqueSlug(baseSlug: string, excludeId?: string): Promise<string> {
+  let slug = baseSlug;
+  let counter = 1;
+
+  while (true) {
+    const existing = await prisma.product.findUnique({
+      where: { slug },
+      select: { id: true }
+    });
+
+    if (!existing || (excludeId && existing.id === excludeId)) {
+      return slug;
+    }
+
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+}
+
 // Helper function to map product to DTO
 function mapProductToDTO(product: any): ProductDTO {
   return {
     id: product.id,
     name: product.name,
+    slug: product.slug,
     description: product.description,
     price: product.price,
     sku: product.sku,
@@ -99,23 +131,23 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
   );
 
   /**
-   * Get single product (Public)
+   * Get single product by slug or ID (Public)
    */
   server.get<{
-    Params: { id: string };
+    Params: { slugOrId: string };
     Reply: ApiResponse<ProductDTO>;
   }>(
-    '/:id',
+    '/:slugOrId',
     {
       schema: {
-        description: 'Get a product by ID',
+        description: 'Get a product by slug (SEO-friendly) or ID',
         tags: ['Products'],
         params: {
           type: 'object',
           properties: {
-            id: { type: 'string' }
+            slugOrId: { type: 'string' }
           },
-          required: ['id']
+          required: ['slugOrId']
         },
         response: {
           200: {
@@ -127,6 +159,7 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
                 properties: {
                   id: { type: 'string' },
                   name: { type: 'string' },
+                  slug: { type: 'string' },
                   description: { type: 'string', nullable: true },
                   price: { type: 'number' },
                   sku: { type: 'string' },
@@ -154,12 +187,21 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
       }
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
-      const { id } = request.params as { id: string };
+      const { slugOrId } = request.params as { slugOrId: string };
 
-      const product = await prisma.product.findUnique({
-        where: { id },
+      // Try to find by slug first, then by ID for backward compatibility
+      let product = await prisma.product.findUnique({
+        where: { slug: slugOrId },
         include: { images: { orderBy: { order: 'asc' } } }
       });
+
+      if (!product) {
+        // Fallback to ID lookup (for backward compatibility with old URLs)
+        product = await prisma.product.findUnique({
+          where: { id: slugOrId },
+          include: { images: { orderBy: { order: 'asc' } } }
+        });
+      }
 
       if (!product) {
         return reply.status(404).send({
@@ -219,7 +261,7 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
       }
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
-      const { name, description, price, sku, stock, isActive, images } =
+      const { name, slug: providedSlug, description, price, sku, stock, isActive, images } =
         request.body as CreateProductRequest;
 
       // Check if SKU already exists
@@ -237,10 +279,15 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
         });
       }
 
+      // Generate slug from name or use provided slug
+      const baseSlug = providedSlug ? generateSlug(providedSlug) : generateSlug(name);
+      const slug = await ensureUniqueSlug(baseSlug);
+
       // Create product with images
       const product = await prisma.product.create({
         data: {
           name,
+          slug,
           description: description || null,
           price,
           sku,
@@ -292,6 +339,7 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
           type: 'object',
           properties: {
             name: { type: 'string', minLength: 1 },
+            slug: { type: 'string', minLength: 1 },
             description: { type: 'string' },
             price: { type: 'number', minimum: 0 },
             stock: { type: 'number', minimum: 0 },
@@ -314,7 +362,7 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const { id } = request.params as { id: string };
-      const { name, description, price, stock, isActive, images } =
+      const { name, slug: providedSlug, description, price, stock, isActive, images } =
         request.body as UpdateProductRequest;
 
       // Check if product exists
@@ -332,11 +380,24 @@ export async function productRoutes(server: FastifyInstance): Promise<void> {
         });
       }
 
+      // Handle slug update
+      let newSlug: string | undefined;
+      if (providedSlug !== undefined) {
+        // Use provided slug
+        const baseSlug = generateSlug(providedSlug);
+        newSlug = await ensureUniqueSlug(baseSlug, id);
+      } else if (name !== undefined && name !== existingProduct.name) {
+        // Auto-generate new slug when name changes
+        const baseSlug = generateSlug(name);
+        newSlug = await ensureUniqueSlug(baseSlug, id);
+      }
+
       // Update product
       const product = await prisma.product.update({
         where: { id },
         data: {
           ...(name !== undefined && { name }),
+          ...(newSlug !== undefined && { slug: newSlug }),
           ...(description !== undefined && { description }),
           ...(price !== undefined && { price }),
           ...(stock !== undefined && { stock }),

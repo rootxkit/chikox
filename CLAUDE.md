@@ -85,6 +85,7 @@ npm run clean                # Remove all build artifacts and node_modules
 - Auth endpoints: `/api/v1/auth/*`
 - User endpoints: `/api/v1/users/*`
 - OAuth endpoints: `/api/v1/oauth/*` (Google, Facebook)
+- Product endpoints: `/api/v1/products/*` (public GET, admin-only CUD)
 - Contact endpoints: `/api/v1/contact`
 
 ### Authentication Flow
@@ -122,6 +123,7 @@ The system uses **dual-token JWT authentication**:
 - `apps/server/src/routes/auth.routes.ts` - Authentication endpoints (registered at `/api/v1/auth`)
 - `apps/server/src/routes/user.routes.ts` - User management endpoints (registered at `/api/v1/users`)
 - `apps/server/src/routes/oauth.routes.ts` - OAuth endpoints for Google/Facebook (registered at `/api/v1/oauth`)
+- `apps/server/src/routes/product.routes.ts` - Product CRUD endpoints (registered at `/api/v1/products`)
 - `apps/server/src/routes/contact.routes.ts` - Contact form endpoint (registered at `/api/v1/contact`)
 
 **Health Check**: `GET /health` returns server status and timestamp
@@ -213,6 +215,8 @@ server.get(
 - `OAuthAccount` - Third-party authentication accounts (Google, Facebook) linked to users
 - `PasswordResetToken` - Tokens for password reset flow
 - `EmailVerificationToken` - Tokens for email verification
+- `Product` - Products with name, description, price, sku (unique), stock, isActive
+- `ProductImage` - Product images with url, alt, order (cascade delete with product)
 - `UserRole` enum - USER, ADMIN, SUPER_ADMIN
 
 **Prisma Client**: Singleton instance exported from `packages/database/src/index.ts`
@@ -232,6 +236,8 @@ Contains interfaces used by both server and client:
 - `JWTPayload` - JWT token payload structure (role field is `string` type)
 - `ApiResponse<T>` - Standard API response wrapper
 - `OAuthCallbackQuery`, `OAuthUserProfile` - OAuth types for third-party authentication
+- `ProductDTO`, `ProductImageDTO` - Product data transfer objects
+- `CreateProductRequest`, `UpdateProductRequest` - Product mutation DTOs
 
 **Important**: The `role` field in `UserDTO` and `JWTPayload` uses `string` type instead of `UserRole` enum to avoid type conflicts with Prisma's generated `UserRole` type. At runtime, values are still `'USER' | 'ADMIN' | 'SUPER_ADMIN'`.
 

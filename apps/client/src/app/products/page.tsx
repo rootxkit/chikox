@@ -164,7 +164,7 @@ export default function ProductsPage() {
             {products.map((product) => (
               <Link
                 key={product.id}
-                href={`/products/${product.id}`}
+                href={`/products/${product.slug}`}
                 className="text-center font-semibold md:text-md hover:text-accent transition-colors w-full"
               >
                 <div className="mb-3 aspect-[5/6] md:mb-4 bg-background-secondary">

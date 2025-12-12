@@ -106,6 +106,7 @@ export interface ProductImageDTO {
 export interface ProductDTO {
   id: string;
   name: string;
+  slug: string;
   description: string | null;
   price: number;
   sku: string;
@@ -118,6 +119,7 @@ export interface ProductDTO {
 
 export interface CreateProductRequest {
   name: string;
+  slug?: string; // Auto-generated from name if not provided
   description?: string;
   price: number;
   sku: string;
@@ -128,6 +130,7 @@ export interface CreateProductRequest {
 
 export interface UpdateProductRequest {
   name?: string;
+  slug?: string;
   description?: string;
   price?: number;
   stock?: number;
