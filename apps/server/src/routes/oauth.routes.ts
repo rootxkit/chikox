@@ -230,7 +230,7 @@ export async function oauthRoutes(server: FastifyInstance): Promise<void> {
         const tokens: GoogleTokenResponse = await tokenResponse.json();
 
         // Get user info
-        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
           headers: { Authorization: `Bearer ${tokens.access_token}` }
         });
 
