@@ -7,7 +7,7 @@ COPY tsconfig.json ./
 COPY packages ./packages
 COPY apps/admin ./apps/admin
 
-RUN npm ci
+RUN npm ci --ignore-scripts
 RUN npm run build:packages
 RUN npm run build --workspace=apps/admin
 

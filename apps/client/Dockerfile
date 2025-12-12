@@ -20,8 +20,8 @@ COPY apps/client/package.json apps/client/package.json
 COPY packages/database/package.json packages/database/package.json
 COPY packages/types/package.json packages/types/package.json
 
-# Install ALL dependencies (including devDependencies for build)
-RUN npm install --include=dev
+# Install ALL dependencies (including devDependencies for build, skip husky prepare script)
+RUN npm install --include=dev --ignore-scripts
 
 # Copy all source code into the builder stage
 COPY . .

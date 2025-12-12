@@ -33,8 +33,8 @@ COPY --from=builder /app/apps/server/dist ./apps/server/dist
 COPY --from=builder /app/apps/server/package.json ./apps/server/
 COPY --from=builder /app/packages ./packages
 
-# Install only production dependencies for the server app
-RUN npm ci --production --workspace=apps/server
+# Install only production dependencies for the server app (skip prepare script which runs husky)
+RUN npm ci --omit=dev --ignore-scripts --workspace=apps/server
 
 # Regenerate Prisma Client in production to ensure binary compatibility
 # (Crucial when using Alpine's linux-musl target)
